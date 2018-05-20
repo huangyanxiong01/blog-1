@@ -9,6 +9,9 @@ Python 2.7.9
 
 # cat /etc/*-release
 DISTRIB_DESCRIPTION="Ubuntu 14.04.2 LTS"
+
+# 内存：2G
+# CPU：2核
 ```
 
 ---
