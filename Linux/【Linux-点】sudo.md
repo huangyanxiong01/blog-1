@@ -146,6 +146,8 @@ go2linux ALL=(ALL) ALL
 
 授权用户 主机=命令，这三个要素是必须的，缺一不可，而 `(目的用户)` 是可选的，当目的用户没有时，那么默认就是 `(root)`。
 
+---
+
 ### <font color=#00b0f0>实例解读</font>
 
 ```
@@ -188,6 +190,8 @@ USER HOST=(OP) CMD
 ```
 
 > 用户 tiger、pig、dog 可以在网段为 10.1.2.0/24 的主机终端中，切换到 bear 用户身份，执行 `/sbin/parted` 和 `/sbin/fdisk` 命令。
+
+---
 
 ### <font color=#00b0f0>不使用 vi </font>
 
