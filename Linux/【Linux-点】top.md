@@ -2,14 +2,22 @@
 
 top 是一个以进程为核心的实时交互性能分析工具。当需要总体了解一个系统的状况时，top 非常适合做这件事。top 有 38 个统计字段，下面分析每个字段的意义、关键字段的性能指标、常用的交互操作命令。
 
-### <font color=#00b0f0>实验环境</font>
+---
 
-- 阿里云服务器
-    - 系统版本 Ubuntu 14.04
-    - 内核版本 3.16.0-30-generic
-    - 双核 8G
+### <font color=#00b0f0>运行环境</font>
 
-*注意：下面的讨论都是以该服务器为标准*
+```
+# uname -a
+Linux ubuntu 3.16.0-30-generic #40~14.04.1-Ubuntu SMP Thu Jan 15 17:43:14 UTC 2015 x86_64 x86_64 x86_64 GNU/Linux
+
+# python2 --version
+Python 2.7.9
+
+# cat /etc/*-release
+DISTRIB_DESCRIPTION="Ubuntu 14.04.2 LTS"
+```
+
+---
 
 ### <font color=#00b0f0>字段的意义</font>
 
@@ -155,6 +163,8 @@ KiB Swap:        0 total,        0 used,        0 free.   271440 cached Mem
 >
 > 实验结果：1. 修改 nice 值对于 cpu 调度进程确实是有影响的；2. 修改 nice 之后并不是立竿见影的，而是随着进程运行时间的增加，TIME+ 的差距才会越来越明显
 
+---
+
 ### <font color=#00b0f0>字段的性能指标</font>
 
 接下来对部分字段的性能指标做分析：
@@ -172,6 +182,8 @@ KiB Swap:        0 total,        0 used,        0 free.   271440 cached Mem
 - **0.0 wa**：一般情况下，如果服务器装的是机械硬盘，则该数值 <= 30% 是正常的，如果装的是 SSD，则应该 <= 8%。在阿里云平台的实践中，发现该数值 >= 40% 时，登陆服务器的命令行打命令就会感觉到明显的卡顿，更高时甚至无法 ssh 登陆服务器。并且很多时候该数值过高是因为内存资源不足，导致系统频繁发生 swap 操作，从而导致磁盘负载大，最终的结果是 wa 的数值高且服务器陷入假死状态。这种情况是无法通过命令行去实时排查问题的，因为服务器已经卡住了，此时就需要一些事后分析手段了，具体方法打算在另外的文章中再讨论
 - **0.3 hi 和 0.0 si**：可以参考下网上两篇文章：[VPS with very high Load - "si" software interrupts ??](http://www.webhostingtalk.com/showthread.php?t=992765) 和 [网卡软中断过高问题优化总结](http://www.simlinux.com/2017/02/28/net-softirq.html)
 - **0.0 st**：当所使用的服务器是并非物理服务器且该数值过高时，有可能是分配给你的虚拟机的 cpu 资源偷偷被减少了，可以向平台运营商提交工单
+
+---
 
 ### <font color=#00b0f0>交互操作</font>
 
