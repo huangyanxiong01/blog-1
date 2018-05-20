@@ -4,13 +4,22 @@ Linux 是一个多用户系统，不同用户之间有时候需要进行一些�
 
 关键字：**使用场景、/etc/sudoers 配置文件**
 
-### <font color=#00b0f0>实验环境</font>
+---
 
-- 阿里云服务器
-    - 系统版本 Ubuntu 14.04
-    - 内核版本 3.16.0-30-generic
+### <font color=#00b0f0>运行环境</font>
 
-*注意：下面的讨论都是以该服务器为标准*
+```
+# uname -a
+Linux ubuntu 3.16.0-30-generic #40~14.04.1-Ubuntu SMP Thu Jan 15 17:43:14 UTC 2015 x86_64 x86_64 x86_64 GNU/Linux
+
+# python2 --version
+Python 2.7.9
+
+# cat /etc/*-release
+DISTRIB_DESCRIPTION="Ubuntu 14.04.2 LTS"
+```
+
+---
 
 ### <font color=#00b0f0>使用场景</font>
 
@@ -43,6 +52,8 @@ games:*:16484:0:99999:7:::
 ```
 
 > 可以看到，`sudo` 适用于实现越权操作
+
+---
 
 ### <font color=#00b0f0>/etc/sudoers 配置文件</font>
 
