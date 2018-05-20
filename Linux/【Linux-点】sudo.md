@@ -57,7 +57,7 @@ games:*:16484:0:99999:7:::
 
 ### <font color=#00b0f0>/etc/sudoers 配置文件</font>
 
-### 初识 /etc/sudoers
+#### 初识 /etc/sudoers
 
 那么，上面为什么加了 `sudo` 就可以操作原来无法执行 `cat /etc/shadow` 呢？因为 `sudo` 命令的配置文件 `/etc/sudoers` 已经默认配置好了用户 tiger 和 `sudo` 相关的规则，文件内容如下：
 
@@ -88,14 +88,14 @@ root    ALL=(ALL:ALL) ALL
 
 重点是这里：`%tiger ALL=(ALL:ALL) ALL`。这条规则的意思是，当用户 tiger 无论在任何的主机上面执行 `sudo` 命令，都可以切换成任何用户的身份，去执行任何的命令（包括 root）。所以，用户 tiger 执行 `sudo` 之后能操作 root 的文件也就说得通了。
 
-### /etc/sudoers 详解
+#### /etc/sudoers 详解
 
-#### 基本语法
+**基本语法**
 
 - “#” 后的语句为注释
 - 当一行规则太长时，可以用 “\” 进行续行
 
-#### 文件内容详解
+**文件内容详解**
 
 配置文件分为别名定义和规则定义两部分，以一份较为完整的配置文件为例
 
