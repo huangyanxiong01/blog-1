@@ -250,5 +250,3 @@ self.finish_response()
 本文首先简单介绍了 WSGI 协议，然后以 wsgiref 的源码实现为着手点，重点分析了该实现中各个类的依赖关系和各自起到的作用，最后以一次 HTTP 请求的接收到发送全过程作为路线图, 再次串联起各个关键的类和流程。
 
 > 附：[wsgiref 行级源码注释](https://github.com/zongzhenh/_backup/tree/master/wsgiref)
-
-转载请标明原文出处
