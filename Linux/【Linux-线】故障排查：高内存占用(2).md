@@ -84,13 +84,18 @@ root@ubuntu:/var/log# dmesg -T | grep "Out of memory"
 # oom_badness 函数关于两个关键参数的截取
 
     ...
+		
+		long points;
+		long adj;
+		
+		...
 
     /*
-	 * The baseline for the badness score is the proportion of RAM that each
-	 * task's rss, pagetable and swap space use.
-	 */
-	points = get_mm_rss(p->mm) + get_mm_counter(p->mm, MM_SWAPENTS) +
-	        mm_pgtables_bytes(p->mm) / PAGE_SIZE;
+     * The baseline for the badness score is the proportion of RAM that each
+     * task's rss, pagetable and swap space use.
+     */
+		points = get_mm_rss(p->mm) + get_mm_counter(p->mm, MM_SWAPENTS) +
+	        	mm_pgtables_bytes(p->mm) / PAGE_SIZE;
 
     ...
     
