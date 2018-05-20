@@ -1,16 +1,25 @@
 ### <font color=#00b0f0>简介</font>
 
-在使用云服务器的时候，对于开机操作都是点击一下控制面板按钮的事，好像人人都会。但是，这中间到底经历过的步骤个人认为还是要有一个认识的。
+对于开机操作都是点击一下控制面板按钮的事，好像人人都会。但是，这中间到底经历过的步骤个人认为还是要有一个认识的。
 
 关键字：**引导、bootloader、执行启动脚本方式、运行级别、init、upstart**
 
-### <font color=#00b0f0>实验环境</font>
+---
 
-- 阿里云服务器
-    - 系统版本 Ubuntu 14.04
-    - 内核版本 3.16.0-30-generic
+### <font color=#00b0f0>运行环境</font>
 
-*注意：下面的讨论都是以该服务器为标准*
+```
+# uname -a
+Linux ubuntu 3.16.0-30-generic #40~14.04.1-Ubuntu SMP Thu Jan 15 17:43:14 UTC 2015 x86_64 x86_64 x86_64 GNU/Linux
+
+# python2 --version
+Python 2.7.9
+
+# cat /etc/*-release
+DISTRIB_DESCRIPTION="Ubuntu 14.04.2 LTS"
+```
+
+---
 
 ### <font color=#00b0f0>引导</font>
 
@@ -67,6 +76,8 @@
 ```
 
 > 小结：通过上述几个问题，可以进行快速的引导故障排查和解决。
+
+---
 
 ### <font color=#00b0f0>执行启动脚本方式</font>
 
@@ -201,6 +212,8 @@ upstart 是比 init 更新的执行启动脚本的方式。虽然它保持了 in
         /etc/rc5.d/S95test
         /etc/rc6.d/K95test
     ```
+
+---
 
 ### <font color=#00b0f0>总结</font>
 
