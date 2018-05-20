@@ -126,8 +126,12 @@ root@ubuntu:/var/log# echo > -1000 /proc/956/oom_score_adj
 root@ubuntu:/var/log# sysctl -w vm.overcommit_memory=2
 ```
 
+---
 
+### <font color=#00b0f0>总结</font>
 
+对于内存这些敏感且珍贵的系统资源，除了在分配使用上面有很多的机制之外，在一些特殊情况下同样有像 OOM 这样的方法去保证这方面的健壮性。同时通过
+对 `oom_badness` 函数的简单了解，也可以看到实现上是用了很朴实的方法，并没有什么很玄乎的技巧，在个人的印象中，内核这种朴实无华的实现方式并不少，在狂秀语法糖的今天，值得我们深思
 
 
 
