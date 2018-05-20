@@ -11,6 +11,7 @@ Python 2.7.9
 DISTRIB_DESCRIPTION="Ubuntu 14.04.2 LTS"
 
 # 2G 内存
+# CPU：2核
 ```
 
 ---
