@@ -193,7 +193,7 @@ USER HOST=(OP) CMD
 
 ---
 
-### <font color=#00b0f0>不使用 vi </font>
+### <font color=#00b0f0>改变默认编辑器</font>
 
 在修改 `/etc/sudoers` 时，`visudo` 默认是使用 `vi` 来进行的。其实可以修改成我们习惯的编辑器，如：
 
