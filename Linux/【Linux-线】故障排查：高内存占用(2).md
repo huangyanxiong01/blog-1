@@ -77,12 +77,49 @@ root@ubuntu:/var/log# dmesg -T | grep "Out of memory"
 虽然 OOM 是内核空间的事情，但是我们也可以在用户空间去做一些修改和配置。对于 OOM 有 4 种应对处理方式：
 
 - 默认方式：让内核去 Kill 掉内存占用最多的进程
-- 自动重启：当有进程触发 OOM 时，不采取默认方式，而是系统自动重启
-- 调整 `oom_score_adj` 参数：内核在执行 OOM Killer 时是根据 `points` 和 `oom_score_adj` 的总和去做判断的。(参考 [linux/mm/oom_kill.c](https://github.com/torvalds/linux/blob/master/mm/oom_kill.c))。
-其中，`points` 是进程所占用的内存大小，而 `oom_score_adj` 是内核留给用户空间做调整的参数。比如 `points` 数值相差不多的两个进程 A 和 B，如果我想要让
-B 
+- 自动重启：当有进程触发 OOM 时，不采取默认方式，而是系统自动重启，通过 `vm.panic_on_oom` 和 `kernel.panic` 两个内核参数去控制。个人感觉这种随便重启的方式非常的不好，所以不做谈论
+- 调整 `oom_score_adj` 参数：内核在执行 OOM Killer 时是根据 `points` 和 `oom_score_adj` 的总和去做判断的，总和越大的越容易被 kill 掉。(参考 [linux/mm/oom_kill.c](https://github.com/torvalds/linux/blob/master/mm/oom_kill.c) 的 `oom_badness` 函数)。
 
+```
+# oom_badness 函数关于两个关键参数的截取
 
+    ...
+
+    /*
+	 * The baseline for the badness score is the proportion of RAM that each
+	 * task's rss, pagetable and swap space use.
+	 */
+	points = get_mm_rss(p->mm) + get_mm_counter(p->mm, MM_SWAPENTS) +
+	        mm_pgtables_bytes(p->mm) / PAGE_SIZE;
+
+    ...
+    
+    points += adj;
+    
+    ...
+
+```
+
+其中，`points` 是进程所占用的内存大小，而 `oom_score_adj` 是内核留给用户空间做调整的参数。比如 `points` 数值相差不多的两个进程 A 和 B，如果我不想让 B 那么容易被 OOM Killer 处理掉，我就可以把 B 的 `oom_score_adj` 参数设置得更小。例如我想让 dockerd 的服务不那么容易被 kill：
+
+```
+# 通过 ps 找到 PID
+root@ubuntu:/var/log# ps aux | grep dockerd | grep -v color
+root       956  0.1  1.9 372996 19844 ?        Ssl  May16   9:17 /usr/bin/dockerd --raw-logs
+
+# 通过 /proc 找到进程的 oom_score_adj 值
+root@ubuntu:/var/log# cat /proc/956/oom_score_adj
+-500
+
+# 改写 oom_score_adj 值
+root@ubuntu:/var/log# echo > -1000 /proc/956/oom_score_adj
+```
+
+- 关闭 OOM Killer：非常不推荐用于生产环境
+
+```
+root@ubuntu:/var/log# sysctl -w vm.overcommit_memory=2
+```
 
 
 
