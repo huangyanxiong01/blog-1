@@ -81,27 +81,27 @@ root@ubuntu:/var/log# dmesg -T | grep "Out of memory"
 - 调整 `oom_score_adj` 参数：内核在执行 OOM Killer 时是根据 `points` 和 `oom_score_adj` 的总和去做判断的，总和越大的越容易被 kill 掉。(参考 [linux/mm/oom_kill.c](https://github.com/torvalds/linux/blob/master/mm/oom_kill.c) 的 `oom_badness` 函数)。
 
 ```
-# oom_badness 函数关于两个关键参数的截取
+	# oom_badness 函数关于两个关键参数的截取
 
-    ...
-		
-		long points;
-		long adj;
-		
-		...
+	...
 
-    /*
-     * The baseline for the badness score is the proportion of RAM that each
-     * task's rss, pagetable and swap space use.
-     */
-		points = get_mm_rss(p->mm) + get_mm_counter(p->mm, MM_SWAPENTS) +
-	        	mm_pgtables_bytes(p->mm) / PAGE_SIZE;
+	long points;
+	long adj;
 
-    ...
-    
-    points += adj;
-    
-    ...
+	...
+
+	/*
+	* The baseline for the badness score is the proportion of RAM that each
+	* task's rss, pagetable and swap space use.
+	*/
+	points = get_mm_rss(p->mm) + get_mm_counter(p->mm, MM_SWAPENTS) +
+					mm_pgtables_bytes(p->mm) / PAGE_SIZE;
+
+	...
+
+	points += adj;
+
+	...
 
 ```
 
