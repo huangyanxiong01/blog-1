@@ -4,13 +4,22 @@
 
 关键字：**deb 包、安装方式、编译安装、dpkg、apt-get、搭建私有镜像仓库、Docker**
 
-### <font color=#00b0f0>实验环境</font>
+---
 
-- 阿里云服务器
-    - 系统版本 Ubuntu 14.04
-    - 内核版本 3.16.0-30-generic
+### <font color=#00b0f0>运行环境</font>
 
-*注意：下面的讨论都是以该服务器为标准*
+```
+# uname -a
+Linux ubuntu 3.16.0-30-generic #40~14.04.1-Ubuntu SMP Thu Jan 15 17:43:14 UTC 2015 x86_64 x86_64 x86_64 GNU/Linux
+
+# python2 --version
+Python 2.7.9
+
+# cat /etc/*-release
+DISTRIB_DESCRIPTION="Ubuntu 14.04.2 LTS"
+```
+
+---
 
 ### <font color=#00b0f0>deb 包</font>
 
@@ -26,6 +35,8 @@
 > - 版本 (Version Number): 1.3.10
 > - 修订号 (Build Number): 2
 > - 平台 (Architecture): i386
+
+---
 
 ### <font color=#00b0f0>安装方式</font>
 
@@ -67,15 +78,21 @@
 - 使用频率：dpkg < 编译安装 < apt-get
 - 定制：apt-get <= dpkg < 编译安装
 
+---
+
 ### <font color=#00b0f0>编译安装</font>
 
 编译安装最明显的好处就是可定制程度大，适合 geek，最大的缺点是人肉处理依赖关系。本文重点讨论包管理方式的安装，故暂时略过，有缘再探讨。
+
+---
 
 ### <font color=#00b0f0>dpkg</font>
 
 dpkg 是 Debian 的一个底层包管理工具，主要用于对已下载到本地和已安装的软件包进行管理。相比编译安装最大的好处是无需编译，直接安装即可。但是，人肉处理依赖关系的问题还在。
 
 在日常的服务器维护中，一般情况下都不会直接使用该工具。
+
+---
 
 ### <font color=#00b0f0>apt-get</font>
 
@@ -264,6 +281,8 @@ apt-get purge nginx -y
 apt-get clean nginx -y
 ```
 
+---
+
 ### <font color=#00b0f0>用 Docker 搭建私有镜像服务器</font>
 
 既然广义的 apt-get 包含客户端和服务端两部分，那么服务端肯定也是要实践一下的。
@@ -341,6 +360,8 @@ apt-get clean nginx -y
     root@ubuntu:/etc/apt#
     ```
 
-### <font color=#00b0f0>小结</font>
+---
+
+### <font color=#00b0f0>总结</font>
 
 感谢写出 apt-get 的大佬，感谢各种镜像服务器的维护者。🙏
