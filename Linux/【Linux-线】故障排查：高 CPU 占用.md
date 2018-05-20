@@ -1,3 +1,18 @@
+### <font color=#00b0f0>运行环境</font>
+
+```
+# uname -a
+Linux ubuntu 3.16.0-30-generic #40~14.04.1-Ubuntu SMP Thu Jan 15 17:43:14 UTC 2015 x86_64 x86_64 x86_64 GNU/Linux
+
+# python2 --version
+Python 2.7.9
+
+# cat /etc/*-release
+DISTRIB_DESCRIPTION="Ubuntu 14.04.2 LTS"
+```
+
+---
+
 ### <font color=#00b0f0>热身：两个常见的 CPU 异常场景</font>
 
 案例一：
@@ -28,10 +43,14 @@ KiB Swap:        0 total,        0 used,        0 free.   201980 cached Mem
 
 排查方向转向内存不足，这个又是另外一个专题，大致方向是排查是否存在异常的大内存进程、升级物理内存等。
 
+---
+
 ### <font color=#00b0f0>造成高 CPU 占用的重要原因</font>
 - **死循环 (循环条件)：实际情况一般是因为循环条件是关于某种等待，比如循环条件依赖同步 IO 读的结果成功，而同步 IO 读阻塞了，从而造成的死循环**
 - **算法复杂度太大 (循环次数)：比如 3 个嵌套的 for 循环，且循环次数大**
 - **循环语句依赖一些脆弱的外部系统 (循环语句)：比如在一个大循环中执行数据库操作**
+
+---
 
 ### <font color=#00b0f0>排查步骤</font>
 
@@ -172,6 +191,8 @@ apt-get install -y gdb
 
 根据这个提示可以在源码中找到对应的语句 `print 'high cpu'`，线程 4755 正在运行的是这行代码。根据 “**造成高 CPU 占用的重要原因**”        ，然后查看上下文发现该行代码处于一个死循环中。
 
+---
+
 ### <font color=#00b0f0>更进一步</font>
 
 Python 里面暂时还没有找到像 jstack 那么方便的调试工具，不过 gdb 也有一个还算好用的 Python 扩展。
@@ -241,6 +262,8 @@ Thread 1 (Thread 0x7fc004914740 (LWP 4753)):
  344                    # have to sleep; but if we sleep the whole timeout time,
 (gdb)
 ```
+
+---
 
 ### <font color=#00b0f0>总结</font>
 
