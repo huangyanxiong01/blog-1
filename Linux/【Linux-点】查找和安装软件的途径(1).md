@@ -6,10 +6,20 @@
 
 关键字：**查找软件、$PATH、which、whereis**
 
-### <font color=#00b0f0>实验环境</font>
-- 系统版本 Ubuntu 14.04
-- 内核版本 3.16.0-30-generic
-- 试验用的文件如下：
+---
+
+### <font color=#00b0f0>运行环境</font>
+
+```
+# uname -a
+Linux ubuntu 3.16.0-30-generic #40~14.04.1-Ubuntu SMP Thu Jan 15 17:43:14 UTC 2015 x86_64 x86_64 x86_64 GNU/Linux
+
+# python2 --version
+Python 2.7.9
+
+# cat /etc/*-release
+DISTRIB_DESCRIPTION="Ubuntu 14.04.2 LTS"
+```
 
 ```
 root@ubuntu:/usr/local/bin# pwd
@@ -46,6 +56,8 @@ root@ubuntu:~# echo $PATH
 /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/jvm/java-8-oracle/bin:/usr/lib/jvm/java-8-oracle/db/bin:/usr/lib/jvm/java-8-oracle/jre/bin
 ```
 
+---
+
 ### <font color=#00b0f0>$PATH 变量</font>
 
 在探讨 `which` 和 `whereis` 之前有必要先看一下 `$PATH`。Linux 有众多的系统环境变量，`$PATH` 就是其中一个。
@@ -66,6 +78,8 @@ root@ubuntu:~# PATH=$PATH:/opt
 root@ubuntu:~# echo $PATH
 /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/jvm/java-8-oracle/bin:/usr/lib/jvm/java-8-oracle/db/bin:/usr/lib/jvm/java-8-oracle/jre/bin:/opt
 ```
+
+---
 
 ### <font color=#00b0f0>which 命令</font>
 
@@ -176,6 +190,8 @@ Debian                                                                 1 May 200
         2
         root@ubuntu:~#
         ```
+
+---
 
 ### <font color=#00b0f0>whereis 命令</font>
 
