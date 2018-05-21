@@ -23,9 +23,15 @@ gperftools 包含 4 个组件，TCMalloc, heap-checker, heap-profiler 和 cpu-pr
 
 ---
 
+---
+
+### <font color=#00b0f0>gperftools 安装</font>
+
+---
+
 ### <font color=#00b0f0>TCMalloc</font>
 
-TCMalloc 是相对 glibc 2.3 malloc 的一个优化替代方案。根据官方说法，TCMalloc 在 malloc/free 的操作上比 malloc 要快 6 倍左右，而且 TCMalloc 能较少内存碎片的产生，从而使内存的使用更加高效。关于 TCMalloc 和 malloc 的性能测试对比可以参考[这里](https://gperftools.github.io/gperftools/tcmalloc.html)
+TCMalloc 是 glibc 2.3 malloc 的一个优化替代方案。根据官方说法，TCMalloc 在 malloc/free 的操作上比 malloc 要快 6 倍左右，而且 TCMalloc 能产生更少的内存碎片，从而使内存的使用更加高效。关于 TCMalloc 和 malloc 的性能测试对比可以参考[这里](https://gperftools.github.io/gperftools/tcmalloc.html)
 
 
 
