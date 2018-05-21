@@ -54,7 +54,7 @@ heap-profiler 可以帮助我们排查内存泄漏问题，以[【Linux-线】�
 中的 `mock_high_memory_pure.py` 为例：
 
 ```
-# 生成报告
+# 生成内存使用报告
 root@ubuntu:/opt# LD_PRELOAD=/usr/lib/libtcmalloc.so.4 HEAPPROFILE=/tmp/profile python mock_high_memory_pure.py
 
 # 在 /tmp 下可以看到非常多形如 profile.xxx.heap 的文件，我们挑最新的那个 (profile.3968.heap)
@@ -67,7 +67,11 @@ root@ubuntu:/tmp# google-pprof --gif `which python` /tmp/profile.3968.heap > 1.g
 
 ![](https://raw.githubusercontent.com/oooooxooooo/picture/master/1.gif)
 
-
+图片关键点解释：
+- /usr/bin/python：执行该进程的命令
+- Total MB：该报告下的进程所占用的总内存
+- 每个框：对应一个函数调用。以最大的 `string_concatenate` 所在的框为例，`string_concatenate` 代表函数的名字；`0.0 (0.0%)` 代表 `string_concatenate` 本身占用的内存为 0.0，占总内存的 0.0%；`of 63.7 (98.7%) 代表 `string_concatenate` 的函数调用占用内存为 63.7 MB，
+占总内存的 98.7%
 
 
 
