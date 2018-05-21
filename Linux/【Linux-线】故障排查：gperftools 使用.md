@@ -21,3 +21,5 @@ DISTRIB_DESCRIPTION="Ubuntu 14.04.2 LTS"
 
 gperftools 包含 4 个组件，`TCMalloc`, `heap-checker`, `heap-profiler` 和 `cpu-profiler`。其中第 1 个是优化过的内存分配器，后面 3 个是性能调优工具。gperftools 所提供的性能调优工具最大的特色是以函数及函数调用关系为核心，通过生成一副函数调用关系图快速且明确地告诉你，哪个函数占用的 CPU 时间最多，哪个函数占用的内存最多。
 
+---
+
