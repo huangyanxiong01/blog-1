@@ -74,7 +74,7 @@ root@ubuntu:/tmp# google-pprof --gif `which python` /tmp/profile.3968.heap > 1.g
 占 `Total MB` 的 98.7%
 - 箭头：代表函数调用关系。以 `string_concatenate` 框所发出的箭头为例，指向了 `PyString_Resize` 框，也就是说在 `string_concatenate` 中调用了 `PyString_Resize`；箭头上的 `63.7` 代表了这个函数调用占用了 63.7 MB 内存
 
-
+通过 `1.gif` 可以很清楚地看到可能发生了内存问题的函数调用 (`PyString_Resize` 并不是我处理得这么大的，是这个工具特意将可能有问题的函数放大，方便查找)，也就是图中的 `PyString_Resize`
 
 
 
