@@ -74,8 +74,27 @@ root@ubuntu:/tmp# google-pprof --gif `which python` /tmp/profile.3968.heap > 1.g
 占 `Total MB` 的 98.7%
 - 箭头：代表函数调用关系。以 `string_concatenate` 框所发出的箭头为例，指向了 `PyString_Resize` 框，也就是说在 `string_concatenate` 中调用了 `PyString_Resize`；箭头上的 `63.7` 代表了 `PyString_Resize` 这个函数调用占用了 63.7 MB 内存
 
-通过 `1.gif` 可以很清楚地看到可能发生了内存问题的函数调用 (`PyString_Resize` 并不是我处理得这么大的，是这个工具特意将可能有问题的函数放大，方便查找)，也就是图中的 `PyString_Resize`。这是个 cpython 函数，对应到 python 就是像 `+=` 这样的字符串操作了，结合 `gdb` 这样的工具找到线程正在执行的代码的上下文，确实会发现有一个循环在不断执行该操作
+通过 `1.gif` 可以很清楚地看到可能发生了内存问题的函数调用 (`PyString_Resize` 并不是我处理得这么大的，是这个工具特意将可能有问题的函数放大，方便查找)，也就是图中的 `PyString_Resize`。这是个 cpython 函数，对应到 python 就是像 `+=` 这样的字符串操作了，结合 `gdb` 这样的工具找到线程正在执行的代码的上下文，确实会发现有一个循环在不断执行该操作：
 
+```
+# mock_high_memory_pure.py
+
+...
+
+while 1:
+    _pure_string += 'qwertyuioplkmsjafdkhjkhsdfajkjsalkdfjslkfjklsasl
+    kajfklsjafkljslkfjskldfjlnmxcnvxznv,mnxzm,vnm,xuw
+    ueiouriowerioqwurioweroiwq
+    eushdjkfhskjadfhkjsadhbcxvnmbnmvbxnmvbnmxcbvmnxbvnmbxmn
+    vbxcnmvbxcnmvbkdslkjsdflkjsdklfjsdlkfjklsjflks;fjlkasdjfklsjfl
+    ksdjfklsdjfklsjfklsdjfklsdjkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+    kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+    kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+    kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+    kkkkkkkkkkkkkkkkkkkkkkkk'
+
+...
+```
 ---
 
 ### <font color=#00b0f0>cpu-profiler</font>
