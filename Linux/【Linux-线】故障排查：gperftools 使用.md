@@ -63,7 +63,7 @@ root@ubuntu:/opt# LD_PRELOAD=/usr/lib/libtcmalloc.so.4 HEAPPROFILE=/tmp/profile 
 root@ubuntu:/tmp# google-pprof --gif `which python` /tmp/profile.3968.heap > 1.gif
 ```
 
-打开 `1.gif`，如下：
+打开 `1.gif`，看到一幅指定报告对应的函数调用关系图，如下：
 
 ![](https://raw.githubusercontent.com/oooooxooooo/picture/master/1.gif)
 
@@ -111,7 +111,7 @@ root@ubuntu:/opt# LD_PRELOAD=/usr/lib/libprofiler.so.0  CPUPROFILE=/tmp/profile 
 root@ubuntu:/tmp# google-pprof --gif `which python` /tmp/profile > 2.gif
 ```
 
-打开 `2.gif`，如下：
+打开 `2.gif`，看到一幅指定报告对应的函数调用关系图，如下：
 
 ![](https://raw.githubusercontent.com/oooooxooooo/picture/master/2.gif)
 
