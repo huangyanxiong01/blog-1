@@ -17,4 +17,6 @@ DISTRIB_DESCRIPTION="Ubuntu 14.04.2 LTS"
 ---
 
 在[【Linux-线】故障排查：高内存占用(1).md](https://github.com/oooooxooooo/blog/blob/master/Linux/%E3%80%90Linux-%E7%BA%BF%E3%80%91%E6%95%85%E9%9A%9C%E6%8E%92%E6%9F%A5%EF%BC%9A%E9%AB%98%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8(1).md)
-中介绍了 `gdb`, `pyrasite`, `guppy`, `objgraph` 等非常好用的性能排查工具
+中介绍了 `gdb`, `pyrasite`, `guppy`, `objgraph` 等非常好用的故障排查工具，这里再介绍一个非常好用的工具箱 --- gperftools。
+
+gperftools 包含 4 个组件，`TCMalloc`, `heap-checker`, `heap-profiler` 和 `cpu-profiler`。
