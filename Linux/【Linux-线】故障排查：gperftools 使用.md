@@ -44,6 +44,10 @@ TCMalloc 的使用非常简单：
 LD_PRELOAD=/usr/lib/libtcmalloc.so.4 python YOUR_SCRIPT.py
 ```
 
+就这样，凡是 malloc 的地方都被 TCMalloc 替换掉了
+
+---
+
 ### <font color=#00b0f0>heap-profiler</font>
 
 heap-profiler 可以帮助我们排查内存泄漏问题，以[【Linux-线】故障排查：高内存占用(1).md](https://github.com/oooooxooooo/blog/blob/master/Linux/%E3%80%90Linux-%E7%BA%BF%E3%80%91%E6%95%85%E9%9A%9C%E6%8E%92%E6%9F%A5%EF%BC%9A%E9%AB%98%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8(1).md)
