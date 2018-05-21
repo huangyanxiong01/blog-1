@@ -23,9 +23,14 @@ gperftools 包含 4 个组件，TCMalloc, heap-checker, heap-profiler 和 cpu-pr
 
 ---
 
----
-
 ### <font color=#00b0f0>gperftools 安装</font>
+
+```
+sudo apt-get update -y
+sudo apt-get install google-perftools -y
+```
+
+因为需要用到几个链接库，安装完成后，到 `/usr/lib` 下检查下 `libtcmalloc.so.4` 和 `libprofiler.so.0` 是否存在
 
 ---
 
