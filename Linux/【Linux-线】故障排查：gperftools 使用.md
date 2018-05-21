@@ -70,7 +70,7 @@ root@ubuntu:/tmp# google-pprof --gif `which python` /tmp/profile.3968.heap > 1.g
 图片关键点解释：
 - /usr/bin/python：执行该进程的命令
 - Total MB：该报告所代表的时间点中，进程所占用的总内存
-- 框：代表一个函数调用。以 `string_concatenate` 所在的框为例，`string_concatenate` 代表函数的名字；`0.0 (0.0%)` 代表 `string_concatenate` 本身占用的内存为 0.0，占 `Total MB` 的 0.0%；`of 63.7 (98.7%)` 代表 `string_concatenate` 的函数调用占用内存为 63.7 MB，
+- 框：代表一个函数。以 `string_concatenate` 所在的框为例，`string_concatenate` 代表函数的名字；`0.0 (0.0%)` 代表 `string_concatenate` 本身占用的内存为 0.0，占 `Total MB` 的 0.0%；`of 63.7 (98.7%)` 代表 `string_concatenate` 的函数调用占用内存为 63.7 MB，
 占 `Total MB` 的 98.7%
 - 箭头：代表函数调用关系。以 `string_concatenate` 框所发出的箭头为例，指向了 `PyString_Resize` 框，也就是说在 `string_concatenate` 中调用了 `PyString_Resize`；箭头上的 `63.7` 代表了这个函数调用占用了 63.7 MB 内存
 
@@ -100,7 +100,7 @@ root@ubuntu:/tmp# google-pprof --gif `which python` /tmp/profile > 2.gif
 图片关键点解释：
 - /usr/bin/python：执行该进程的命令
 - Total samples：该报告所代表的时间点中，进程所占用的 CPU 时间
-- 框：代表一个函数调用。以最大的 `PyString_Resize` 所在的框为例，`PyString_Resize` 代表函数的名字；`22 (46.8%)` 代表 `PyString_Resize` 本身占用的CPU 时间为 0.22 秒，占 `Total samples` 的 46.8%；`of 32 (68.1%)` 代表 `PyString_Resize` 的函数调用占用 CPU 时间为 0.32 秒，
+- 框：代表一个函数。以最大的 `PyString_Resize` 所在的框为例，`PyString_Resize` 代表函数的名字；`22 (46.8%)` 代表 `PyString_Resize` 本身占用的CPU 时间为 0.22 秒，占 `Total samples` 的 46.8%；`of 32 (68.1%)` 代表 `PyString_Resize` 的函数调用占用 CPU 时间为 0.32 秒，
 占 `Total samples` 的 68.1%
 - 箭头：代表函数调用关系。箭头上旁边的数字代表了指向的函数调用所占用的 CPU 时间
 
