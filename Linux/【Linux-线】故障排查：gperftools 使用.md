@@ -54,7 +54,7 @@ heap-profiler 可以帮助我们排查内存泄漏问题，以[【Linux-线】�
 中的 `mock_high_memory_pure.py` 为例：
 
 ```
-# 生成内存报告
+# 生成内存使用报告
 root@ubuntu:/opt# LD_PRELOAD=/usr/lib/libtcmalloc.so.4 HEAPPROFILE=/tmp/profile python mock_high_memory_pure.py
 
 # 在 /tmp 下可以看到非常多形如 profile.xxx.heap 的文件，我们挑最新的那个 (profile.3968.heap)
@@ -83,7 +83,7 @@ root@ubuntu:/tmp# google-pprof --gif `which python` /tmp/profile.3968.heap > 1.g
 cpu-profiler 可以帮助我们排查高 CPU 占用问题，同样以 `mock_high_memory_pure.py` 为例：
 
 ```
-# 生成 CPU 报告
+# 生成 CPU 使用报告
 root@ubuntu:/opt# LD_PRELOAD=/usr/lib/libprofiler.so.0  CPUPROFILE=/tmp/profile python mock_high_memory_pure.py
 
 # 在 /tmp 下可以看到名为 profile 的文件
