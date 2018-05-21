@@ -124,3 +124,9 @@ root@ubuntu:/tmp# google-pprof --gif `which python` /tmp/profile > 2.gif
 - 箭头：代表函数调用关系。箭头旁边的数字代表了指向的函数调用所占用的 CPU 时间
 
 通过 `2.gif` 可以推断这个进程的 CPU 占用比较正常，CPU 时间的使用集中在了 `PyString_Resize` 函数上
+
+---
+
+### <font color=#00b0f0>总结</font>
+
+在[Linux-线】故障排查：高 CPU 占用](https://github.com/oooooxooooo/blog/blob/master/Linux/%E3%80%90Linux-%E7%BA%BF%E3%80%91%E6%95%85%E9%9A%9C%E6%8E%92%E6%9F%A5%EF%BC%9A%E9%AB%98%20CPU%20%E5%8D%A0%E7%94%A8.md)和[【Linux-线】故障排查：高内存占用(1)](https://github.com/oooooxooooo/blog/blob/master/Linux/%E3%80%90Linux-%E7%BA%BF%E3%80%91%E6%95%85%E9%9A%9C%E6%8E%92%E6%9F%A5%EF%BC%9A%E9%AB%98%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8(1).md)中，都是先通过 gdb 来定位线程正在执行的代码上下文，但是这个上下文的范围往往不是很明确，如果不借助其他工具，多数只能带着猜测去验证，但是如果结合本文中的 gperftools，在定位到上下文范围的同时，进一步定位函数，那么排查将会更加的稳
