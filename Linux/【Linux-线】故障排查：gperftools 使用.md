@@ -121,6 +121,6 @@ root@ubuntu:/tmp# google-pprof --gif `which python` /tmp/profile > 2.gif
 - Total samples：该报告所代表的时间点中，进程所占用的 CPU 时间
 - 框：代表一个函数。以最大的 `PyString_Resize` 所在的框为例，`PyString_Resize` 代表函数的名字；`22 (46.8%)` 代表 `PyString_Resize` 本身占用的CPU 时间为 0.22 秒，占 `Total samples` 的 46.8%；`of 32 (68.1%)` 代表 `PyString_Resize` 的函数调用占用 CPU 时间为 0.32 秒，
 占 `Total samples` 的 68.1%
-- 箭头：代表函数调用关系。箭头上旁边的数字代表了指向的函数调用所占用的 CPU 时间
+- 箭头：代表函数调用关系。箭头旁边的数字代表了指向的函数调用所占用的 CPU 时间
 
 通过 `2.gif` 可以推断这个进程的 CPU 占用比较正常，CPU 时间的使用集中在了 `PyString_Resize` 函数上
