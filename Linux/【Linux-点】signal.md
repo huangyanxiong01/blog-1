@@ -54,7 +54,7 @@ DISTRIB_DESCRIPTION="Ubuntu 14.04.2 LTS"
 - **SIGSTOP**：无法被**捕获**、**忽略**、**阻塞** 的信号，被挂起的进程会一直等着 `SIGCONT` 信号的到来
 - **SIGCONT**：无法被**阻塞**的信号
 
-#### 验证 SIGKILL 和 SIGSTOP
+#### 验证 SIGKILL 和 SIGSTOP 的不可抗性
 
 ```
 ```
