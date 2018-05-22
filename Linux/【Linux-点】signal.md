@@ -228,6 +228,11 @@ root@ubuntu:/tmp#
 
 ---
 
+### <font color=#00b0f0>接收信号</font>
+
+信号的处理流程大概如下图：
+
+![](https://raw.githubusercontent.com/oooooxooooo/picture/master/Screen%20Shot%202018-05-22%20at%2010.18.33%20PM.png)
 
 
 
