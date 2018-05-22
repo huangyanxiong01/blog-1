@@ -86,7 +86,7 @@ def handle_sigkill(signum, frame):
 def main():
     # 捕获 SIGINT 信号
     signal.signal(signal.SIGINT, handle_sigint)
-    # 由于 SIGSTOP 和 SIGKILL 是不可抗的，如果这里注册了捕获将会报 RuntimeError 异常
+    # 由于 SIGSTOP 和 SIGKILL 是不可抗的，如果这里注册了捕获运行时将会报 RuntimeError 异常
     pass
 
     # 发送 SIGINT 信号
@@ -112,7 +112,7 @@ handle signal SIGINT --> 2
 [1]+  Stopped                 python signal01.py
 ```
 
-接着注释掉代码 `os.kill(os.getpid(), signal.SIGSTOP)` 再此执行脚本，`SIGINT` 仍然是顺利捕获，`SIGKILL` 跟 `SIGSTOP` 一样没能被捕获，盖被 kill 的还是 kill 了。结果如下：
+接着注释掉代码 `os.kill(os.getpid(), signal.SIGSTOP)` 再此执行脚本，`SIGINT` 仍然是顺利捕获，`SIGKILL` 跟 `SIGSTOP` 一样没能被捕获，该 kill 的还是被 kill 了。结果如下：
 
 ```
 root@ubuntu:/opt# python signal01.py 
@@ -120,4 +120,7 @@ handle signal SIGINT --> 2
 <frame object at 0x7fb85c389050>
 Killed
 ```
+
+---
+
 
