@@ -125,4 +125,62 @@ Killed
 
 ### <font color=#00b0f0>发送信号</font>
 
-常用
+常用的发送信号的方法有以下几种：
+
+- 调用系统函数 kill
+- 调用系统函数 alarm
+- 从键盘发送信号 `<Control-C>`, `<Control-D>` 等
+- 用 `/bin/kill` 程序
+
+使用频率最高的应该是用 `/bin/kill` 程序发送信号了，但是这里有一个很容易被忽略的问题，先看下下面的脚本：
+
+```
+import os
+import time
+
+
+def child():
+    # 被子进程调用
+    print('I am child')
+    # 循环不退出
+    while 1:
+        time.sleep(0.5)
+
+
+def parent():
+    # fork 子进程
+    try:
+        pid = os.fork()
+    except OSError:
+        exit("Could not create a child")
+
+    if pid == 0:
+        # 在子进程中，调用 child() 函数
+        child()
+    
+    # 循环不退出
+    while 1:
+        time.sleep(0.5)
+
+    # finished = os.waitpid(0, 0)
+    # print(finished)
+
+
+def main():
+    parent()
+
+
+if __name__ == '__main__':
+    main()
+
+```
+
+
+
+
+
+
+
+
+
+
