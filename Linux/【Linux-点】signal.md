@@ -57,4 +57,45 @@ DISTRIB_DESCRIPTION="Ubuntu 14.04.2 LTS"
 #### 验证 SIGKILL 和 SIGSTOP 的不可抗性
 
 ```
+# -*- coding=utf-8 -*-
+
+import os
+import signal
+
+
+def handle_sigint(signum, frame):
+    # 处理 SIGINT 信号
+    print('handle signal SIGINT --> {}'.format(signum))
+    print(frame)
+
+
+def handle_sigstop(signum, frame):
+    # 处理 SIGSTOP 信号
+    print('handle signal SIGSTOP --> {}'.format(signum))
+    print(frame)
+
+
+def handle_sigkill(signum, frame):
+    # 处理 SIGKILL 信号
+    print('handle signal SIGKILL --> {}'.format(signum))
+    print(frame)
+
+
+def main():
+    # 捕获 SIGINT 信号
+    signal.signal(signal.SIGINT, handle_sigint)
+    # 由于 SIGSTOP 和 SIGKILL 是不可抗的，如果这里注册了捕获将会报 RuntimeError 异常
+    pass
+
+    # 发送 SIGINT 信号
+    os.kill(os.getpid(), signal.SIGINT)
+    # 发送 SIGSTOP 信号
+    os.kill(os.getpid(), signal.SIGSTOP)
+    # 发送 SIGSTOP 信号
+    os.kill(os.getpid(), signal.SIGKILL)
+    
+
+if __name__ == '__main__':
+    main()
+
 ```
