@@ -196,7 +196,7 @@ root@ubuntu:/tmp# ps axu | grep signal02.py | grep -v color
 root     27243  0.0  0.4  24260  4712 pts/6    S    19:51   0:00 python signal02.py
 ```
 
-因为 `kill -9 27242` 只会 kill 当前的进程 (根本原因是 `/bin/kill` 程序对应的系统函数 kill 的 pid 参数正负影响着 kill 的执行结果)，而不会把当前进程的子进程也 kill 掉。如果像连当前进程的子进程都 kill 了，就要执行 `kill -9 -27242`。如下 (换了两个父子进程)：
+因为 `kill -9 27242` 只会 kill 当前的进程 (根本原因是 `/bin/kill` 程序对应的系统函数 kill 的 pid 参数正负影响着 kill 的执行结果)，而不会把当前进程的子进程也 kill 掉。如果想连当前进程的子进程都 kill 了，就要执行 `kill -9 -27242`。如下 (换了两个父子进程)：
 
 ```
 root@ubuntu:/tmp# ps axu | grep signal02.py | grep -v color
@@ -209,6 +209,37 @@ root@ubuntu:/tmp# kill -9 -27315
 root@ubuntu:/tmp# ps axu | grep signal02.py | grep -v color
 root@ubuntu:/tmp#
 ```
+
+同时还有一个有意思的结果需要注意下，在 kill 掉父进程后，子进程并没有变成僵尸进程，而是被 init 进程收养了。如下：
+
+```
+root@ubuntu:/tmp# ps axu | grep signal02.py | grep -v color
+root     27353  0.0  0.6  24256  6944 pts/6    S+   20:03   0:00 python signal02.py
+root     27354  0.0  0.4  24260  4636 pts/6    S+   20:03   0:00 python signal02.py
+root@ubuntu:/tmp# ps -f 27354
+UID        PID  PPID  C STIME TTY      STAT   TIME CMD
+root     27354 27353  0 20:03 pts/6    S+     0:00 python signal02.py
+root@ubuntu:/tmp# kill -9 27353
+root@ubuntu:/tmp# ps -f 27354
+UID        PID  PPID  C STIME TTY      STAT   TIME CMD
+root     27354     1  0 20:03 pts/6    S      0:00 python signal02.py
+root@ubuntu:/tmp#
+```
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
