@@ -35,4 +35,6 @@ DISTRIB_DESCRIPTION="Ubuntu 14.04.2 LTS"
 | 15 | SIGTERM | /bin/kill 命令的默认信号 | 终止 | 内核 |
 | 17 | SIGCHLD | 一个子进程的终结 | 忽略 | 内核 |
 | 18 | SIGCONT | 继续被停止的进程 | 忽略 | 内核 |
-| 19 | SIGSTOP | 停止进程直到接受到 SIGCONT 信号 | 停止 | 内核 |
+| 19 | SIGSTOP | 停止进程直到接受到 SIGCONT 信号 | 停止/挂起 | 内核 |
+
+根据表格和参考其他的信号量可以得出，**进程对于信号的默认处理方式有 3 种：终止、忽略、挂起**
