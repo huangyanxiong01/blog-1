@@ -56,6 +56,8 @@ DISTRIB_DESCRIPTION="Ubuntu 14.04.2 LTS"
 
 #### 验证 SIGKILL 和 SIGSTOP 的不可抗性
 
+测试脚本如下：
+
 ```
 # -*- coding=utf-8 -*-
 
@@ -99,3 +101,23 @@ if __name__ == '__main__':
     main()
 
 ```
+
+运行脚本，发现 `SIGINT` 被捕获了，并且按照我们自定义的处理函数 `handle_sigint` 去处理了这个信号。但是 `SIGSTOP` 却不能被捕获，进程依然是被挂起了，这也导致了后面的 `SIGKILL` 没能发送出来。结果如下：
+
+```
+root@ubuntu:/opt# python signal01.py 
+handle signal SIGINT --> 2
+<frame object at 0x7f880c5e9050>
+
+[1]+  Stopped                 python signal01.py
+```
+
+接着注释掉代码 `os.kill(os.getpid(), signal.SIGSTOP)` 再此执行脚本，`SIGINT` 仍然是顺利捕获，`SIGKILL` 跟 `SIGSTOP` 一样没能被捕获，盖被 kill 的还是 kill 了。结果如下：
+
+```
+root@ubuntu:/opt# python signal01.py 
+handle signal SIGINT --> 2
+<frame object at 0x7fb85c389050>
+Killed
+```
+
