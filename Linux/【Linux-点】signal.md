@@ -135,6 +135,8 @@ Killed
 使用频率最高的应该是用 `/bin/kill` 程序发送信号了，但是这里有一个很容易被忽略的问题，先看下下面的脚本：
 
 ```
+# -*- coding=utf-8 -*-
+
 import os
 import time
 
@@ -175,8 +177,38 @@ if __name__ == '__main__':
 
 ```
 
+执行脚本可以看到进程 fork 成功，且父进程是 `27242`，子进程是 `27243`，结果如下：
 
+```
+root@ubuntu:/tmp# ps axu | grep signal02.py | grep -v color
+root     27242  0.0  0.6  24256  6972 pts/6    S+   19:51   0:00 python signal02.py
+root     27243  0.0  0.4  24260  4712 pts/6    S+   19:51   0:00 python signal02.py
+root@ubuntu:/tmp# ps -f 27243
+UID        PID  PPID  C STIME TTY      STAT   TIME CMD
+root     27243 27242  0 19:51 pts/6    S+     0:00 python signal02.py
+```
 
+此时，执行 `kill -9 27242` 会发现父进程被 kill 掉了，但是子进程还在，如下：
+
+```
+root@ubuntu:/tmp# kill -9 27242
+root@ubuntu:/tmp# ps axu | grep signal02.py | grep -v color
+root     27243  0.0  0.4  24260  4712 pts/6    S    19:51   0:00 python signal02.py
+```
+
+因为 `kill -9 27242` 只会 kill 当前的进程 (根本原因是 `/bin/kill` 程序对应的系统函数 kill 的 pid 参数正负影响着 kill 的执行结果)，而不会把当前进程的子进程也 kill 掉。如果像连当前进程的子进程都 kill 了，就要执行 `kill -9 -27242`。如下 (换了两个父子进程)：
+
+```
+root@ubuntu:/tmp# ps axu | grep signal02.py | grep -v color
+root     27315  0.2  0.6  24256  6972 pts/6    S+   19:59   0:00 python signal02.py
+root     27316  0.0  0.4  24260  4740 pts/6    S+   19:59   0:00 python signal02.py
+root@ubuntu:/tmp# ps -f 27316
+UID        PID  PPID  C STIME TTY      STAT   TIME CMD
+root     27316 27315  0 19:59 pts/6    S+     0:00 python signal02.py
+root@ubuntu:/tmp# kill -9 -27315
+root@ubuntu:/tmp# ps axu | grep signal02.py | grep -v color
+root@ubuntu:/tmp#
+```
 
 
 
