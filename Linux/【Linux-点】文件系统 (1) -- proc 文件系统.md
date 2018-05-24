@@ -199,6 +199,12 @@ nonvoluntary_ctxt_switches:	5025
 # voluntary_ctxt_switches, nonvoluntary_ctxt_switches：进程主动、被动的上下文切换次数
 ```
 
+- **task**：该进程包含的线程，每个线程都对应一个以线程 id 命名的目录，结构与进程目录类似
+```
+root@ubuntu:/proc/11739/task# ls
+11739
+```
+
 **2、非进程目录**
 
 
