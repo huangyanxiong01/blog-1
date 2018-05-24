@@ -385,5 +385,11 @@ Linux version 3.16.0-30-generic (buildd@kissel) (gcc version 4.8.2 (Ubuntu 4.8.2
 
 ---
 
-### <font color=#00b0f0>/proc 下的其他目录</font>
+### <font color=#00b0f0>/proc/sys/</font>
+
+前面提到了 proc 提供了查看和配置两个功能，配置就是内核优化相关的内容，这些配置文件主要集中在 `/proc/sys` 目录下。可以通过 `echo xxx > /proc/sys/xxx/xxx` 或者 `sysctl -w xxxkey=xxxvalue`, `sysctl -p` 去进行配置。这部分涉及到的内容非常多，计划另外写。
+
+---
+
+### <font color=#00b0f0>总结</font>
 
