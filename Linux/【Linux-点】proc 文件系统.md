@@ -38,7 +38,7 @@ DISTRIB_DESCRIPTION="Ubuntu 14.04.2 LTS"
 
 ### <font color=#00b0f0>与 proc 同一层的文件</font>
 
-**进程目录**
+**1、进程目录**
 
 /proc 下面有很多以数字命名的目录，如下：
 
