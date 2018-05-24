@@ -122,21 +122,21 @@ lrwx------ 1 root root 64 May 24 01:48 8 -> /dev/ptmx
 # pathname：如果该段虚拟内存区域是通过 `mmap` 映射文件而来的，那么 pathname 就代表文件的绝对路径
 ```
 
-- **mem**：只能通过 `open`, `read`, `write` 等系统调用使用
+- **mem** -- 只能通过 `open`, `read`, `write` 等系统调用使用
 
-- **root**：符号链接，进程对应的 root 目录
+- **root** -- 符号链接，进程对应的 root 目录
 ```
 root@ubuntu:/proc/11739# ll root
 lrwxrwxrwx 1 root root 0 May 24 01:45 root -> //
 ```
 
-- **stat**：进程状态信息，可读性差，一般给 `ps` 这样的系统命令使用
+- **stat** -- 进程状态信息，可读性差，一般给 `ps` 这样的系统命令使用
 ```
 root@ubuntu:/proc/11739# cat stat
 11739 (sshd) S 1158 11739 11739 0 -1 4219136 711 43352 0 0 33 119 167 23 20 0 1 0 9616123 122183680 1769 18446744073709551615 139907021352960 139907022099308 140735977982752 140735977979720 139906984753331 0 0 4096 81926 18446744071580841145 0 0 17 0 0 0 0 0 0 139907024196480 139907024210800 139907033661440 140735977987894 140735977987915 140735977987915 140735977988073 0
 ```
 
-- **status**：进程状态信息，相比 `stat` 可读性更好
+- **status** -- 进程状态信息，相比 `stat` 可读性更好
 ```
 root@ubuntu:/proc/11739# more status 
 Name:	sshd
@@ -199,7 +199,7 @@ nonvoluntary_ctxt_switches:	5025
 # voluntary_ctxt_switches, nonvoluntary_ctxt_switches：进程主动、被动的上下文切换次数
 ```
 
-- **task**：该进程包含的线程，每个线程都对应一个以线程 id 命名的线程目录，线程目录的结构与进程目录类似
+- **task** -- 该进程包含的线程，每个线程都对应一个以线程 id 命名的线程目录，线程目录的结构与进程目录类似
 ```
 root@ubuntu:/proc/11739/task# ls
 11739
@@ -211,7 +211,7 @@ cgroup  cmdline     cwd     fd       io       maps      mounts     oom_adj    pa
 
 **2、非进程目录**
 
-- **/proc/buddyinfo**：
+- **/proc/buddyinfo** -- 
 
 ---
 
