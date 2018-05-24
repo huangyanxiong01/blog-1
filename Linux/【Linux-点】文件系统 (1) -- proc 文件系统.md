@@ -36,7 +36,7 @@ DISTRIB_DESCRIPTION="Ubuntu 14.04.2 LTS"
 
 ---
 
-### <font color=#00b0f0>/proc 同级文件</font>
+### <font color=#00b0f0>在 /proc 级文件</font>
 
 **1、进程目录**
 
@@ -211,7 +211,200 @@ cgroup  cmdline     cwd     fd       io       maps      mounts     oom_adj    pa
 
 **2、非进程目录**
 
-- **/proc/buddyinfo** -- 
+- **/proc/cmdline** -- 引导时，传递给内核的参数，一般是由 grub 等引导程序负责传递
+```
+root@ubuntu:/proc# more cmdline 
+BOOT_IMAGE=/vmlinuz-3.16.0-30-generic root=/dev/mapper/ubuntu--vg-root ro nomdmonddf nomdmonisw
+```
+
+- **/proc/cpuinfo** -- 处理器信息：核心数、频率、生产厂商等
+
+- **/proc/crypto** -- 内核支持的加密算法
+```
+name         : crct10dif
+driver       : crct10dif-pclmul
+module       : crct10dif_pclmul
+priority     : 200
+refcnt       : 1
+selftest     : passed
+type         : shash
+blocksize    : 1
+digestsize   : 2
+
+...
+```
+
+- **/proc/devices** -- 系统已经挂在块设备和字符设备信息
+```
+root@ubuntu:/proc# more devices 
+Character devices:
+  1 mem
+  4 /dev/vc/0
+  4 tty
+  4 ttyS
+  5 /dev/tty
+
+...
+
+Block devices:
+  1 ramdisk
+259 blkext
+  7 loop
+  8 sd
+  9 md
+ 11 sr
+
+...
+```
+
+- **/proc/fb** -- 帧缓冲设备的设备号和驱动信息
+```
+root@ubuntu:/proc# more fb
+0 VESA VGA
+```
+
+- **/proc/filesystems** -- 系统支持那些文件系统类型，其中 `nodev` 代表不支持，在
+```
+root@ubuntu:/proc# more filesystems
+nodev	pipefs
+nodev	devpts
+	ext3
+	ext2
+	ext4
+nodev	hugetlbfs
+	vfat
+nodev	ecryptfs
+	fuseblk
+nodev	prl_fs
+nodev	aufs
+
+...
+```
+
+- **/proc/kcore** -- 不能直接查看，一般是给调试工具使用的，如 gdb
+
+- **/proc/ioports** -- 已注册端口的输入输出设备
+
+- **/proc/kmsg** -- 不能直接查看，一般是给系统命令 dmesg 使用
+
+- **/proc/loadavg** -- 系统负载，`top` 命令的 `loadavg` 参数就是从这里获取的
+
+- **/proc/mdstat** -- RAID 信息
+
+- **/proc/meminfo** -- 系统内存的总体 (相当于每个进程内存信息的和) 信息
+```
+root@ubuntu:/proc# more meminfo 
+MemTotal:        1014068 kB
+MemFree:          309972 kB
+MemAvailable:     763096 kB
+Buffers:          139912 kB
+Cached:           400096 kB
+SwapCached:            0 kB
+
+...
+
+# 字段解析
+# Dirty：等待写如磁盘的数据大小
+# Writeback：开始写入磁盘的数据大小
+# Mapped：映射的数据大小 (如使用系统调用 mmap 进行文件映射)
+# Slab：内核空间缓存的数据大小
+# PageTables：page table 大小
+# VMallocTotal：虚拟内存大小
+# VMallocChunk：可以用的虚拟内存大小
+```
+
+- **/proc/modules** -- 内核已经加载的模块
+```
+root@ubuntu:/proc# cat modules | grep ipv4
+nf_conntrack_ipv4 14806 2 - Live 0xffffffffc030c000
+nf_defrag_ipv4 12758 1 nf_conntrack_ipv4, Live 0xffffffffc0307000
+nf_nat_ipv4 13263 1 iptable_nat, Live 0xffffffffc0302000
+nf_nat 22050 3 ipt_MASQUERADE,iptable_nat,nf_nat_ipv4, Live 0xffffffffc00e2000
+nf_conntrack 105081 7 ipt_MASQUERADE,nf_conntrack_netlink,iptable_nat,nf_conntrack_ipv4,nf_nat_ipv4,xt_conntrack,nf_nat, Live 0xffffffffc02c7000
+```
+
+- **/proc/mounts** -- 系统已经挂载的文件系统
+```
+root@ubuntu:/proc# more mounts 
+rootfs / rootfs rw 0 0
+sysfs /sys sysfs rw,nosuid,nodev,noexec,relatime 0 0
+proc /proc proc rw,nosuid,nodev,noexec,relatime 0 0
+
+...
+```
+
+- **/proc/partitions** -- 系统块设备设备号信息
+```
+root@ubuntu:/proc# more partitions
+major minor  #blocks  name
+
+   8        0   67108864 sda
+   8        1     248832 sda1
+   8        2          1 sda2
+   8        5   66856960 sda5
+  11        0    1048575 sr0
+ 252        0   65806336 dm-0
+ 252        1    1048576 dm-1
+ 
+ # 字段解析
+ # major：主设备号
+ # minor：次设备号
+ # blocks：块数量
+ # name：设备名称
+```
+
+- **/proc/stat** -- 系统概况 (偏 cpu 和进程信息) 
+```
+root@ubuntu:/proc# more stat 
+
+...
+
+ctxt 22916458
+btime 1527001368
+processes 15201
+procs_running 1
+procs_blocked 0
+
+...
+
+# 字段解析
+# ctxt：系统自启动开始，CPU 上下文切换次数
+# btime：系统自启动开始，到当前时间之间的秒数
+# processes：系统自启动开始，创建了多少进程
+# procs_running：运行的进程数量
+# procs_blocked：被阻塞的进程数量
+```
+
+- **/proc/swaps** -- swap 信息，当有多个 swap 空间是，`Priority` 越小的越容易被使用
+
+- **/proc/version** -- 内核版本信息
+```
+root@ubuntu:/proc# more /proc/version
+Linux version 3.16.0-30-generic (buildd@kissel) (gcc version 4.8.2 (Ubuntu 4.8.2-19ubuntu1) ) #40~14.04.1-Ubuntu SMP Thu Jan 15 17:43:14 UTC 2015
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ---
 
