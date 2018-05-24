@@ -70,7 +70,7 @@ root@ubuntu:/proc/11739# more cmdline
 sshd: root@pts/0
 ```
 
-- **cwd** -- 进程当前运行目录的符号链接
+- **cwd** -- 符号链接，进程当前运行目录
 ```
 root@ubuntu:/proc/11739# ll cwd
 lrwxrwxrwx 1 root root 0 May 24 01:45 cwd -> //
@@ -82,7 +82,7 @@ root@ubuntu:/proc/11739# more environ
 # 空的
 ```
 
-- **exe** -- 执行进程的命令的符号链接
+- **exe** -- 符号链接，执行进程的命令
 ```
 root@ubuntu:/proc/11739# ll exe 
 lrwxrwxrwx 1 root root 0 May 24 01:45 exe -> /usr/sbin/sshd*
@@ -111,6 +111,8 @@ lrwx------ 1 root root 64 May 24 01:48 8 -> /dev/ptmx
 ```
 # ddress            # perms   # offset    # dev    # inode    # pathname
 08048000-08056000   r-xp      00000000    03:0c    64593      /usr/sbin/gpm`
+
+...
 ```
 
 - ddress：进程虚拟内存空间的开始地址-结束地址
@@ -119,6 +121,66 @@ lrwx------ 1 root root 64 May 24 01:48 8 -> /dev/ptmx
 - dev：device 的缩写，如果该段虚拟内存区域是通过 `mmap` 映射文件而来的，那么 dev 就代表该文件所在的主要设备和次要设备的编号，以 `:` 分割
 - inode：如果该段虚拟内存区域是通过 `mmap` 映射文件而来的，那么 inode 就代表文件的 inode
 - pathname：如果该段虚拟内存区域是通过 `mmap` 映射文件而来的，那么 pathname 就代表文件的绝对路径
+
+- **mem**：只能通过 `open`, `read`, `write` 等系统调用使用
+
+- **root**：符号链接，进程对应的 root 目录
+```
+root@ubuntu:/proc/11739# ll root
+lrwxrwxrwx 1 root root 0 May 24 01:45 root -> //
+```
+
+- **stat**：进程状态信息，可读性差，一般给 `ps` 这样的系统命令使用
+```
+root@ubuntu:/proc/11739# cat stat
+11739 (sshd) S 1158 11739 11739 0 -1 4219136 711 43352 0 0 33 119 167 23 20 0 1 0 9616123 122183680 1769 18446744073709551615 139907021352960 139907022099308 140735977982752 140735977979720 139906984753331 0 0 4096 81926 18446744071580841145 0 0 17 0 0 0 0 0 0 139907024196480 139907024210800 139907033661440 140735977987894 140735977987915 140735977987915 140735977988073 0
+```
+
+- **status**：进程状态信息，相比 `stat` 可读性更好
+```
+root@ubuntu:/proc/11739# more status 
+Name:	sshd
+State:	S (sleeping)
+Tgid:	11739
+Ngid:	0
+Pid:	11739
+PPid:	1158
+TracerPid:	0
+Uid:	0	0	0	0
+Gid:	0	0	0	0
+FDSize:	64
+Groups:	
+VmPeak:	  119328 kB
+VmSize:	  119320 kB
+VmLck:	       0 kB
+VmPin:	       0 kB
+VmHWM:	    7076 kB
+VmRSS:	    7076 kB
+VmData:	     752 kB
+VmStk:	     136 kB
+VmExe:	     732 kB
+VmLib:	    8556 kB
+VmPTE:	     252 kB
+VmSwap:	       0 kB
+Threads:	1
+SigQ:	0/3855
+SigPnd:	0000000000000000
+ShdPnd:	0000000000000000
+SigBlk:	0000000000000000
+SigIgn:	0000000000001000
+SigCgt:	0000000180014006
+CapInh:	0000000000000000
+CapPrm:	0000003fffffffff
+CapEff:	0000003fffffffff
+CapBnd:	0000003fffffffff
+Seccomp:	0
+Cpus_allowed:	ffffffff
+Cpus_allowed_list:	0-31
+Mems_allowed:	00000000,00000001
+Mems_allowed_list:	0
+voluntary_ctxt_switches:	9976
+nonvoluntary_ctxt_switches:	5025
+```
 
 ---
 
