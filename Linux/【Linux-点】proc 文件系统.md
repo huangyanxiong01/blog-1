@@ -64,7 +64,12 @@ dr-xr-xr-x   9 root       root          0 May 22 23:03 1121/
 
 每一个进程目录都会包含下面的文件 (以 11739 进程目录为例)：
 
-**cmdline**：启动
+- **cmdline** -- 启动该进程的命令
+```
+root@ubuntu:/proc/11739# more cmdline 
+sshd: root@pts/0
+```
+
 
 ---
 
