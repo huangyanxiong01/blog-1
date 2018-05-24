@@ -40,26 +40,31 @@ DISTRIB_DESCRIPTION="Ubuntu 14.04.2 LTS"
 
 **进程目录**
 
-/proc 下面有很多以数字命名的目录，这些数字代表的就是进程的 PID，每个目录下面包含很多跟这个进程相关的详细信息：
+/proc 下面有很多以数字命名的目录，如下：
 
 ```
-root@ubuntu:/proc# ls | grep -E "[0-9]*"
-1
-10
-100
-1078
-11
-1112
-1116
-112
-1121
+root@ubuntu:/proc# ll -h | grep -E "[0-9]*"
+total 4.0K
+dr-xr-xr-x 187 root       root          0 May 22 23:02 ./
+drwxr-xr-x  22 root       root       4.0K Feb 25 03:19 ../
+dr-xr-xr-x   9 root       root          0 May 22 23:03 1/
+dr-xr-xr-x   9 root       root          0 May 22 23:03 10/
+dr-xr-xr-x   9 root       root          0 May 22 23:03 100/
+dr-xr-xr-x   9 root       root          0 May 22 23:03 1078/
+dr-xr-xr-x   9 root       root          0 May 22 23:03 11/
+dr-xr-xr-x   9 root       root          0 May 22 23:03 1112/
+dr-xr-xr-x   9 root       root          0 May 22 23:03 1116/
+dr-xr-xr-x   9 root       root          0 May 22 23:03 112/
+dr-xr-xr-x   9 root       root          0 May 22 23:03 1121/
 
 ...
 ```
 
+这些以数字命名的目录都叫做进程目录，数字代表的是进程的 PID，同时，这些目录里面也包含该进程相关的详细信息。每个进程目录的 owner 和 group 都和运行该进程的用户对应。当进程运行结束时，对应的进程目录也会消失，比如 `1121` 进程退出了，`/proc/1121` 目录也会消失。
 
+每一个进程目录都会包含下面的文件 (以 11739 进程目录为例)：
 
-
+**cmdline**：启动
 
 ---
 
