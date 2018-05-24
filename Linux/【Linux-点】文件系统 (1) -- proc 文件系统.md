@@ -36,9 +36,7 @@ DISTRIB_DESCRIPTION="Ubuntu 14.04.2 LTS"
 
 ---
 
-### <font color=#00b0f0>在 /proc 这一级的文件</font>
-
-**1、进程目录**
+### <font color=#00b0f0>/proc 下的进程目录</font>
 
 /proc 下面有很多以数字命名的目录，如下：
 
@@ -209,7 +207,9 @@ auxv    clear_refs  cpuset  exe      gid_map  loginuid  mountinfo  numa_maps  oo
 cgroup  cmdline     cwd     fd       io       maps      mounts     oom_adj    pagemap        root         sessionid  stat   syscall
 ```
 
-**2、非进程目录**
+---
+
+### <font color=#00b0f0>/proc 下的文件</font>
 
 - **/proc/cmdline** -- 引导时，传递给内核的参数，一般是由 grub 等引导程序负责传递
 ```
@@ -385,5 +385,5 @@ Linux version 3.16.0-30-generic (buildd@kissel) (gcc version 4.8.2 (Ubuntu 4.8.2
 
 ---
 
-### <font color=#00b0f0>/proc 子目录下的文件</font>
+### <font color=#00b0f0>/proc 下的其他目录</font>
 
