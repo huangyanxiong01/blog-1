@@ -180,23 +180,24 @@ Mems_allowed:	00000000,00000001
 Mems_allowed_list:	0
 voluntary_ctxt_switches:	9976
 nonvoluntary_ctxt_switches:	5025
-```
 
-- Name：运行该进程的命令
-- Tgid：线程组 id
-- VmPeak：进程占用的虚拟内存的峰值大小
-- VmSize：进程占用的虚拟内存大小
-- VmRSS：虚拟内存对应的物理内存大小
-- VmHWM：虚拟内存对应的物理内存的峰值大小
-- VmLib：虚拟内存中共享内存的大小
-- VmPTE：page table 的大小
-- Threads：进程包含的线程数
-- VmData, VmStk, VmExe：进程的数据、调用栈、文本段的虚拟内存大小
-- Cpus_allowed：进程是否可以使用 cpu，如果改值符合 `Cpus_allowed_list` 范围则代表 ok
-- Cpus_allowed_list：获取了 cpu 时间的 `Cpus_allowed` 标记范围
-- Mems_allowed：进程是否可以使用内存，如果改值包含了 `Cpus_allowed_list` 则代表 ok
-- Mems_allowed_list：可以使用内存的标记
-- voluntary_ctxt_switches, nonvoluntary_ctxt_switches：进程主动、被动的上下文切换次数
+# 字段解析
+# Name：运行该进程的命令
+# Tgid：线程组 id
+# VmPeak：进程占用的虚拟内存的峰值大小
+# VmSize：进程占用的虚拟内存大小
+# VmRSS：虚拟内存对应的物理内存大小
+# VmHWM：虚拟内存对应的物理内存的峰值大小
+# VmLib：虚拟内存中共享内存的大小
+# VmPTE：page table 的大小
+# Threads：进程包含的线程数
+# VmData, VmStk, VmExe：进程的数据、调用栈、文本段的虚拟内存大小
+# Cpus_allowed：进程是否可以使用 cpu，如果改值符合 `Cpus_allowed_list` 范围则代表 ok
+# Cpus_allowed_list：获取了 cpu 时间的 `Cpus_allowed` 标记范围
+# Mems_allowed：进程是否可以使用内存，如果改值包含了 `Cpus_allowed_list` 则代表 ok
+# Mems_allowed_list：可以使用内存的标记
+# voluntary_ctxt_switches, nonvoluntary_ctxt_switches：进程主动、被动的上下文切换次数
+```
 
 ---
 
