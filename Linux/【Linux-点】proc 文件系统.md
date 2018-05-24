@@ -199,6 +199,10 @@ nonvoluntary_ctxt_switches:	5025
 # voluntary_ctxt_switches, nonvoluntary_ctxt_switches：进程主动、被动的上下文切换次数
 ```
 
+**2、非进程目录**
+
+
+
 ---
 
 ### <font color=#00b0f0>proc 中的文件</font>
