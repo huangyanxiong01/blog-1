@@ -385,17 +385,17 @@ Linux version 3.16.0-30-generic (buildd@kissel) (gcc version 4.8.2 (Ubuntu 4.8.2
 
 ---
 
-### <font color=#00b0f0>/proc/sys/ 配置接口</font>
+### <font color=#00b0f0>/proc/sys 配置接口</font>
 
 ```
 root@ubuntu:/proc/sys# ls
 abi  debug  dev  fs  kernel  net  vm
 ```
 
-前面提到了 proc 提供了查看和配置两个功能，配置就是内核优化相关的内容，这些配置文件主要集中在 `/proc/sys` 目录下。可以通过 `echo xxx > /proc/sys/xxx/xxx` 或者 `sysctl -w xxxkey=xxxvalue`, `sysctl -p` 去进行配置。这部分涉及到的内容非常多，计划另外写。
+前面提到了 proc 提供了查看和配置两个功能，配置就是内核参数调优相关的内容，这些配置文件主要集中在 `/proc/sys` 目录下。可以通过 `echo xxx > /proc/sys/xxx/xxx` 或者 `sysctl -w xxxkey=xxxvalue`, `sysctl -p` 去进行配置。这部分涉及到的内容非常多，计划另外写。
 
 ---
 
 ### <font color=#00b0f0>总结</font>
 
-通过对 proc 文件系统的了解，可以发现其实很多系统的内置工具的数据来源都是来自它 (如 `ps`, `top` 等)，因此在故障排查是 proc 可以帮助我们掌握最可靠的硬件、内核、进程等一系列信息。同时，`/proc/sys` 目录包含了丰富的配置文件，涉及设备、文件系统、内核、网络、内存，我们可以通过修改特定的配置文件去提升对应子系统的性能表现。
+通过对 proc 文件系统的了解，可以发现其实很多系统的内置工具的数据来源都是来自它 (如 `ps`, `top` 等)，因此在故障排查时，proc 可以帮助我们掌握最可靠的硬件、内核、进程等一系列信息。同时，`/proc/sys` 目录包含了丰富的配置文件，涉及设备、文件系统、内核、网络、内存，我们可以通过修改特定的配置文件去提升对应子系统的性能表现。
