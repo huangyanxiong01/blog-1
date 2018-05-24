@@ -38,7 +38,26 @@ DISTRIB_DESCRIPTION="Ubuntu 14.04.2 LTS"
 
 ### <font color=#00b0f0>与 proc 同一层的文件</font>
 
-**/proc/apm**
+**进程目录**
+
+/proc 下面有很多以数字命名的目录，这些数字代表的就是进程的 PID，每个目录下面包含很多跟这个进程相关的详细信息：
+
+```
+root@ubuntu:/proc# ls | grep -E "[0-9]*"
+1
+10
+100
+1078
+11
+1112
+1116
+112
+1121
+
+...
+```
+
+
 
 
 
