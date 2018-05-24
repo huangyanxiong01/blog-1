@@ -64,12 +64,58 @@ dr-xr-xr-x   9 root       root          0 May 22 23:03 1121/
 
 每一个进程目录都会包含下面的文件 (以 11739 进程目录为例)：
 
-- **cmdline** -- 启动该进程的命令
+- **cmdline** -- 启动进程的命令
 ```
 root@ubuntu:/proc/11739# more cmdline 
 sshd: root@pts/0
 ```
 
+- **cwd** -- 进程当前运行目录的符号链接
+```
+root@ubuntu:/proc/11739# ll cwd
+lrwxrwxrwx 1 root root 0 May 24 01:45 cwd -> //
+```
+
+- **environ** -- 进程的环境变量列表
+```
+root@ubuntu:/proc/11739# more environ 
+# 空的
+```
+
+- **exe** -- 执行进程的命令的符号链接
+```
+root@ubuntu:/proc/11739# ll exe 
+lrwxrwxrwx 1 root root 0 May 24 01:45 exe -> /usr/sbin/sshd*
+```
+
+- **fd** -- 进程使用到的文件描述符
+```
+root@ubuntu:/proc/11739# ll fd
+total 0
+dr-x------ 2 root root  0 May 24 01:45 ./
+dr-xr-xr-x 9 root root  0 May 24 01:45 ../
+lrwx------ 1 root root 64 May 24 01:45 0 -> /dev/null
+lrwx------ 1 root root 64 May 24 01:45 1 -> /dev/null
+lrwx------ 1 root root 64 May 24 01:48 10 -> /dev/ptmx
+lrwx------ 1 root root 64 May 24 01:48 11 -> /dev/ptmx
+lrwx------ 1 root root 64 May 24 01:45 2 -> /dev/null
+lrwx------ 1 root root 64 May 24 01:45 3 -> socket:[57097]
+lrwx------ 1 root root 64 May 24 01:45 4 -> socket:[58153]
+lr-x------ 1 root root 64 May 24 01:45 5 -> pipe:[57226]
+l-wx------ 1 root root 64 May 24 01:48 6 -> pipe:[57226]
+l-wx------ 1 root root 64 May 24 01:48 7 -> /run/systemd/sessions/5.ref|
+lrwx------ 1 root root 64 May 24 01:48 8 -> /dev/ptmx
+```
+
+- **maps** -- 进程 (线程) 中虚拟内存碎片信息
+```
+# ddress            # perms   # offset    # dev    # inode    # pathname
+08048000-08056000   r-xp      00000000    03:0c    64593      /usr/sbin/gpm`
+```
+
+- ddress：进程虚拟内存空间的开始地址-结束地址
+- perms：permissions 的缩写，进程对该虚拟内存的权限。完整的权限是 `r/w/x/p`， 分别代表读/写/执行/共享，`-` 代表没有这个权限。如果进程在做了越权的操作会产生分段错误，可以通过系统调用 `mprotect` 去修改权限
+- offset：
 
 ---
 
