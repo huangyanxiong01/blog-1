@@ -36,7 +36,7 @@ DISTRIB_DESCRIPTION="Ubuntu 14.04.2 LTS"
 
 ---
 
-### <font color=#00b0f0>与 proc 同一层的文件</font>
+### <font color=#00b0f0>/proc 同级文件</font>
 
 **1、进程目录**
 
@@ -211,8 +211,8 @@ cgroup  cmdline     cwd     fd       io       maps      mounts     oom_adj    pa
 
 **2、非进程目录**
 
-
+- **/proc/buddyinfo**：
 
 ---
 
-### <font color=#00b0f0>proc 中的文件</font>
+### <font color=#00b0f0>/proc 中的文件</font>
