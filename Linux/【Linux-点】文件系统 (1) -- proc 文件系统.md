@@ -36,7 +36,7 @@ DISTRIB_DESCRIPTION="Ubuntu 14.04.2 LTS"
 
 ---
 
-### <font color=#00b0f0>在 /proc 级文件</font>
+### <font color=#00b0f0>在 /proc 这一级的文件</font>
 
 **1、进程目录**
 
@@ -383,29 +383,7 @@ root@ubuntu:/proc# more /proc/version
 Linux version 3.16.0-30-generic (buildd@kissel) (gcc version 4.8.2 (Ubuntu 4.8.2-19ubuntu1) ) #40~14.04.1-Ubuntu SMP Thu Jan 15 17:43:14 UTC 2015
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ---
 
-### <font color=#00b0f0>/proc 中的文件</font>
+### <font color=#00b0f0>/proc 子目录下的文件</font>
+
