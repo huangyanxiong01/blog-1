@@ -18,7 +18,7 @@
 3. 根据 data pooling 中的 `file1 --> 12` 得到 file1 的 inode 编号 12
 4. 根据 inode 编号 12 找到对应的 data pooling `a`
 
-### <font color=#00b0f0>ext2/ext3/ext4区别</font>
+### <font color=#00b0f0>ext2/ext3/ext4 区别</font>
 
 extX 系列是 Linux 默认的文件系统，X 越大代表是越新的文件系统，这些文件系统之间是向后兼容，各有特点，不能粗暴地认定 ext3 就一定比 ext2 要好，因为在某些
 特殊使用场景下，可能旧版本的反而表现会更好。
@@ -39,4 +39,4 @@ extX 系列是 Linux 默认的文件系统，X 越大代表是越新的文件系
 - ext4 支持无日志模式
 - ext4 支持碎片整理
 
-> 总的来说，ext4 比 ext3 的性能更好，附加功能也更多
+> 总的来说，在性能、可靠性、功能方面，ext4 比 ext3 都要好
