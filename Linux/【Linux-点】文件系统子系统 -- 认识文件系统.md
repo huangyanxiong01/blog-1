@@ -11,3 +11,9 @@
 在用户眼里，文件系统就是一颗目录树。而实际上虚拟文件系统提供的对象模型并不是一颗树，而是下图的结构：
 
 ![](https://raw.githubusercontent.com/hsxhr-10/picture/master/fs-obj-model.jpeg)
+
+比如执行 `cat /dir1/file1` 的查找过程如下：
+1. 虚拟文件系统根据 dir1 这个文件名找到 inode 编号 10
+2. 根据 inode 编号 10 找到对应的 data pooling
+3. 根据 data pooling 中的 `file1 --> 12` 得到 file1 的 inode 编号 12
+4. 根据 inode 编号 12 找到对应的 data pooling `a`
