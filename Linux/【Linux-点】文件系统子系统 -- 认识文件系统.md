@@ -8,3 +8,6 @@
 
 ![](https://raw.githubusercontent.com/hsxhr-10/picture/master/vfs.jpeg)
 
+在用户眼里，文件系统就是一颗目录树。而实际上虚拟文件系统提供的对象模型并不是一颗树，而是下图的结构：
+
+![](https://raw.githubusercontent.com/hsxhr-10/picture/master/fs-obj-model.jpeg)
