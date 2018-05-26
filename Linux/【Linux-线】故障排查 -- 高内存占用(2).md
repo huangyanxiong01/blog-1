@@ -105,7 +105,7 @@ root@ubuntu:/var/log# dmesg -T | grep "Out of memory"
 
 ```
 
-其中，`points` 是进程所占用的内存大小，而 `oom_adj` 是内核留给用户空间做调整的参数。比如 `points` 数值相差不多的两个进程 A 和 B，如果我不想让 B 那么容易被 OOM Killer 处理掉，我就可以把 B 的 `oom_adj` 参数设置得更小，。例如我想让 dockerd 的服务不那么容易被 kill：
+其中，`points` 是进程所占用的内存大小，而 `oom_adj` 是内核留给用户空间做调整的参数。比如 `points` 数值相差不多的两个进程 A 和 B，如果我不想让 B 那么容易被 OOM Killer 处理掉，我就可以把 B 的 `oom_adj` 参数设置得更小，`oom_adj` 的取值范围是 [-17, 15]，其中，-17 代表该进程不会被 OOM 杀死。例如我想让 dockerd 的服务不那么容易被 kill：
 
 ```
 # 通过 ps 找到 PID
