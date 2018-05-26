@@ -68,6 +68,63 @@ Linux 3.16.0-30-generic (ubuntu) 	05/26/2018 	_x86_64_	(2 CPU)
 
 默认情况下，系统提供 irqbalance 服务进行硬中断的分配，并且效果不错，用户无需关心这个问题。但是在一些特殊的应用场景下，比如对于文件服务器、高流量 Web 服务器这样的应用来说，当发现多个网卡的请求都集中在同一个 CPU 时，通过把不同的网卡硬中断请求均衡绑定到不同的 CPU 上将会减轻某个 CPU 的负担，提高多个 CPU 整体处理中断的能力。具体绑定方法可以参考[这里](https://www.cnblogs.com/bamanzi/p/linux-irq-and-cpu-affinity.html)。
 
+#### taskset
+
+该命令将绑定进程到指定的 CPU 上，这种人为的绑定可以使得进程在多核新的使用上比较均衡
+
+```
+# 默认情况下，进程 31647 在 CPU0 和 CPU1 之间切换运行
+
+...
+
+# 绑定进程 31647 在 CPU0 上运行
+root@ubuntu:/proc/28941# taskset -cp 0 31647
+pid 31647's current affinity list: 1
+pid 31647's new affinity list: 0
+root@ubuntu:/proc/28941#
+
+# top 可以看到 CPU0 很忙，CPU1 很闲
+top - 04:36:11 up 3 days,  5:33,  4 users,  load average: 1.00, 0.80, 0.42
+Tasks: 175 total,   3 running, 172 sleeping,   0 stopped,   0 zombie
+%Cpu0  :  9.8 us, 59.0 sy,  0.0 ni,  0.0 id, 31.3 wa,  0.0 hi,  0.0 si,  0.0 st
+%Cpu1  :  0.8 us,  0.8 sy,  0.0 ni, 97.5 id,  0.0 wa,  0.0 hi,  0.8 si,  0.0 st
+KiB Mem:   1014068 total,   747784 used,   266284 free,   122772 buffers
+KiB Swap:        0 total,        0 used,        0 free.   443588 cached Mem
+
+...
+
+# 绑定进程 31647 在 CPU1 上运行
+root@ubuntu:/proc/28941# taskset -cp 1 31647
+pid 31647's current affinity list: 0
+pid 31647's new affinity list: 1
+root@ubuntu:/proc/28941#
+
+# top 可以看到 CPU1 很忙，CPU0 很闲
+top - 04:38:05 up 3 days,  5:35,  4 users,  load average: 1.00, 0.86, 0.49
+Tasks: 175 total,   4 running, 171 sleeping,   0 stopped,   0 zombie
+%Cpu0  :  0.7 us,  0.3 sy,  0.0 ni, 98.6 id,  0.0 wa,  0.0 hi,  0.3 si,  0.0 st
+%Cpu1  : 13.1 us, 55.6 sy,  0.0 ni,  0.0 id, 19.8 wa,  0.0 hi, 11.5 si,  0.0 st
+KiB Mem:   1014068 total,   747564 used,   266504 free,   122880 buffers
+KiB Swap:        0 total,        0 used,        0 free.   443596 cached Mem
+
+...
+
+# 绑定进程 31647 在 CPU0 和 CPU1 之间切换运行
+root@ubuntu:/proc/28941# taskset -cp 0-1 31647
+pid 31716's current affinity list: 1
+pid 31716's new affinity list: 0,1
+
+# top 可以看到 CPU1 和 CPU0 差不多忙
+top - 04:41:18 up 3 days,  5:38,  4 users,  load average: 0.83, 0.79, 0.53
+Tasks: 176 total,   3 running, 173 sleeping,   0 stopped,   0 zombie
+%Cpu0  :  4.7 us, 24.7 sy,  0.0 ni, 49.5 id, 21.1 wa,  0.0 hi,  0.0 si,  0.0 st
+%Cpu1  :  5.0 us, 26.7 sy,  0.0 ni, 43.3 id, 10.0 wa,  0.0 hi, 15.0 si,  0.0 st
+KiB Mem:   1014068 total,   748148 used,   265920 free,   123036 buffers
+KiB Swap:        0 total,        0 used,        0 free.   443596 cached Mem
+
+...
+```
+
 
 
 
