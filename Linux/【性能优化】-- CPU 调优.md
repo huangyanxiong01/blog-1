@@ -68,6 +68,8 @@ Linux 3.16.0-30-generic (ubuntu) 	05/26/2018 	_x86_64_	(2 CPU)
 
 默认情况下，系统提供 irqbalance 服务进行硬中断的分配，并且效果不错，用户无需关心这个问题。但是在一些特殊的应用场景下，比如对于文件服务器、高流量 Web 服务器这样的应用来说，当发现多个网卡的请求都集中在同一个 CPU 时，通过把不同的网卡硬中断请求均衡绑定到不同的 CPU 上将会减轻某个 CPU 的负担，提高多个 CPU 整体处理中断的能力。具体绑定方法可以参考[这里](https://www.cnblogs.com/bamanzi/p/linux-irq-and-cpu-affinity.html)。
 
+> mpstat 关注的是**硬中断负载均衡**
+
 #### taskset
 
 该命令将绑定进程到指定的 CPU 上，这种人为的绑定可以使得进程在多核新的使用上比较均衡
@@ -124,6 +126,8 @@ KiB Swap:        0 total,        0 used,        0 free.   443596 cached Mem
 
 ...
 ```
+
+> taskset 关注的是**多核心利用率**
 
 
 
