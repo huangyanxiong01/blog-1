@@ -105,7 +105,7 @@ root@ubuntu:/var/log# dmesg -T | grep "Out of memory"
 
 ```
 
-其中，`points` 是进程所占用的内存大小，而 `oom_score_adj` 是内核留给用户空间做调整的参数。比如 `points` 数值相差不多的两个进程 A 和 B，如果我不想让 B 那么容易被 OOM Killer 处理掉，我就可以把 B 的 `oom_score_adj` 参数设置得更小。例如我想让 dockerd 的服务不那么容易被 kill：
+其中，`points` 是进程所占用的内存大小，而 `oom_adj` 是内核留给用户空间做调整的参数。比如 `points` 数值相差不多的两个进程 A 和 B，如果我不想让 B 那么容易被 OOM Killer 处理掉，我就可以把 B 的 `oom_adj` 参数设置得更小，。例如我想让 dockerd 的服务不那么容易被 kill：
 
 ```
 # 通过 ps 找到 PID
@@ -113,11 +113,11 @@ root@ubuntu:/var/log# ps aux | grep dockerd | grep -v color
 root       956  0.1  1.9 372996 19844 ?        Ssl  May16   9:17 /usr/bin/dockerd --raw-logs
 
 # 通过 /proc 找到进程的 oom_score_adj 值
-root@ubuntu:/var/log# cat /proc/956/oom_score_adj
--500
+root@ubuntu:/var/log# cat /proc/956/oom_adj
+-8
 
-# 改写 oom_score_adj 值
-root@ubuntu:/var/log# echo > -1000 /proc/956/oom_score_adj
+# 改写 oom_adj 值
+root@ubuntu:/var/log# echo > -16 /proc/956/oom_adj
 ```
 
 - 关闭 OOM Killer：非常不推荐用于生产环境
