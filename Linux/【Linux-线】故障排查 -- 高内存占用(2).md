@@ -126,14 +126,23 @@ root@ubuntu:/var/log# echo > -16 /proc/956/oom_adj
 root@ubuntu:/var/log# sysctl -w vm.overcommit_memory=2
 ```
 
+跟 OOM 相关的配置还有 `/proc/sys/vm/overcommit_memory`，`man proc` 的解释如下：
+
+```
+This file contains the kernel virtual memory accounting mode.  Values are:
+
+	0: heuristic overcommit (this is the default)
+	1: always overcommit, never check
+	2: always check, never overcommit
+```
+
+- 0 代表如果当进程申请的虚拟内存远大于物理内存时，则触发 OOM (例如物理内存 8g，申请虚拟内存 24g)
+- 1 代表无论申请多大的虚拟内存都允许，但当物理内存耗尽时，则触发 OOM
+- 2 代表会有一个 `RAM * SWAP * 系数` 的额度，当这次申请的虚拟内存加上之前已经申请的虚拟内存超过了额度，则触发 OOM (系数可以通过 `cat /proc/sys/vm/overcommit_ratio` 查看)
+
 ---
 
 ### <font color=#00b0f0>总结</font>
 
 对于内存这些敏感且珍贵的系统资源，除了在分配使用上面有很多的保护机制之外，在一些特殊情况下同样有像 OOM 这样的方法去保证这方面的健壮性。同时通过
 对 `oom_badness` 函数的简单了解，也可以看到实现上是用了很朴实的方法，并没有什么很玄乎的技巧，在个人的印象中，内核这种朴实无华的实现方式并不少，在狂秀语法糖的今天，值得我们深思
-
-
-
-
-
