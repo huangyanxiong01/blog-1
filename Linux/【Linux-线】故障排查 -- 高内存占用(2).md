@@ -78,7 +78,7 @@ root@ubuntu:/var/log# dmesg -T | grep "Out of memory"
 
 - 默认方式：让内核去 Kill 掉内存占用最多的进程
 - 自动重启：当有进程触发 OOM 时，不采取默认方式，而是系统自动重启，通过 `vm.panic_on_oom` 和 `kernel.panic` 两个内核参数去控制。个人感觉这种随便重启的方式非常的不好，所以不做谈论
-- 调整 `oom_score_adj` 参数：内核在执行 OOM Killer 时是根据 `points` 和 `oom_score_adj` 的总和去做判断的，总和越大的越容易被 kill 掉。(参考 [linux/mm/oom_kill.c](https://github.com/torvalds/linux/blob/master/mm/oom_kill.c) 的 `oom_badness` 函数)。
+- 调整 `oom_adj` 参数：内核在执行 OOM Killer 时是根据 `points` 和 `oom_adj` 的总和去做判断的，总和越大的越容易被 kill 掉。(参考 [linux/mm/oom_kill.c](https://github.com/torvalds/linux/blob/master/mm/oom_kill.c) 的 `oom_badness` 函数)。
 
 ```
 	# oom_badness 函数关于两个关键参数的截取
@@ -112,7 +112,7 @@ root@ubuntu:/var/log# dmesg -T | grep "Out of memory"
 root@ubuntu:/var/log# ps aux | grep dockerd | grep -v color
 root       956  0.1  1.9 372996 19844 ?        Ssl  May16   9:17 /usr/bin/dockerd --raw-logs
 
-# 通过 /proc 找到进程的 oom_score_adj 值
+# 通过 /proc 找到进程的 oom_adj 值
 root@ubuntu:/var/log# cat /proc/956/oom_adj
 -8
 
