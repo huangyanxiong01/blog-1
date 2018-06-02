@@ -19,3 +19,5 @@ CPU 三大组成部分
 如下图红框所示：
 
 ![](https://raw.githubusercontent.com/hsxhr-10/picture/master/cpu%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86.png)
+
+### <font color=#00b0f0>CPU 性能指标</font>
