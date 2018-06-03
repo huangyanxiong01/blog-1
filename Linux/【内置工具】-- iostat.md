@@ -55,7 +55,7 @@ dm-1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0
 - **r_await**：每个读 I/O 平均花费的时间 (包括内核队列时间等待和设备处理时间)
 - **w_await**：每个写 I/O 平均花费的时间 (包括内核队列时间等待和设备处理时间)
 - **svctm**：已废弃的字段，参考 man 手册 `Warning! Do not trust this field any more.  This  field  will be removed in a future sysstat version.`
-- **util**：该设备有 I/O 的时间比 (重点是有没有 I/O，不考虑有多少 I/O)
+- **util**：该设备有 I/O 活动的时间比 (重点是有没有 I/O，不考虑有多少 I/O)
 
 > `iostat` 能让我们了解到有没有 I/O；随机和顺序 I/O 的比例；读写 I/O 的比例；读写 I/O 的数据量大小；未完成的 I/O 个数；大概的 I/O 时间等，通过这些信息我们可以对设备的现状作出一个初步的评估
 
