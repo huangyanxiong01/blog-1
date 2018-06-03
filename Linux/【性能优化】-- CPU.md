@@ -18,7 +18,7 @@ DISTRIB_DESCRIPTION="Ubuntu 14.04.2 LTS"
 
 想要快速确定一个问题是 CPU 造成的，其实不是一件很容易的事情，因为 CPU 需要跟不同的子系统互相通信，所以很多时候表现出来的只是表象，背后真相可能是其他子系统造成的问题。比如当 CPU 的利用率很高时，有可能是真的在高速地处理者任务，也有可能是因为某个系统事件阻塞在那里；或者在增加了 CPU 数量之后，发现进程服务的 CPU 占用还是非常高。
 
-除了 [【常用工具】-- top](https://github.com/hsxhr-10/blog/blob/master/Linux/%E3%80%90%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7%E3%80%91--%20top.md) 中提到的 `top`，下面还会介绍一些其他非常好用的 CPU 调优工具
+除了 [【内置工具】-- top](https://github.com/hsxhr-10/blog/blob/master/Linux/%E3%80%90%E5%86%85%E7%BD%AE%E5%B7%A5%E5%85%B7%E3%80%91--%20top.md) 中提到的 `top`，下面还会介绍一些其他非常好用的 CPU 调优工具
 
 #### vmstat
 
