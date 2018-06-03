@@ -43,4 +43,16 @@ dm-1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0
 ```
 
 - Device：对应 `/dev` 目录下的的设备 (加了 `-p` 参数会显示设备的分区，如 `sda1`)
-
+- rrqm/s：每秒合并的读 I/O 个数，当多个 I/O 读取相邻的数据块时，这些读 I/O 将会被合并成一个，提高读取效率
+- wrqm/s：每秒合并的写 I/O 个数，当多个 I/O 写入相邻的数据块时，这些写 I/O 将会被合并成一个，提高写入效率
+- r/s：每秒的读 I/O 个数
+- w/s：每秒的写 I/O 个数
+- rMB/s：每秒读取的字节数 (加了 `-m` 参数，所以显示的是 MB/s，默认 KB/s)
+- wMB/s：每秒写入的字节数 (加了 `-m` 参数，所以显示的是 MB/s，默认 KB/s)
+- avgrq-sz：每个 I/O 的平均扇区个数
+- avgqu-sz：未完成的 I/O 个数 (包括内核队列等待未完成和设备处理未完成)
+- await：每个 I/O 平均花费的时间 (包括内核队列时间等待和设备处理时间)
+- r_await：每个读 I/O 平均花费的时间 (包括内核队列时间等待和设备处理时间)
+- w_await：每个写 I/O 平均花费的时间 (包括内核队列时间等待和设备处理时间)
+- svctm：已废弃的字段，参考 man 手册 `Warning! Do not trust this field any more.  This  field  will be removed in a future sysstat version.`
+- util：该设备有 I/O 的时间比 (重点是有没有 I/O，不考虑有多少 I/O)
