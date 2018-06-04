@@ -30,6 +30,8 @@
 
 ![](https://raw.githubusercontent.com/hsxhr-10/picture/master/cpu%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86.png)
 
+---
+
 ### <font color=#00b0f0>CPU 性能指标</font>
 
 - 主频：指的是每秒能发出的数字脉冲次数，单位是 MHz/GHz。比如主频 800MHz 的 CPU 能在每秒发出一亿次的数字脉冲 (100 * 1000 * 1000)，主频的数值越大，相当于 CPU 从 PC 中读取地址的速度越快，所以也可以约等于 CPU 越快。不过这里有个陷阱，就是主频仅仅是参考数值，实际上会有低频的实际速度大于等于高频的情况
