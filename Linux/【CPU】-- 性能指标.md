@@ -1,6 +1,6 @@
 ### <font color=#00b0f0>CPU 工作原理</font>
 
-先直观感受下 CPU 的样子：
+先直观感受下多核 CPU 的样子：
 
 ![](https://raw.githubusercontent.com/hsxhr-10/picture/master/cpu%E7%BB%93%E6%9E%84%E5%9B%BE1.jpg)
 
