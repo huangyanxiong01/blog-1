@@ -2,9 +2,9 @@
 
 先直观感受下 CPU 的样子：
 
-![]()
+![](https://raw.githubusercontent.com/hsxhr-10/picture/master/cpu%E7%BB%93%E6%9E%84%E5%9B%BE1.jpg)
 
-![]()
+![](https://raw.githubusercontent.com/hsxhr-10/picture/master/cpu%E7%BB%93%E6%9E%84%E5%9B%BE2.jpg)
 
 三大组成部分：
 
