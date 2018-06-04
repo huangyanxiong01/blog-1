@@ -1,11 +1,5 @@
 ### <font color=#00b0f0>CPU 工作原理</font>
 
-先直观感受下多核 CPU 的样子：
-
-![](https://raw.githubusercontent.com/hsxhr-10/picture/master/cpu%E7%BB%93%E6%9E%84%E5%9B%BE1.jpg)
-
-![](https://raw.githubusercontent.com/hsxhr-10/picture/master/cpu%E7%BB%93%E6%9E%84%E5%9B%BE2.jpg)
-
 三大组成部分：
 
 - 控制单元
@@ -40,3 +34,11 @@
    - L2 Cache：容量次之，对于多核芯 CPU 来说，每个核单独拥有二级缓存，且不共享，L2 Cache 等于每个核的二级缓存之和
    - L3 Cache：容量最大，对于多核芯 CPU 来说，每个核共享三级缓存
 - TODO：外频、倍频系数、流水线
+
+---
+
+最后直观感受下多核 CPU 的样子：
+
+![](https://raw.githubusercontent.com/hsxhr-10/picture/master/cpu%E7%BB%93%E6%9E%84%E5%9B%BE1.jpg)
+
+![](https://raw.githubusercontent.com/hsxhr-10/picture/master/cpu%E7%BB%93%E6%9E%84%E5%9B%BE2.jpg)
