@@ -27,8 +27,6 @@ DISTRIB_DESCRIPTION="Ubuntu 14.04.2 LTS"
 
 *注意：下面的测试机器的多核指的是逻辑核，且都是云服务器。*
 
-4 台测试服务器的情况：
-
 ```
 # 服务器 1 的 CPU 情况
 root@iZbp107984k6l9khwapbruZ:~# lscpu 
