@@ -1,13 +1,14 @@
 ### 测试指标
 
 - 延迟：即完成一个 CPU 周期所需的时间
+- 运算速率：包括算术运算和逻辑运算
 
 ---
 
 ### 工具
 
 - cyclictest：负责测试延迟
-
+- sysbench：负责测试运算速率额
 ---
 
 ### 测试示例
@@ -165,3 +166,240 @@ T: 0 (32363) P: 0 I:1000 C: 298471 Min:     12 Act:   30 Avg:   41 Max:    7497
 - 对于服务器 1 和 3 来说，CPU 核数差距较大，差了 4 倍，但是 1 和 3 的 `L1d cache`, `L1i cache` 相同，3 的 `L2 cache` 是 1 的 4 倍，3 的 `L3 cache` 比 1 少几百 KB。结果 3 的 `Avg` 和 1 的 `Avg` 并没有相差很大，说明除了核数，三级缓存对 CPU 的延迟影响也很大。
 - 对于服务器 3 和 2/4，虽然 3 的核数 <= 2/4，但是三级缓存之和却平均多了 16500KB，更重要的是二级缓存是它们的 4 倍，所以 3 的 `Avg` 值比 2/4 少了 4-5 倍。
 - 对于服务器 2 和 4 来说，虽然 2 的核数是 4 的 2 倍，三级缓存之和多了五千多 KB，但是 2 的 `Avg` 值却比 4 要高，这咋一看不合理，但是由于这些都是通过虚拟化技术虚拟出来的云服务器，并且 2 和 4 是在不同的区域，同时 2 是一个人满为患的老区，4 是人相对少的新区，这也可以说明老区的云服务器对物理资源的争夺比新区要激烈，老区的物理资源也没有新区的充裕。
+
+总的来说，对于 CPU 延迟：1 < 3 < 4 < 2。
+
+#### 测试运算速率
+
+> sysbench 通过求最大质数来测试 CPU 的运算能力
+
+**当没有充分利用多核优势时**
+
+```
+# 服务器 1
+root@iZbp107984k6l9khwapbruZ:~# sysbench --test=cpu --cpu-max-prime=20000 run
+sysbench 0.4.12:  multi-threaded system evaluation benchmark
+
+Running the test with following options:
+Number of threads: 1
+
+Doing CPU performance benchmark
+
+Threads started!
+Done.
+
+Maximum prime number checked in CPU test: 20000
+
+
+Test execution summary:
+    total time:                          26.0489s
+    total number of events:              10000
+    total time taken by event execution: 26.0473
+    per-request statistics:
+         min:                                  2.59ms
+         avg:                                  2.60ms
+         max:                                  3.75ms
+         approx.  95 percentile:               2.62ms
+
+Threads fairness:
+    events (avg/stddev):           10000.0000/0.00
+    execution time (avg/stddev):   26.0473/0.00
+```
+
+```
+# 服务器 2
+root@iZ231l9tsglZ:~# sysbench --test=cpu --cpu-max-prime=20000 run
+sysbench 0.4.12:  multi-threaded system evaluation benchmark
+
+Running the test with following options:
+Number of threads: 1
+
+Doing CPU performance benchmark
+
+Threads started!
+Done.
+
+Maximum prime number checked in CPU test: 20000
+
+
+Test execution summary:
+    total time:                          33.1618s
+    total number of events:              10000
+    total time taken by event execution: 33.1524
+    per-request statistics:
+         min:                                  3.25ms
+         avg:                                  3.32ms
+         max:                                 14.83ms
+         approx.  95 percentile:               3.50ms
+
+Threads fairness:
+    events (avg/stddev):           10000.0000/0.00
+    execution time (avg/stddev):   33.1524/0.00
+```
+
+```
+# 服务器 3
+root@iZwz960qbyq1j1qda2lvdoZ:~# sysbench --test=cpu --cpu-max-prime=20000 run
+sysbench 0.4.12:  multi-threaded system evaluation benchmark
+
+Running the test with following options:
+Number of threads: 1
+
+Doing CPU performance benchmark
+
+Threads started!
+Done.
+
+Maximum prime number checked in CPU test: 20000
+
+
+Test execution summary:
+    total time:                          28.2148s
+    total number of events:              10000
+    total time taken by event execution: 28.2130
+    per-request statistics:
+         min:                                  2.74ms
+         avg:                                  2.82ms
+         max:                                 78.38ms
+         approx.  95 percentile:               2.87ms
+
+Threads fairness:
+    events (avg/stddev):           10000.0000/0.00
+    execution time (avg/stddev):   28.2130/0.00
+```
+
+```
+# 服务器 4
+root@iZbp175df13v7q2t1t1ddgZ:~# sysbench --test=cpu --cpu-max-prime=20000 run
+sysbench 0.4.12:  multi-threaded system evaluation benchmark
+
+Running the test with following options:
+Number of threads: 1
+
+Doing CPU performance benchmark
+
+Threads started!
+Done.
+
+Maximum prime number checked in CPU test: 20000
+
+
+Test execution summary:
+    total time:                          70.3269s
+    total number of events:              10000
+    total time taken by event execution: 70.3050
+    per-request statistics:
+         min:                                  3.74ms
+         avg:                                  7.03ms
+         max:                                 23.68ms
+         approx.  95 percentile:              12.64ms
+
+Threads fairness:
+    events (avg/stddev):           10000.0000/0.00
+    execution time (avg/stddev):   70.3050/0.00
+```
+
+重点关注 `total time` 参数，表示完成这个运算用了多少时间，该值越小代表 CPU 运算越快。对于 CPU 运算时间：1 < 3 < 2 < 4。
+
+**当充分利用多核优势时**
+
+*加上 --num-threads 参数，按照服务器的核数赋值*
+
+```
+# 服务器 1
+root@iZbp107984k6l9khwapbruZ:~# sysbench --test=cpu --cpu-max-prime=20000 --num-threads=4 run
+sysbench 0.4.12:  multi-threaded system evaluation benchmark
+
+Running the test with following options:
+Number of threads: 4
+
+Doing CPU performance benchmark
+
+Threads started!
+Done.
+
+Maximum prime number checked in CPU test: 20000
+
+
+Test execution summary:
+    total time:                          7.1411s
+    total number of events:              10000
+    total time taken by event execution: 28.5349
+    per-request statistics:
+         min:                                  2.59ms
+         avg:                                  2.85ms
+         max:                                 15.11ms
+         approx.  95 percentile:               3.15ms
+
+Threads fairness:
+    events (avg/stddev):           2500.0000/217.80
+    execution time (avg/stddev):   7.1337/0.01
+```
+
+```
+# 服务器 2
+root@iZ231l9tsglZ:~# sysbench --test=cpu --cpu-max-prime=20000 --num-threads=2 run
+sysbench 0.4.12:  multi-threaded system evaluation benchmark
+
+Running the test with following options:
+Number of threads: 2
+
+Doing CPU performance benchmark
+
+Threads started!
+Done.
+
+Maximum prime number checked in CPU test: 20000
+
+
+Test execution summary:
+    total time:                          17.5296s
+    total number of events:              10000
+    total time taken by event execution: 35.0462
+    per-request statistics:
+         min:                                  3.25ms
+         avg:                                  3.50ms
+         max:                                 21.72ms
+         approx.  95 percentile:               4.02ms
+
+Threads fairness:
+    events (avg/stddev):           5000.0000/20.00
+    execution time (avg/stddev):   17.5231/0.00
+```
+
+```
+# 服务器 3
+root@iZwz960qbyq1j1qda2lvdoZ:~# sysbench --test=cpu --cpu-max-prime=20000 --num-threads=1 run
+sysbench 0.4.12:  multi-threaded system evaluation benchmark
+
+Running the test with following options:
+Number of threads: 1
+
+Doing CPU performance benchmark
+
+Threads started!
+Done.
+
+Maximum prime number checked in CPU test: 20000
+
+
+Test execution summary:
+    total time:                          28.5588s
+    total number of events:              10000
+    total time taken by event execution: 28.5568
+    per-request statistics:
+         min:                                  2.75ms
+         avg:                                  2.86ms
+         max:                                109.25ms
+         approx.  95 percentile:               2.94ms
+
+Threads fairness:
+    events (avg/stddev):           10000.0000/0.00
+    execution time (avg/stddev):   28.5568/0.00
+```
+
+```
+# 服务器 4
+```
+
+可以看到多核的
