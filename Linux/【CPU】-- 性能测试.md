@@ -11,6 +11,18 @@
 - sysbench：负责测试运算速率额 (sysbench 通过求最大质数来测试 CPU 的运算能力)
 ---
 
+### <font color=#00b0f0>运行环境</font>
+
+```
+# uname -a
+Linux ubuntu 3.16.0-30-generic #40~14.04.1-Ubuntu SMP Thu Jan 15 17:43:14 UTC 2015 x86_64 x86_64 x86_64 GNU/Linux
+
+# cat /etc/*-release
+DISTRIB_DESCRIPTION="Ubuntu 14.04.2 LTS"
+```
+
+---
+
 ### 测试示例
 
 *注意：下面的测试机器的多核指的是逻辑核，且都是云服务器。*
