@@ -121,7 +121,7 @@ NUMA node0 CPU(s):     0
 #### 测试延迟
 
 ```
-# 测试结果
+# 服务器 1
 root@iZbp107984k6l9khwapbruZ:~# cyclictest -D 300s q
 # /dev/cpu_dma_latency set to 0us
 WARN: Running on unknown kernel version...YMMV
@@ -131,7 +131,7 @@ T: 0 ( 9136) P: 0 I:1000 C: 299848 Min:      5 Act:   11 Avg:   11 Max:   21205
 ```
 
 ```
-# 测试结果
+# 服务器 2
 root@iZ231l9tsglZ:~# cyclictest -D 300s q
 # /dev/cpu_dma_latency set to 0us
 policy: other/other: loadavg: 1.17 0.99 0.91 1/513 30696           
@@ -140,7 +140,7 @@ T: 0 (21462) P: 0 I:1000 C: 296034 Min:     10 Act:   27 Avg:   55 Max:   19410
 ```
 
 ```
-# 测试结果
+# 服务器 3
 root@iZwz960qbyq1j1qda2lvdoZ:~# cyclictest -D 300s q
 # /dev/cpu_dma_latency set to 0us
 policy: other/other: loadavg: 0.22 0.08 0.04 1/224 22971          
@@ -149,7 +149,7 @@ T: 0 (22963) P: 0 I:1000 C: 299906 Min:      6 Act:   11 Avg:   18 Max:    4835
 ```
 
 ```
-# 测试结果
+# 服务器 4
 root@iZbp175df13v7q2t1t1ddgZ:~# cyclictest -D 300s q
 # /dev/cpu_dma_latency set to 0us
 policy: other/other: loadavg: 1.09 1.15 1.03 2/252 6806            
