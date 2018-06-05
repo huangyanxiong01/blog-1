@@ -14,7 +14,7 @@
 
 *注意：下面的测试机器的多核指的是逻辑核，且都是云服务器*
 
-#### 测试延迟
+4 台测试服务器的情况
 
 ```
 # 服务器 1 的 CPU 情况
@@ -42,16 +42,6 @@ L2 cache:              256K
 L3 cache:              40960K
 NUMA node0 CPU(s):     0-3
 
-# 测试结果
-root@iZbp107984k6l9khwapbruZ:~# cyclictest -D 300s q
-# /dev/cpu_dma_latency set to 0us
-WARN: Running on unknown kernel version...YMMV
-policy: other/other: loadavg: 0.00 0.04 0.69 1/235 9864          
-
-T: 0 ( 9136) P: 0 I:1000 C: 299848 Min:      5 Act:   11 Avg:   11 Max:   21205
-```
-
-```
 # 服务器 2 的 CPU 情况
 root@iZ231l9tsglZ:~# lscpu 
 Architecture:          x86_64
@@ -77,15 +67,6 @@ L2 cache:              256K
 L3 cache:              20480K
 NUMA node0 CPU(s):     0,1
 
-# 测试结果
-root@iZ231l9tsglZ:~# cyclictest -D 300s q
-# /dev/cpu_dma_latency set to 0us
-policy: other/other: loadavg: 1.17 0.99 0.91 1/513 30696           
-
-T: 0 (21462) P: 0 I:1000 C: 296034 Min:     10 Act:   27 Avg:   55 Max:   19410
-```
-
-```
 # 服务器 3 的 CPU 情况
 root@iZwz960qbyq1j1qda2lvdoZ:~# lscpu 
 Architecture:          x86_64
@@ -111,15 +92,6 @@ L2 cache:              1024K
 L3 cache:              33792K
 NUMA node0 CPU(s):     0
 
-# 测试结果
-root@iZwz960qbyq1j1qda2lvdoZ:~# cyclictest -D 300s q
-# /dev/cpu_dma_latency set to 0us
-policy: other/other: loadavg: 0.22 0.08 0.04 1/224 22971          
-
-T: 0 (22963) P: 0 I:1000 C: 299906 Min:      6 Act:   11 Avg:   18 Max:    4835
-```
-
-```
 # 服务器 4 的 CPU 情况
 root@iZbp175df13v7q2t1t1ddgZ:~# lscpu 
 Architecture:          x86_64
@@ -144,7 +116,39 @@ L1i cache:             32K
 L2 cache:              256K
 L3 cache:              15360K
 NUMA node0 CPU(s):     0
+```
 
+#### 测试延迟
+
+```
+# 测试结果
+root@iZbp107984k6l9khwapbruZ:~# cyclictest -D 300s q
+# /dev/cpu_dma_latency set to 0us
+WARN: Running on unknown kernel version...YMMV
+policy: other/other: loadavg: 0.00 0.04 0.69 1/235 9864          
+
+T: 0 ( 9136) P: 0 I:1000 C: 299848 Min:      5 Act:   11 Avg:   11 Max:   21205
+```
+
+```
+# 测试结果
+root@iZ231l9tsglZ:~# cyclictest -D 300s q
+# /dev/cpu_dma_latency set to 0us
+policy: other/other: loadavg: 1.17 0.99 0.91 1/513 30696           
+
+T: 0 (21462) P: 0 I:1000 C: 296034 Min:     10 Act:   27 Avg:   55 Max:   19410
+```
+
+```
+# 测试结果
+root@iZwz960qbyq1j1qda2lvdoZ:~# cyclictest -D 300s q
+# /dev/cpu_dma_latency set to 0us
+policy: other/other: loadavg: 0.22 0.08 0.04 1/224 22971          
+
+T: 0 (22963) P: 0 I:1000 C: 299906 Min:      6 Act:   11 Avg:   18 Max:    4835
+```
+
+```
 # 测试结果
 root@iZbp175df13v7q2t1t1ddgZ:~# cyclictest -D 300s q
 # /dev/cpu_dma_latency set to 0us
