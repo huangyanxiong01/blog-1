@@ -17,7 +17,7 @@
 #### 测试延迟
 
 ```
-# 测试服务器 1 的 CPU 情况
+# 服务器 1 的 CPU 情况
 root@iZbp107984k6l9khwapbruZ:~# lscpu 
 Architecture:          x86_64
 CPU op-mode(s):        32-bit, 64-bit
@@ -52,7 +52,7 @@ T: 0 ( 9136) P: 0 I:1000 C: 299848 Min:      5 Act:   11 Avg:   11 Max:   21205
 ```
 
 ```
-# 测试服务器 2 的 CPU 情况
+# 服务器 2 的 CPU 情况
 root@iZ231l9tsglZ:~# lscpu 
 Architecture:          x86_64
 CPU op-mode(s):        32-bit, 64-bit
@@ -85,4 +85,32 @@ policy: other/other: loadavg: 1.17 0.99 0.91 1/513 30696
 T: 0 (21462) P: 0 I:1000 C: 296034 Min:     10 Act:   27 Avg:   55 Max:   19410
 ```
 
+```
+# 服务器 3 的 CPU 情况
+root@iZwz960qbyq1j1qda2lvdoZ:~# lscpu 
+Architecture:          x86_64
+CPU op-mode(s):        32-bit, 64-bit
+Byte Order:            Little Endian
+CPU(s):                1
+On-line CPU(s) list:   0
+Thread(s) per core:    1
+Core(s) per socket:    1
+Socket(s):             1
+NUMA node(s):          1
+Vendor ID:             GenuineIntel
+CPU family:            6
+Model:                 85
+Stepping:              4
+CPU MHz:               2500.000
+BogoMIPS:              5000.00
+Hypervisor vendor:     KVM
+Virtualization type:   full
+L1d cache:             32K
+L1i cache:             32K
+L2 cache:              1024K
+L3 cache:              33792K
+NUMA node0 CPU(s):     0
 
+# 测试结果
+
+```
