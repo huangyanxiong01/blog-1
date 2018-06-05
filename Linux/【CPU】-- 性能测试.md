@@ -152,3 +152,7 @@ policy: other/other: loadavg: 1.09 1.15 1.03 2/252 6806
 
 T: 0 (32363) P: 0 I:1000 C: 298471 Min:     12 Act:   30 Avg:   41 Max:    7497
 ```
+
+对于服务器的 CPU 重点看几个参数 `CPU(s)`, `CPU MHz`, `L1d cache`, `L1i cache`, `L2 cache`, `L3 cache`，可以看到 4 个测试服务器的 `CPU MHz` 字段基本相同，重点分析其他三个参数对 CPU 延迟的影响。
+
+
