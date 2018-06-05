@@ -369,7 +369,7 @@ Threads fairness:
 
 ```
 # 服务器 3
-root@iZwz960qbyq1j1qda2lvdoZ:~# sysbench --test=cpu --cpu-max-prime=20000 --num-threads=1 run
+root@iZwz960qbyq1j1qda2lvdoZ:~# sysbench --test=cpu --cpu-max-prime=20000 --num-threads=4 run
 sysbench 0.4.12:  multi-threaded system evaluation benchmark
 
 Running the test with following options:
@@ -400,6 +400,33 @@ Threads fairness:
 
 ```
 # 服务器 4
+root@iZbp175df13v7q2t1t1ddgZ:~# sysbench --test=cpu --cpu-max-prime=20000 --num-threads=4 run
+sysbench 0.4.12:  multi-threaded system evaluation benchmark
+
+Running the test with following options:
+Number of threads: 1
+
+Doing CPU performance benchmark
+
+Threads started!
+Done.
+
+Maximum prime number checked in CPU test: 20000
+
+
+Test execution summary:
+    total time:                          71.8341s
+    total number of events:              10000
+    total time taken by event execution: 71.8184
+    per-request statistics:
+         min:                                  3.74ms
+         avg:                                  7.18ms
+         max:                                 17.23ms
+         approx.  95 percentile:              12.65ms
+
+Threads fairness:
+    events (avg/stddev):           10000.0000/0.00
+    execution time (avg/stddev):   71.8184/0.00
 ```
 
-可以看到多核的
+可以看到多核的优势已经体现出来了，1 比原来快了差不多 4 倍，2 比 原来快了差不多 2 倍，而 3 和 4 由于是单核，即便是加了参数也跟原来的速率差不多。对于 CPU 运算时间：1 < 2 < 3 < 4。
