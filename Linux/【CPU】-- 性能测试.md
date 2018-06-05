@@ -112,5 +112,43 @@ L3 cache:              33792K
 NUMA node0 CPU(s):     0
 
 # 测试结果
+root@iZwz960qbyq1j1qda2lvdoZ:~# cyclictest -D 300s q
+# /dev/cpu_dma_latency set to 0us
+policy: other/other: loadavg: 0.22 0.08 0.04 1/224 22971          
 
+T: 0 (22963) P: 0 I:1000 C: 299906 Min:      6 Act:   11 Avg:   18 Max:    4835
+```
+
+```
+# 服务器 4 的 CPU 情况
+root@iZbp175df13v7q2t1t1ddgZ:~# lscpu 
+Architecture:          x86_64
+CPU op-mode(s):        32-bit, 64-bit
+Byte Order:            Little Endian
+CPU(s):                1
+On-line CPU(s) list:   0
+Thread(s) per core:    1
+Core(s) per socket:    1
+Socket(s):             1
+NUMA node(s):          1
+Vendor ID:             GenuineIntel
+CPU family:            6
+Model:                 45
+Stepping:              7
+CPU MHz:               2300.022
+BogoMIPS:              4600.04
+Hypervisor vendor:     Xen
+Virtualization type:   full
+L1d cache:             32K
+L1i cache:             32K
+L2 cache:              256K
+L3 cache:              15360K
+NUMA node0 CPU(s):     0
+
+# 测试结果
+root@iZbp175df13v7q2t1t1ddgZ:~# cyclictest -D 300s q
+# /dev/cpu_dma_latency set to 0us
+policy: other/other: loadavg: 1.09 1.15 1.03 2/252 6806            
+
+T: 0 (32363) P: 0 I:1000 C: 298471 Min:     12 Act:   30 Avg:   41 Max:    7497
 ```
