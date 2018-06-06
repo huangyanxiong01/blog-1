@@ -53,7 +53,7 @@ superblock 的成员变量由结构 `struct super_block` 定义，常见的有�
 superblock 的操作函数列表由 `super_operations` 结构体定义，常见的有：
 
 - alloc_inode(sb)：初始化一个新的 inode
-- destroy_inode(inode)：释放 inode**
+- destroy_inode(inode)：释放 inode
 - read_inode(inode)：磁盘中的文件系统 inode 并填充到内存中 VFS 的 inode
 - write_inode(inode, wait)：将内存中 VFS 的 inode 写入磁盘中文件系统的 inode
 
