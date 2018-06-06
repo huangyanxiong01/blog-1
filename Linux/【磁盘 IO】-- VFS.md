@@ -31,5 +31,11 @@ Linux 为了支持不同的文件系统，就需要一个抽象层将具体文�
 
 #### superblock
 
-superblock 用于存放文件系统的信息，比如文件系统类型、设备标识符等，这个对象对应着文件系统中的超级块，但是文件系统中的超级块是存放于磁盘当中。superblock 的成员变量由结构 `struct super_block` 表示，操作函数则由 `super_operations` 结构体表示，都是定义在文件include/linux/fs.h中，操作函数主要提供对文件系统和 inode 的管理，比如增删 inode，同步 VFS 和 FS 之间的数据等。
+superblock 用于存放文件系统的信息，比如文件系统类型、设备标识、回写列表符等，这个对象对应着文件系统中的超级块，但是文件系统中的超级块是存放于磁盘当中。superblock 的成员变量由结构 `struct super_block` 表示，操作函数则由 `super_operations` 结构体表示，都是定义在文件 `include/linux/fs.h` 中，操作函数主要提供对文件系统和 inode 的管理，比如增删 inode 对象，同步 VFS 和文件系统之间的数据等，这些函数的具体实现由文件系统提供，VFS 只提供接口，这就体现了抽象层的作用了。
+
+#### inode
+
+一个 inode 对象对应着一个文件/目录，inode 存放着内核操作文件/目录时所需的一切信息，形象点来说就是执行 `ls -l` 时的信息都是 inode 提供的。inode 对象由`inode` 结构体表示，操作函数则是由 `inode_operations` 结构体表示，都定义在文件 `include/linux/fs.h` 中，操作函数主要提供对 inode 成员变量的操作，同理，这些函数的具体实现由文件系统提供，VFS 只提供接口。
+
+#### dentry
 
