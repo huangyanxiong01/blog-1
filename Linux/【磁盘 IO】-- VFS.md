@@ -30,10 +30,10 @@ Linux 为了支持不同的文件系统，就需要一个抽象层将具体文�
 
 ### VFS 数据结构
 
-- **superblock**：超级块。表示某个加载的文件系统
-- **inode**：索引节点。表示某个文件
-- **dentry**：目录项。表示路径的一个组成部分
-- **file**：文件对象。表示被某个进程打开的一个文件
+- **superblock：超级块。表示某个加载的文件系统
+- inode：索引节点。表示某个文件
+- dentry：目录项。表示路径的一个组成部分
+- file：文件对象。表示被某个进程打开的一个文件**
 
 > 这些对象都是存放于内存当中
 
@@ -43,30 +43,30 @@ superblock 存储着一个已挂载的文件系统的详细信息，代表一个
 
 superblock 的成员变量由结构 `struct super_block` 定义，常见的有：
 
-- **s_type：文件系统类型**
-- **s_op：superblock 操作函数列表**
+- **s_type：文件系统类型
+- s_op：superblock 操作函数列表**
 
-superblock 的操作函数由 `super_operations` 结构体定义，常见的有：
+superblock 的操作函数列表由 `super_operations` 结构体定义，常见的有：
 
-- **alloc_inode(sb)：初始化一个新的 inode**
-- **destroy_inode(inode)：释放 inode**
-- **read_inode(inode)：磁盘中的文件系统 inode 并填充到内存中 VFS 的 inode**
-- **write_inode(inode, wait)：将内存中 VFS 的 inode 写入磁盘中文件系统的 inode**
+- **alloc_inode(sb)：初始化一个新的 inode
+- destroy_inode(inode)：释放 inode
+- read_inode(inode)：磁盘中的文件系统 inode 并填充到内存中 VFS 的 inode
+- write_inode(inode, wait)：将内存中 VFS 的 inode 写入磁盘中文件系统的 inode**
 
 这些函数都由具体的文件系统实现，VFS 只提供接口名。上述结构体都定义在文件 `include/linux/fs.h` 中。
 
 #### inode
 
-inode 存储了一个文件的详细信息，代表了一个真实的物理文件；当一个文件被首次访问时，内核会利用 superblock 提供的操作函数将磁盘中文件系统的 inode 读出来，并填充到内存中 VFS 的 inode。形象点来说，执行 `ls -l` 时的信息都是 inode 提供的。
+inode 存储了一个文件的详细信息，代表了一个真实的物理文件。当一个文件被首次访问时，内核会利用 superblock 提供的操作函数将磁盘中的文件系统的 inode 读出来，并填充到内存中 VFS 的 inode。形象点来说，执行 `ls -l` 时的信息都是 inode 提供的。
 
 inode 的成员变量由 `inode` 结构体表示，常见的有：
 
-- **i_dentry：与之对应的 dentry 链表**
-- **i_sb：与之对应的 superblock**
-- **i_op：inode 操作函数列表**
-- **i_fop：该 inode 对应的 file 的操作函数列表 (很重要！用户空间的 I/O 操作都会被转到这里)**
+- **i_dentry：与之对应的 dentry 链表
+- i_sb：与之对应的 superblock
+- i_op：inode 操作函数列表
+- i_fop：该 inode 对应的 file 的操作函数列表 (很重要！用户空间的 I/O 操作都会被转到这里)**
 
-inode 的操作函数由 `inode_operations` 结构体表示，常见的有：
+inode 的操作函数列表由 `inode_operations` 结构体表示，常见的有：
 
 - **create(dir, dentry, mode, nameidata)：为 dentry 创建一个新的 inode**
 
@@ -74,45 +74,65 @@ inode 的操作函数由 `inode_operations` 结构体表示，常见的有：
 
 #### dentry
 
-VFS 也可以根据 inode 提供的信息来解析路径，但是由于路径解析是一个非常频繁的操作，且解析路径是一个耗时的操作，因此为了提高解析的性能，引入 dentry 对象，并将 dentry 对象缓存起来，这样在每次需要解析路径时，就快很多了。比如路径 /bin/pwd，/、bin、pwd 都是路径中的一个 dentry，各自也都有对应的 inode 对象。不同于前面两个对象，这个对象在文件系统中并没有对应的磁盘数据。
+dentry 概念的引入主要是为了更快速地解析路径、查找文件。由于路径解析是一个非常频繁的操作，且解析路径是一个耗时的操作，因此为了提高解析的性能，引入 dentry 对象，并将 dentry 对象缓存起来，这样在每次需要解析路径时，就快很多了。比如路径 /bin/pwd，/、bin、pwd 都是路径中的一个 dentry。不同于前面的两个对象，dentry 没有对应的磁盘数据结构，VFS 在解析路径名的过程中现场将它们逐个地解析成 dentry，并缓存起来。
 
-dentry 对象的成员变量由 `dentry` 结构体表示，常见的有：
+dentry 的成员变量由 `dentry` 结构体表示，常见的有：
 
-- **d_inode：与之对应的 inode 对象**
-- **d_sb：与之对应的 superblock 对象**
-- d_parent：：父目录组成的 dentry 对象链表
-- d_subdirs：子目录的 dentry 对象
-- d_vfs_flags：dentry 对象缓存标志
-- d_op：操作函数
+- **d_inode：与之对应的 inode 对象
+- d_sb：与之对应的 superblock 对象
+- d_name：dentry 的名字
+- d_subdirs：子目录的 dentry 列表
+- d_parent：父目录的 dentry
+- d_op：dentry 操作函数列表**
 
-dentry 对象的操作函数由 `dentry_operations` 结构体表示，常见的有：
+dentry 对象的操作函数列表由 `dentry_operations` 结构体表示，常见的有：
 
-- d_delete(dentry)：删除 dentry 对象
+- **d_revalidate(dentry)：判断 dentry 是否有效
+- d_hash(dentry, qstr)：为 dentry 生成缓存用的散列值**
 
 这些函数的具体实现由文件系统提供，VFS 只提供接口。上述结构体都定义在文件 `include/linux/fs.h` 中。
 
 #### file
 
-file 对象和文件的关系就像是进程和程序的关系。file 对象表示被进程打开的文件 (在内存而非磁盘中的文件)。当进程 A 打开了文件 x 时，就会产生一个 file 对象，假设进程 A 和 B 同时打开了文件 x，那么就会产生两个 file 对象。开发可能对于这个对象相比前三个对象更熟悉，因为 VFS 对用户可见的一般来说就是文件，用户进程操作得最多的也是文件，而不是 superblock, inode 或者 dentry。一个文件的 file 对象可能不是唯一的，但是 inode 对象和 dentry 对象肯定是唯一的。跟 dentry 对象类似，file 对象在文件系统上也没有对应的磁盘数据。
+file 是已打开的文件在内存中的表示，主要用于建立进程、VFS、文件系统、磁盘文件几者的联系。用户空间的进程看到的只是 file，而不用关心 superblock, inode, dentry 等对象。file 对应的就是磁盘中的文件，他们之间的关系就像是进程和程序文件的关系。一个文件可以被多个进程同时打开，所以文件的 file 可以不唯一，但是文件的 inode 和 dentry 肯定是唯一的。
 
-file 对象的成员变量由 `file` 结构体表示，常见的有：
+file 的成员变量由 `file` 结构体表示，常见的有：
 
-- **f_dentry：与之对应的 dentry 对象**
-- f_mode：文件的访问模式
-- f_pos：文件当前的位移量
-- f_op：操作函数
+- **f_dentry：与之对应的 dentry 对象
+- f_list：file 列表
+- f_op：file 操作函数列表**
 
-file 对象的操作函数由 `file_operations` 结构体表示，常见的有：
+file 的操作函数列表由 `file_operations` 结构体表示，常见的有：
 
-- open
-- read
-- write
-- mmap
-- flush
+- **open(inode, file)：文件打开操作
+- read(file, __user, size_t， loff_t)：文件读操作
+- write(file, __user, size_t， loff_t)：文件写操作**
+
+这些函数的具体实现由文件系统提供，VFS 只提供接口。上述结构体都定义在文件 `include/linux/fs.h` 中。
+
+#### 文件系统相关
+
+和文件系统相关的数据结构有两个，`file_system_type` 和 `vfsmount`。只要有文件系统创建，就会有且只有一个 `file_system_type` 结构体被初始化，内核利用该结构体将磁盘中的 superblock 读出并填充到内存中的 superblock。而每当有文件系统挂载时，就会有一个 `vfsmount` 被初始化，该结构体代表一个挂载点。
+
+#### 进程相关
+
+和进程相关的数据结构主要是 `files_struct`，关键的成员变量如下：
+
+- **fd：进程的 file 数组 (很重要！文件 A  的文件描述符就是文件 A 对应的 file 在该数组中的索引)
+- max_fds：file 数的上限
+- max_fdset：文件描述符的上限
+- open_fds：打开的文件描述符数组
+- close_on_exec：关闭的文件描述符数组**
 
 ---
 
-### 进程, superblock, inode, dentry, file, 文件系统, 之间的关系
+### 数据结构之间的联系
+
+上述的各个数据结构当然不是孤立存在的，正是由于它们的相互合作，才能让 VFS 很好滴工作。下图是描述它们之间的联系。
+
+![](https://raw.githubusercontent.com/hsxhr-10/picture/master/VFS%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8B%E9%97%B4%E7%9A%84%E8%81%94%E7%B3%BB.jpg)
+
+---
 
 当一个进程向一个文件发出 I/O 操作时，进程、VFS、文件系统之间发生了什么？想要弄清楚这个问题还需要了解一下进程与文件相关的数据结构 `files_struct`。
 
