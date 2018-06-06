@@ -65,7 +65,6 @@ inode 存储了一个文件的详细信息，代表了一个真实的物理文�
 
 inode 的成员变量由 `inode` 结构体表示，常见的有：
 
-- **i_dentry：与之对应的 dentry 链表**
 - **i_sb：与之对应的 superblock**
 - **i_fop：该 inode 对应的 file 的操作函数列表 (很重要！用户空间的 I/O 操作都会被转到这里)**
 - i_op：inode 操作函数列表
