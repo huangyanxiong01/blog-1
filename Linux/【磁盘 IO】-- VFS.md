@@ -35,13 +35,25 @@ superblock 用于存放文件系统的信息。
 
 这个对象对应着文件系统中的 superblock，但是文件系统中的 superblock 是存放于磁盘当中。
 
-superblock 的成员变量由结构 `struct super_block` 表示，比较常见的成员变量有 `s_type` (文件系统类型)、`s_dev` (设备标识符)、`s_op` (操作函数) 等；操作函数则由 `super_operations` 结构体表示，操作函数主要提供对文件系统和 inode 的管理，比如同步 VFS 和文件系统之间的数据、增删 inode 对象等。这些函数的具体实现由文件系统提供，VFS 只提供接口名，这就体现了抽象层的作用了。
+superblock 的成员变量由结构 `struct super_block` 表示，比较常见的成员变量有：
+
+- `s_type` (文件系统类型)
+- `s_dev` (设备标识符)
+- `s_op` (操作函数)
+
+操作函数则由 `super_operations` 结构体表示，操作函数主要提供对文件系统和 inode 的管理，比如同步 VFS 和文件系统之间的数据、增删 inode 对象等。这些函数的具体实现由文件系统提供，VFS 只提供接口名，这就体现了抽象层的作用了。
 
 上述结构体都定义在文件 `include/linux/fs.h` 中。
 
 #### inode
 
-一个 inode 对象对应着一个文件/目录，inode 存放着内核操作文件/目录时所需的一切信息，形象点来说就是执行 `ls -l` 时的信息都是 inode 提供的。这个对象对应着文件系统中的 inode，但是文件系统中的 inode 是存放于磁盘当中。inode 对象由`inode` 结构体表示，操作函数则是由 `inode_operations` 结构体表示，都定义在文件 `include/linux/fs.h` 中，操作函数主要提供对 inode 成员变量的操作，同理，这些函数的具体实现由文件系统提供，VFS 只提供接口。
+一个 inode 对象对应着一个文件/目录，inode 存放着内核操作文件/目录时所需的一切信息，形象点来说就是执行 `ls -l` 时的信息都是 inode 提供的。
+
+这个对象对应着文件系统中的 inode，但是文件系统中的 inode 是存放于磁盘当中。
+
+inode 对象由 `inode` 结构体表示，操作函数则是由 `inode_operations` 结构体表示，都定义在文件 `include/linux/fs.h` 中，操作函数主要提供对 inode 成员变量的操作，同理，这些函数的具体实现由文件系统提供，VFS 只提供接口。
+
+上述结构体都定义在文件 `include/linux/fs.h` 中。
 
 #### dentry
 
