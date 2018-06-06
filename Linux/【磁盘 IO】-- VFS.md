@@ -33,13 +33,13 @@ Linux 为了支持不同的文件系统，就需要一个抽象层将具体文�
 
 superblock 用于存放文件系统的信息，管理 VFS 和文件系统的映射关系 (包括 superblock 映射、inode 映射等)。这个对象对应着文件系统中的 superblock，但是文件系统中的 superblock 是存放于磁盘当中。
 
-superblock 的成员变量由结构 `struct super_block` 表示，比较常见的有：
+superblock 的成员变量由结构 `struct super_block` 表示，常见的有：
 
-- `s_type`：文件系统类型
-- `s_dev`：设备标识符
-- `s_op`：操作函数
+- s_type：文件系统类型
+- s_dev：设备标识符
+- s_op：操作函数
 
-superblock 的操作函数由 `super_operations` 结构体表示，比较常见的有：
+superblock 的操作函数由 `super_operations` 结构体表示，常见的有：
 
 - alloc_inode(sb)：初始化一个新的 inode
 - destroy_inode(inode)：释放 inode
@@ -51,13 +51,30 @@ superblock 的操作函数由 `super_operations` 结构体表示，比较常见�
 
 #### inode
 
-一个 inode 对象对应着一个文件/目录，inode 存放着内核操作文件/目录时所需的一切信息，形象点来说就是执行 `ls -l` 时的信息都是 inode 提供的。
+一个 inode 对象对应着一个文件/目录，inode 存放并管理着内核操作文件/目录时所需的一切信息，形象点来说就是执行 `ls -l` 时的信息都是 inode 提供的。这个对象对应着文件系统中的 inode，但是文件系统中的 inode 是存放于磁盘当中。
 
-这个对象对应着文件系统中的 inode，但是文件系统中的 inode 是存放于磁盘当中。
+inode 的成员变量由 `inode` 结构体表示，常见的有：
 
-inode 对象由 `inode` 结构体表示，操作函数则是由 `inode_operations` 结构体表示，都定义在文件 `include/linux/fs.h` 中，操作函数主要提供对 inode 成员变量的操作，同理，这些函数的具体实现由文件系统提供，VFS 只提供接口。
+- i_dentry：目录项链表；
+- i_ino：inode 编号
+- i_mode：访问权限控制
+- i_count：引用计数
+- i_nlink：硬连接数
+- i_uid：使用者的 id
+- i_gid：使用者的组 id
+- i_size：以字节为单位的文件大小
+- i_atime：最后访问时间
+- i_mtime：最后修改时间
+- i_ctime：最后改变时间
+- i_blocks：文件的块数
 
-上述结构体都定义在文件 `include/linux/fs.h` 中。
+inode 的操作函数由 `inode_operations` 结构体表示，常见的有：
+
+- create(dir, dentry, mode, nameidata)：为dentry对象创建一个新的 inode
+- link(old_dentry, dir, new_dentry)：创建硬连接
+- symlink(dir, dentry, symname)：创建符号连接
+
+这些函数的具体实现由文件系统提供，VFS 只提供接口。上述结构体都定义在文件 `include/linux/fs.h` 中。
 
 #### dentry
 
