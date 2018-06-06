@@ -39,13 +39,13 @@ Linux 为了支持不同的文件系统，就需要一个抽象层将具体文�
 - 文件系统相关
 - 进程相关
 
-> 这些对象都是存放于内存当中
+> 这些对象都是存放于内存当中。下面结构体的成员变量只列举个别
 
 #### superblock
 
 superblock 存储着一个已挂载的文件系统的详细信息，代表一个已安装的文件系统。当有文件系统被挂载时，内核会从磁盘中读出该文件系统的 superblock 来填充 VFS 的 superblock。一个已挂载的文件系统和一个 superblock 一一对应。
 
-superblock 的成员变量由结构 `struct super_block` 定义，常见的有：
+superblock 的成员变量由结构 `struct super_block` 定义：
 
 - **s_type：文件系统类型**
 - s_op：superblock 操作函数列表
