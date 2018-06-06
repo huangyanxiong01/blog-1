@@ -41,45 +41,34 @@ Linux 为了支持不同的文件系统，就需要一个抽象层将具体文�
 
 superblock 存储着一个已挂载的文件系统的详细信息，代表一个已安装的文件系统。当有文件系统被挂载时，内核会从磁盘中读出该文件系统的 superblock 来填充 VFS 的 superblock。一个已挂载的文件系统和一个 superblock 一一对应。
 
-superblock 对象的成员变量由结构 `struct super_block` 表示，常见的有：
+superblock 的成员变量由结构 `struct super_block` 定义，常见的有：
 
-- s_type：文件系统类型
-- s_op：操作函数
+- **s_type：文件系统类型**
+- **s_op：superblock 操作函数列表**
 
-superblock 对象的操作函数由 `super_operations` 结构体表示，常见的有：
+superblock 的操作函数由 `super_operations` 结构体定义，常见的有：
 
-- alloc_inode(sb)：初始化一个新的 inode 对象
-- read_inode(inode)：磁盘中的文件系统 inode 对象并填充到内存中 VFS 的 inode 对象
-- write_inode(inode, wait)：将内存中 VFS 的 inode 对象写入磁盘中文件系统的 inode 对象
+- **alloc_inode(sb)：初始化一个新的 inode**
+- **destroy_inode(inode)：释放 inode**
+- **read_inode(inode)：磁盘中的文件系统 inode 并填充到内存中 VFS 的 inode**
+- **write_inode(inode, wait)：将内存中 VFS 的 inode 写入磁盘中文件系统的 inode**
 
 这些函数都由具体的文件系统实现，VFS 只提供接口名。上述结构体都定义在文件 `include/linux/fs.h` 中。
 
 #### inode
 
-一个 inode 对象对应着一个文件/目录，inode 对象存放并管理着内核操作文件/目录时所需的一切信息，形象点来说就是执行 `ls -l` 时的信息都是 inode 对象提供的。这个对象对应着文件系统中的 inode 对象，但是文件系统中的 inode 对象是存放于磁盘当中。
+inode 存储了一个文件的详细信息，代表了一个真实的物理文件；当一个文件被首次访问时，内核会利用 superblock 提供的操作函数将磁盘中文件系统的 inode 读出来，并填充到内存中 VFS 的 inode。形象点来说，执行 `ls -l` 时的信息都是 inode 提供的。
 
-inode 对象的成员变量由 `inode` 结构体表示，常见的有：
+inode 的成员变量由 `inode` 结构体表示，常见的有：
 
-- **i_dentry：与之对应的 dentry 对象链表**
-- **i_sb：与之对应的 superblock 对象**
-- i_ino：inode 编号
-- i_mode：访问权限控制
-- i_count：引用计数
-- i_nlink：硬连接数
-- i_uid：使用者的 id
-- i_gid：使用者的组 id
-- i_size：以字节为单位的文件大小
-- i_atime：最后访问时间
-- i_mtime：最后修改时间
-- i_ctime：最后改变时间
-- i_blocks：文件的块数
-- i_op：操作函数
+- **i_dentry：与之对应的 dentry 链表**
+- **i_sb：与之对应的 superblock**
+- **i_op：inode 操作函数列表**
+- **i_fop：该 inode 对应的 file 的操作函数列表 (很重要！用户空间的 I/O 操作都会被转到这里)**
 
-inode 对象的操作函数由 `inode_operations` 结构体表示，常见的有：
+inode 的操作函数由 `inode_operations` 结构体表示，常见的有：
 
-- create(dir, dentry, mode, nameidata)：为dentry对象创建一个新的 inode
-- link(old_dentry, dir, new_dentry)：创建硬连接
-- symlink(dir, dentry, symname)：创建符号连接
+- **create(dir, dentry, mode, nameidata)：为 dentry 创建一个新的 inode**
 
 这些函数的具体实现由文件系统提供，VFS 只提供接口。上述结构体都定义在文件 `include/linux/fs.h` 中。
 
