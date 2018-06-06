@@ -141,6 +141,6 @@ file 的操作函数列表由 `file_operations` 结构体表示，常见的有�
 5. 根据 inode 的 `i_fop` 和 syscall 的类型，找到对应的操作函数接口
 6. 根据 inode 的 `i_sb` 找到对应的 superblock
 7. 根据 superblock 找到对应的文件系统
-8. VFS 将控制权交给该文件系统，并传递要执行的函数接口
+8. VFS 将控制权交给该文件系统，并传递要执行的操作函数接口
 9. 文件系统判断要操作的文件类型 (f/c/b/s)，并调用自身实现的函数接口向下层继续发出 I/O 请求 (下层结构请参考[分层模型](https://raw.githubusercontent.com/hsxhr-10/picture/master/%E5%9D%97%E8%AE%BE%E5%A4%87%E5%88%86%E5%B1%82%E5%9B%BE2.jpg))。
 
