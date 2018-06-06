@@ -20,7 +20,15 @@ Linux 为了支持不同的文件系统，就需要一个抽象层将具体文�
 
 ---
 
-### VFS 核心数据结构
+### 关于文件系统的三个概念
+
+- 创建：格式化磁盘并创建文件系统，在创建文件系统的时候会在磁盘中写入该文件系统的 superblock (注意是文件系统的 superblock 而不是 VFS 的 superblock)
+- 注册：向内核声明自己是能被支持的文件系统，注册过程就是对数据结构 `file_system_type` 的初始化
+- 挂载：mount 操作
+
+---
+
+### VFS 数据结构
 
 - **superblock**：超级块。表示某个加载的文件系统
 - **inode**：索引节点。表示某个文件
@@ -31,24 +39,20 @@ Linux 为了支持不同的文件系统，就需要一个抽象层将具体文�
 
 #### superblock
 
-superblock 对象用于存放文件系统的信息；管理 VFS 和文件系统的映射关系 (包括 superblock 映射、inode 映射等)；记录着脏 inode 对象信息和回写标志，提供回写操作。这个对象对应着文件系统中的 superblock 对象，但是文件系统中的 superblock 对象是存放于磁盘当中。
+superblock 存储着一个已挂载的文件系统的详细信息，代表一个已安装的文件系统。当有文件系统被挂载时，内核会从磁盘中读出该文件系统的 superblock 来填充 VFS 的 superblock。一个已挂载的文件系统和一个 superblock 一一对应。
 
 superblock 对象的成员变量由结构 `struct super_block` 表示，常见的有：
 
 - s_type：文件系统类型
-- s_dirty：脏节点链表
-- s_io：回写链表
 - s_op：操作函数
 
 superblock 对象的操作函数由 `super_operations` 结构体表示，常见的有：
 
 - alloc_inode(sb)：初始化一个新的 inode 对象
-- destroy_inode(inode)：释放 inode 对象
-- read_inode(inode)：读文件系统中的 inode 对象那个内容，并写入内存中对应 VFS 的 inode 对象中
-- write_inode(inode, wait)：将 VFS 中 inode 写入文件系统中的 inode 对象
-- sync_fs(sb, wait)：同步 VFS 和文件系统中的数据
+- read_inode(inode)：磁盘中的文件系统 inode 对象并填充到内存中 VFS 的 inode 对象
+- write_inode(inode, wait)：将内存中 VFS 的 inode 对象写入磁盘中文件系统的 inode 对象
 
-这些函数的具体实现由文件系统提供，VFS 只提供接口名，这就体现了抽象层的作用了。上述结构体都定义在文件 `include/linux/fs.h` 中。
+这些函数都由具体的文件系统实现，VFS 只提供接口名。上述结构体都定义在文件 `include/linux/fs.h` 中。
 
 #### inode
 
