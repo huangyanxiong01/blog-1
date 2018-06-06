@@ -32,10 +32,12 @@ Linux 为了支持不同的文件系统，就需要一个抽象层将具体文�
 
 ### VFS 数据结构
 
-- **superblock：超级块。表示某个加载的文件系统**
-- **inode：索引节点。表示某个文件**
-- **dentry：目录项。表示路径的一个组成部分**
-- **file：文件对象。表示被某个进程打开的一个文件**
+- superblock：超级块。表示某个加载的文件系统
+- inode：索引节点。表示某个文件
+- dentry：目录项。表示路径的一个组成部分
+- file：文件对象。表示被某个进程打开的一个文件
+- 文件系统相关
+- 进程相关
 
 > 这些对象都是存放于内存当中
 
@@ -46,14 +48,14 @@ superblock 存储着一个已挂载的文件系统的详细信息，代表一个
 superblock 的成员变量由结构 `struct super_block` 定义，常见的有：
 
 - **s_type：文件系统类型**
-- **s_op：superblock 操作函数列表**
+- s_op：superblock 操作函数列表
 
 superblock 的操作函数列表由 `super_operations` 结构体定义，常见的有：
 
-- **alloc_inode(sb)：初始化一个新的 inode**
-- **destroy_inode(inode)：释放 inode**
-- **read_inode(inode)：磁盘中的文件系统 inode 并填充到内存中 VFS 的 inode**
-- **write_inode(inode, wait)：将内存中 VFS 的 inode 写入磁盘中文件系统的 inode**
+- alloc_inode(sb)：初始化一个新的 inode
+- destroy_inode(inode)：释放 inode**
+- read_inode(inode)：磁盘中的文件系统 inode 并填充到内存中 VFS 的 inode
+- write_inode(inode, wait)：将内存中 VFS 的 inode 写入磁盘中文件系统的 inode
 
 这些函数都由具体的文件系统实现，VFS 只提供接口名。上述结构体都定义在文件 `include/linux/fs.h` 中。
 
@@ -65,12 +67,12 @@ inode 的成员变量由 `inode` 结构体表示，常见的有：
 
 - **i_dentry：与之对应的 dentry 链表**
 - **i_sb：与之对应的 superblock**
-- **i_op：inode 操作函数列表**
 - **i_fop：该 inode 对应的 file 的操作函数列表 (很重要！用户空间的 I/O 操作都会被转到这里)**
+- i_op：inode 操作函数列表
 
 inode 的操作函数列表由 `inode_operations` 结构体表示，常见的有：
 
-- **create(dir, dentry, mode, nameidata)：为 dentry 创建一个新的 inode**
+- create(dir, dentry, mode, nameidata)：为 dentry 创建一个新的 inode
 
 这些函数的具体实现由文件系统提供，VFS 只提供接口。上述结构体都定义在文件 `include/linux/fs.h` 中。
 
@@ -81,12 +83,12 @@ dentry 概念的引入主要是为了更快速地解析路径、查找文件。�
 dentry 的成员变量由 `dentry` 结构体表示，常见的有：
 
 - **d_inode：与之对应的 inode 对象**
-- **d_op：dentry 操作函数列表**
+- d_op：dentry 操作函数列表
 
 dentry 对象的操作函数列表由 `dentry_operations` 结构体表示，常见的有：
 
-- **d_revalidate(dentry)：判断 dentry 是否有效**
-- **d_hash(dentry, qstr)：为 dentry 生成缓存用的散列值**
+- d_revalidate(dentry)：判断 dentry 是否有效
+- d_hash(dentry, qstr)：为 dentry 生成缓存用的散列值
 
 这些函数的具体实现由文件系统提供，VFS 只提供接口。上述结构体都定义在文件 `include/linux/fs.h` 中。
 
@@ -97,13 +99,13 @@ file 是已打开的文件在内存中的表示，主要用于建立进程、VFS
 file 的成员变量由 `file` 结构体表示，常见的有：
 
 - **f_dentry：与之对应的 dentry 对象**
-- **f_op：file 操作函数列表**
+- f_op：file 操作函数列表
 
 file 的操作函数列表由 `file_operations` 结构体表示，常见的有：
 
-- **open(inode, file)：文件打开操作**
-- **read(file, __user, size_t， loff_t)：文件读操作**
-- **write(file, __user, size_t， loff_t)：文件写操作**
+- open(inode, file)：文件打开操作
+- read(file, __user, size_t， loff_t)：文件读操作
+- write(file, __user, size_t， loff_t)：文件写操作
 
 这些函数的具体实现由文件系统提供，VFS 只提供接口。上述结构体都定义在文件 `include/linux/fs.h` 中。
 
@@ -116,10 +118,10 @@ file 的操作函数列表由 `file_operations` 结构体表示，常见的有�
 和进程相关的数据结构主要是 `files_struct`，代表进程打开的文件信息，关键的成员变量如下：
 
 - **fd：进程的 file 数组 (很重要！文件 A  的文件描述符就是文件 A 对应的 file 在该数组中的索引)**
-- **max_fds：file 数的上限**
-- **max_fdset：文件描述符的上限**
-- **open_fds：打开的文件描述符数组**
-- **close_on_exec：关闭的文件描述符数组**
+- max_fds：file 数的上限
+- max_fdset：文件描述符的上限
+- open_fds：打开的文件描述符数组
+- close_on_exec：关闭的文件描述符数组
 
 ---
 
