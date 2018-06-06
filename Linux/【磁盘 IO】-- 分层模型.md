@@ -8,6 +8,8 @@
 
 ![](https://raw.githubusercontent.com/hsxhr-10/picture/master/%E7%A3%81%E7%9B%98%E5%88%86%E5%B1%82%E6%A8%A1%E5%9E%8B.png)
 
+![](https://raw.githubusercontent.com/hsxhr-10/picture/master/%E5%9D%97%E8%AE%BE%E5%A4%87%E5%88%86%E5%B1%82%E5%9B%BE2.jpg)
+
 下面简单介绍每一层的意义：
 
 - **VFS Layer**：虚拟文件系统层。为一个抽象层，为上层用户空间屏蔽下层实际文件系统的细节，提供一套统一的文件系统操作接口，相当于真实文件系统的管理者。正是由于该层的存在才使得用户空间只需调用同一个 read() 函数，就可以即对 Ext3 文件系统读取，也可以对 NFS 文件系统读取 (可优化层度中等)。
