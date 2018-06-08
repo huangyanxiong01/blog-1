@@ -16,12 +16,12 @@
 
 下面简单介绍每一层的意义：
 
-- **VFS Layer**：虚拟文件系统层。为一个抽象层，为上层用户空间屏蔽下层实际文件系统的细节，提供一套统一的文件系统操作接口，相当于文件系统的管理者。使得用户空间只需调用同一个 read() 函数，就可以即对 Ext3 文件系统读取，也可以对 NFS 文件系统读取 (可优化程度较低)。正是 VFS 的存在使得 Linux 可以兼容多文件系统，也让 “一切皆文件” 的理念得已实现
-- **Page Cache Layer**：页缓存层。提供预读和回写机制，极大提高了磁盘的 I/O 性能
-- **FS Layer**：文件系统层。具体的文件系统，跟 VFS 存在映射关系
-- **Generic Block Layer**：通用块层。负责为上层提供一个抽象层，屏蔽掉下层具体的块设备类型，Generic Block Layer 和 Block Device Layer 的之间就类似 VFS 和 FS 的关系。由于上三层对于数据的 I/O 是以块或者页作为数据的单位，下三层对数据的 I/O 则是以扇区作为数据的单位，通用块层就做了这种转换操作，让上三层和下三层能顺利沟通，真正的面向硬件设备的 I/O 请求也是从该层发出
-- **I/O Scheduler Layer**：I/O 调度层。提供不同的调度算法，并根据算法，合并可以合并的 I/O 请求，对请求重新排序，向 Block Device Drive Layer 发送 I/O 请求
-- **Block Device Drive Layer**：块设备驱动层。磁盘设备的驱动程序，负责和磁盘控制器打交道
-- **Block Device Layer**：块设备层。磁盘控制器，磁盘设备等硬件层
+- **VFS Layer**：虚拟文件系统层。主要作用有两个，1 是适配多不同的文件系统，让 Linux 可以兼容多种文件系统；2 是提供一套统一的操作接口，让用户进程无论是对于块设备、socket、字符设备、还是普通文件等的操作都能使用同样的接口，达到 “一切皆文件” 的效果。
+- **Page Cache Layer**：页缓存层。主要作用又两个，1 是提供预读；2是提供回写。极大提高了磁盘的 I/O 性能
+- **FS Layer**：文件系统层。主要作用有两个，1 是标记数据在物理设备的位置信息，让面向用户空间的路径能转换成面向物理设备的位置；2 是为 VFS 提供映射关系
+- **Generic Block Layer**：通用块层。主要作用是提供了一个类似 VFS 层的块设备操作抽象层，下层对接各种不同属性的块设备，对上提供统一的 Block IO 请求标准 (上三层操作数据的单位是块/页，下三层操作数据的单位是扇区，从该层开始发出的就是以扇区为单位的面向物理设备的 I/O 请求)
+- **I/O Scheduler Layer**：I/O 调度层。主要作用有两个，1 是合并相邻扇区的 I/O 请求；2 是对请求重新排序并调度
+- **Block Device Drive Layer**：块设备驱动层。主要作用是负责和磁盘控制器打交道
+- **Block Device Layer**：块设备层。主要作用是通过磁盘控制器读写物理设备
 
 > 优化的性价比：Block Device Layer > Page Cache Layer > FS Layer > I/O Scheduler Layer > (VFS Layer, Generic Block Layer, Block Device Drive Layer)
