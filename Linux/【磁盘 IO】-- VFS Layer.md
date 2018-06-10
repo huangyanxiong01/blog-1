@@ -70,7 +70,8 @@ inode 存储了一个文件的详细信息，代表了一个真实的物理文�
 inode 的成员变量由 `inode` 结构体表示，常见的有：
 
 - **i_sb：与之对应的 superblock**
-- **i_fop：该 inode 对应的 file 的操作函数列表 (很重要！用户空间的 I/O 操作都会被转到这里)**
+- **i_fop：该 inode 对应的 file 的操作函数列表 (很重要！用户空间的 I/O 操作都会被映射到这里)**
+- **i_data：inode 数据在硬件设备上的地址映射（很重要！上层的逻辑 inode 对应到了下层的物理设备地址）**
 - i_op：inode 操作函数列表
 
 inode 的操作函数列表由 `inode_operations` 结构体表示，常见的有：
