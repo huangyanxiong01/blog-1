@@ -14,7 +14,11 @@
 
 #### ext4 磁盘格式
 
+以 ext4 文件系统为例，ext4 文件系统对磁盘数据的组织格式是由一个 `boot block` 和多个 `group block` 组成的，如下：
+
 ![](https://raw.githubusercontent.com/hsxhr-10/picture/master/ext4-磁盘格式1.png)
+
+其中，每个 `group block` 又是由 `super block`, `group descriptors`, `data bitmap`, `inode bitmap`, `inode table`, `data blocks` 组成，如下：
 
 ![](https://raw.githubusercontent.com/hsxhr-10/picture/master/ext4-磁盘格式2.png)
 
