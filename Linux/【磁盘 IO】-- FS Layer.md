@@ -31,7 +31,7 @@
 
 ---
 
-### 文件路径、block、inode、sector
+### 文件路径 和 block、inode、sector 之间的转换
 
 *下面说的文件路径默认是绝对路径*
 
@@ -46,13 +46,46 @@
 
 #### 例子
 
+> 转换链条：文件路径 -- inode -- block -- sector
+
+```
+# 查看 sector 大小
+root@120:~# fdisk -lu /dev/dm-0
+
+Disk /dev/dm-0: 67.4 GB, 67385688064 bytes
+255 heads, 63 sectors/track, 8192 cylinders, total 131612672 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 4096 bytes
+I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+...
+
+# 查看 block/sector 大小
+root@120:~# debugfs -R show_super_stats /dev/dm-0 | grep -i block
+debugfs 1.42.9 (4-Feb-2014)
+Block count:              16451584
+Reserved block count:     822579
+Free blocks:              8746256
+First block:              0
+Block size:               4096
+Reserved GDT blocks:      1020
+Blocks per group:         32768
+Inode blocks per group:   512
+Flex block group size:    16
+Reserved blocks uid:      0 (user root)
+Reserved blocks gid:      0 (group root)
+Journal backup:           inode blocks
+...
+```
+
+1、从左往右：
+
 根据文件路径查找 inode
 
 ```
 root@120:~# ls -i /usr/lib/libpq.a
 3277421 /usr/lib/libpq.a
 
-# 3277421 就是文件 /usr/lib/libpq.a 的 inode number
+# 3277421 就是文件的 inode number
 ```
 
 根据文件路径查找 block
@@ -60,7 +93,7 @@ root@120:~# ls -i /usr/lib/libpq.a
 ```
 root@120:/usr/lib# debugfs /dev/dm-0
 debugfs 1.42.9 (4-Feb-2014)
-debugfs: stat /usr/lib/libpq.a
+debugfs:  stat /usr/lib/libpq.a
 
 Inode: 3277421   Type: regular    Mode:  0644   Flags: 0x80000
 Generation: 493211873    Version: 0x00000000:00000001
@@ -77,15 +110,40 @@ EXTENTS:
 (0-79):15809024-15809103
 (END)
 
-# 重点看到 (0-79):15809024-15809103，(0-79) 就是文件 /usr/lib/libpq.a 的 block number，15809024-15809103 就是 文件 /usr/lib/libpq.a 在 data blocks 中的位置
+# 重点看到 (0-79):15809024-15809103，(0-79) 就是文件的 block number，15809024-15809103 就是文件在 data blocks 中的位置
 ```
 
-根据文件路径查找 sector
+2、从右往左：
+
+根据 inode 查找文件路径
 
 ```
-# 接上，并根据公式 sector号=block号*(block大小/sector大小) 计算扇区范围
-# 则文件 /usr/lib/libpq.a 的 sector 范围是：
-
+root@120:/usr/lib# debugfs /dev/dm-0
+debugfs 1.42.9 (4-Feb-2014)
+debugfs:  ncheck 3277421
+Inode	Pathname
+3277421	/usr/lib/libpq.a
 ```
 
+根据 block 查找文件路径
 
+```
+# 先根据 block 查找 inode
+root@120:/usr/lib# debugfs /dev/dm-0
+debugfs 1.42.9 (4-Feb-2014)
+debugfs:  icheck 15809024
+Block	Inode number
+15809024	3277421
+
+# 再根据 inode 查找文件路径 (参考上面)
+```
+
+根据内核日志中的出错扇区定位文件路径
+
+```
+# 假设有以下的日志信息
+kernel: end_request: I/O error, dev sdb, sector 41913499
+
+#
+
+```
