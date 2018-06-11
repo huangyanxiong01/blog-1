@@ -55,6 +55,37 @@ root@120:~# ls -i /usr/lib/libpq.a
 # 3277421 就是文件 /usr/lib/libpq.a 的 inode number
 ```
 
+根据文件路径查找 block
 
+```
+root@120:/usr/lib# debugfs /dev/dm-0
+debugfs 1.42.9 (4-Feb-2014)
+debugfs: stat /usr/lib/libpq.a
+
+Inode: 3277421   Type: regular    Mode:  0644   Flags: 0x80000
+Generation: 493211873    Version: 0x00000000:00000001
+User:     0   Group:     0   Size: 323796
+File ACL: 0    Directory ACL: 0
+Links: 1   Blockcount: 640
+Fragment:  Address: 0    Number: 0    Size: 0
+ ctime: 0x59fbe0bb:02dc6c00 -- Fri Nov  3 11:21:31 2017
+ atime: 0x5b010e2c:2638e590 -- Sun May 20 13:57:00 2018
+ mtime: 0x59b1a800:00000000 -- Fri Sep  8 04:11:44 2017
+crtime: 0x59fbe0ba:ea9a9800 -- Fri Nov  3 11:21:30 2017
+Size of extra inode fields: 28
+EXTENTS:
+(0-79):15809024-15809103
+(END)
+
+# 重点看到 (0-79):15809024-15809103，(0-79) 就是文件 /usr/lib/libpq.a 的 block number，15809024-15809103 就是 文件 /usr/lib/libpq.a 在 data blocks 中的位置
+```
+
+根据文件路径查找 sector
+
+```
+# 接上，并根据公式 sector号=block号*(block大小/sector大小) 计算扇区范围
+# 则文件 /usr/lib/libpq.a 的 sector 范围是：
+
+```
 
 
