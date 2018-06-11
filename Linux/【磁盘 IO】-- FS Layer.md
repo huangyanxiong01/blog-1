@@ -177,3 +177,5 @@ Device Boot      Start         End      Blocks   Id  System
 
 ### 常见文件系统
 
+- ext2/ext3/ext4
+- other
