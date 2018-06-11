@@ -166,6 +166,13 @@ Device Boot      Start         End      Blocks   Id  System
 
 ### 文件系统相关命令
 
+- fdisk -lu
+- mkfs.ext4
+- mount
+- umount
+- dd
+- debugfs
+
 ---
 
 ### 常见文件系统
