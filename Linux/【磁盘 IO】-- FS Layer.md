@@ -29,6 +29,8 @@
 - **inode table**：记录该组所有文件的元数据
 - **data blocks**：记录该组所有实际数据
 
+> 同一个文件的数据会尽量放到同一个 `block group` 中，减少磁盘的寻道时间
+
 ---
 
 ### 文件路径 和 block、inode、sector 之间的转换
@@ -135,7 +137,7 @@ debugfs:  icheck 15809024
 Block	Inode number
 15809024	3277421
 
-# 再根据 inode 查找文件路径 (参考上面)
+# 转化成根据 inode 查找文件路径
 ```
 
 根据内核日志中的出错扇区定位文件路径
@@ -144,6 +146,17 @@ Block	Inode number
 # 假设有以下的日志信息
 kernel: end_request: I/O error, dev sdb, sector 41913499
 
-#
+# 根据 sector 定位分区
+root@120:~# fdisk -lu /dev/sdb
+...
+Device Boot      Start         End      Blocks   Id  System
+/dev/sdb1              63    24595514    12297726   83  Linux
+/dev/sdb2        24595515    41929649     8667067+  83  Linux
 
+# 出错 sector 在分区 /dev/sdb2 中
+
+# 根据公式：Blocks值 = （出错扇区 – 分区起始扇区）/ 8，计算 sector 对应的 block
+# blocks=（41913499 – 分区起始扇区）/8 = （41913499 - 24595515）/8 = 2164748
+
+# 转化成根据 block 查找文件路径
 ```
