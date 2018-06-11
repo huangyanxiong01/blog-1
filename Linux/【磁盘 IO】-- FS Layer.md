@@ -109,6 +109,13 @@ EXTENTS:
 # 之所以除 8 是因为 block size 4096B 和 sector size 512B 之间差了 4 倍。
 ```
 
+1.3. 根据文件路径查找 sector
+
+```
+# 根据 1.2 知道 block 信息：(0-79):15809024-15809103，同时根据 block = (结束 sector - 起始 sector) / 8，且文件所在分区的起始 sector 等于 2048，
+# 算得 sector 范围是：(2048-2680):126474240-126474872
+```
+
 2. 从右往左
 
 2.1. 根据 inode 查找文件路径
@@ -149,7 +156,7 @@ Device Boot      Start         End      Blocks   Id  System
 
 # 出错 sector 在分区 /dev/sdb2 中
 
-# 根据公式：Blocks值 = （出错扇区 – 分区起始扇区）/ 8，计算 sector 对应的 block
+# 根据公式：Blocks值 = （出错扇区 – 分区起始扇区）/ 8，计算 sector 对应的 block，
 # blocks=（41913499 – 分区起始扇区）/8 = （41913499 - 24595515）/8 = 2164748
 
 # 转化成根据 block 查找文件路径
