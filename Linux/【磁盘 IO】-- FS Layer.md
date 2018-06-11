@@ -73,7 +73,7 @@ Journal backup:           inode blocks
 
 1. 从左往右
 
-1.1 根据文件路径查找 inode
+1.1. 根据文件路径查找 inode
 
 ```
 root@120:~# ls -i /usr/lib/libpq.a
@@ -82,7 +82,7 @@ root@120:~# ls -i /usr/lib/libpq.a
 # 3277421 就是文件的 inode number
 ```
 
-1.2 根据文件路径查找 block
+1.2. 根据文件路径查找 block
 
 ```
 root@120:/usr/lib# debugfs /dev/dm-0
@@ -107,9 +107,9 @@ EXTENTS:
 # 重点看到 (0-79):15809024-15809103，(0-79) 就是文件的 block number，15809024-15809103 就是文件在 data blocks 中的位置
 ```
 
-2 从右往左
+2. 从右往左
 
-2.1 根据 inode 查找文件路径
+2.1. 根据 inode 查找文件路径
 
 ```
 root@120:/usr/lib# debugfs /dev/dm-0
@@ -119,7 +119,7 @@ Inode	Pathname
 3277421	/usr/lib/libpq.a
 ```
 
-2.2 根据 block 查找文件路径
+2.2. 根据 block 查找文件路径
 
 ```
 # 先根据 block 查找 inode
@@ -132,7 +132,7 @@ Block	Inode number
 # 转化成根据 inode 查找文件路径
 ```
 
-2.3 根据 sector 查找文件路径
+2.3. 根据 sector 查找文件路径
 
 ```
 # 假设有以下的日志信息
