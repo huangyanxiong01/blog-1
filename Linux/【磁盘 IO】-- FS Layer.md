@@ -10,7 +10,7 @@
 
 ### 概述
 
-问：什么是文件系统？答：文件系统是对一个存储设备上的数据和元数据进行组织的机制。通俗点说就是我有一块磁盘，但是数据在磁盘上面是如何组织存放的，就文件系统来管这事了。
+文件系统的主要作用是规定好数据是以什么格式存放在物理设备上。通俗点说就是有一块磁盘，但是数据在磁盘上面是如何组织的，这事就由文件系统来管。
 
 #### ext4 磁盘格式
 
@@ -21,3 +21,31 @@
 其中，每个 `block group` 又是由 `super block`, `group descriptors`, `data bitmap`, `inode bitmap`, `inode table`, `data blocks` 组成 (并且 `super block` 和 `inode table` 会映射到内存中的 VFS) 如下：
 
 ![](https://raw.githubusercontent.com/hsxhr-10/picture/master/ext4-磁盘格式2.png)
+
+- **super block**：记录文件系统的信息 (内核只会用到第一个，其他的都是冗余)
+- **group descriptors**：记录所有的 block group 的信息 (内核只会用到第一个，其他的都是冗余)
+- **data bitmap**：记录 data blocks 的使用情况
+- **inode bitmap**：记录 inode table 的使用情况
+- **inode table**：记录该组所有文件的元数据
+- **data blocks**：记录该组所有实际数据
+
+---
+
+### 文件路径 (绝对路径)、inode number、block number、sector number 之间的转换
+
+从上面的介绍我们已经知道了一个文件，比如 `/usr/lib/libpq.a` 是以何种格式组织于磁盘中的，下面来实践下。
+
+文件在用户空间通常都是以文件路径的形式来表示，这也是我们最熟悉的一种方式；在 VFS 和 FS 中，文件通常是以 block (数据块) 的形式来表示，inode 则是联系用户空间和 VFS, FS 等内核空间的部分；而在物理设备层面上，文件则是由于 sector (扇区) 来表示。
+
+#### 根据文件路径查找 inode
+
+```
+root@120:~# ls -i /usr/lib/libpq.a
+3277421 /usr/lib/libpq.a
+
+# 3277421 就是文件 /usr/lib/libpq.a 的 inode number
+```
+
+
+
+
