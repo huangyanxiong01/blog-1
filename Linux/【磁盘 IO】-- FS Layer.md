@@ -61,7 +61,7 @@ Sector size (logical/physical): 512 bytes / 4096 bytes
 I/O size (minimum/optimal): 4096 bytes / 4096 bytes
 ...
 
-# 查看 block/sector 大小
+# 查看 block 大小
 root@120:~# debugfs -R show_super_stats /dev/dm-0 | grep -i block
 debugfs 1.42.9 (4-Feb-2014)
 Block count:              16451584
@@ -140,7 +140,7 @@ Block	Inode number
 # 转化成根据 inode 查找文件路径
 ```
 
-根据内核日志中的出错扇区定位文件路径
+根据 sector 查找文件路径
 
 ```
 # 假设有以下的日志信息
