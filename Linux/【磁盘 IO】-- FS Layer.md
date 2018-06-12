@@ -257,6 +257,8 @@ tmpfs 499M 0 499M 0% /dev/shm
 
 #### 2. 选择对照表
 
-
-
-
+| Tables        | Are           | Cool  |
+| ------------- |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
