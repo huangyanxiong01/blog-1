@@ -239,6 +239,5 @@ tmpfs 499M 0 499M 0% /dev/shm
 
 ### 常见文件系统
 
-- ext2/ext3/ext4
-- other
+#### ext4 和 
 
