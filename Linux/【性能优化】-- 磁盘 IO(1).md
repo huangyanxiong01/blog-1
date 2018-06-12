@@ -54,7 +54,7 @@ root@120:~# echo 256 > /sys/block/sda/queue/nr_requests
 
 #### FS Layer
 
-1. 根据实际场景，选择合适的文件系统，参考[这里](https://github.com/hsxhr-10/blog/blob/master/Linux/【磁盘%20IO】--%20FS%20Layer.md#2-选择对照表)，总的来说，选 ext4 一般是不会出大错的。
+1. 根据实际场景，选择合适的文件系统，参考 [这里](https://github.com/hsxhr-10/blog/blob/master/Linux/【磁盘%20IO】--%20FS%20Layer.md#2-选择对照表)，总的来说，选 ext4 一般是不会出大错的。
 
 2. 根据 [这里](https://github.com/hsxhr-10/blog/blob/master/Linux/【磁盘%20IO】--%20FS%20Layer.md) 我们知道文件系统维护着元数据和实际数据两部分的数据，实际数据是不可能减少了，但是可以通过减少非必要的元数据来提升性能。对于很多场景，atime (文件的最后访问时间) 是非必须的，因此可以减少对 atime 的维护。
 
