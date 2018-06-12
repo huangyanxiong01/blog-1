@@ -132,14 +132,29 @@ root@120:~# cat /proc/sys/vm/dirty_background_ratio
 
 3. 预读
 
-在非频繁的小文件 I/O 情况下，调大预读可以提高读性能，当然如果预读失败，可能反而会降低性能，主要还是看 I/O 场景。
+在非频繁的小文件随机 I/O 情况下，比如一些要求大吞吐量的业务场景，调大预读可以提高读性能。当然如果预读失败，可能反而会降低性能。
 
 ```
 # 查看设备的预读大小，单位 Byte
 root@120:~# blockdev --report
 RO    RA   SSZ   BSZ   StartSec            Size   Device
 rw   256   512  1024       2048       254803968   /dev/sda1
+
+# RA 表示预读，可以看到预读大小为 256 Byte
+
+# 修改
+root@120:~# blockdev --setra 512 /dev/sda1
+root@120:~# blockdev --report
+RO    RA   SSZ   BSZ   StartSec            Size   Device
+rw   512   512  1024       2048       254803968   /dev/sda1
 ```
 
 ---
 
+性能优化之前一定要搞清楚场景
+
+- 从性能指标方面：随机 IOPS、吞吐量、延迟
+- 从操作文件大小方面：小文件、大文件
+- 从读写比例方面：多读少写、多写少读
+- 从数据实时性方面：数据是否需要实时落盘？
+- 从数据可靠性方面：是否允许丢失少量数据？
