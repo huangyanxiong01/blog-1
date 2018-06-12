@@ -173,6 +173,13 @@ Device Boot      Start         End      Blocks   Id  System
 - dd
 - debugfs
 
+#### 创建并挂载磁盘
+
+涉及命令：fdisk, mkfs.ext4, mount
+
+1. 运行 `fdisk -lu` 查看磁盘设备名, 假设为 `/dev/vdb`
+
+
 ---
 
 ### 常见文件系统
