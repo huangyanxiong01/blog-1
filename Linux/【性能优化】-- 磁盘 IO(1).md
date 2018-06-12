@@ -101,30 +101,45 @@ root@120:~# mount /dev/sda1 / -o defaults,noatime,data=writeback
 
 #### Page Cache Layer
 
+1. 在合理的范围内，尽量选购大容量的内存。因为 Page Cache Layer 在读写缓冲方面的性能都严重依赖于内存的容量大小。
 
-1. 调整 VM 系统内核参数
+> 预读和回写的相关知识可以参考 [这里](https://github.com/hsxhr-10/blog/blob/master/Linux/【磁盘%20IO】--%20Page%20Cache%20Layer.md#预读和回写)
 
-1.1. `/proc/sys/vm/dirty_ratio` 这个参数控制着 Page Cache Layer 的写缓冲区大小，单位是百分比。代表当写缓冲区占物理内存的多少时，开始向磁盘写数据。增大该值可以极大提高磁盘 I/O 的写性能，当然也要结合场景，当需要实时写入磁盘时，就需要调小该值。
+2. 回写
+
+2.1. `/proc/sys/vm/dirty_ratio` 这个参数控制着 Page Cache Layer 的写缓冲区大小，单位是百分比。代表当写缓冲区占物理内存的多少时，开始向磁盘写数据。增大该值可以极大提高写性能，当然也要结合场景，当需要实时写入磁盘时，就需要调小该值。默认值 10。
 
 ```
 root@120:~# cat /proc/sys/vm/dirty_ratio
 20
 ```
 
-1.2. `/proc/sys/vm/dirty_expire_centisecs` 这个参数控制着写缓冲区中的数据多 “旧” 之后，就要被写入磁盘，单位是 1/100秒。调大该值也可以大大提升写性能。
+2.2. `/proc/sys/vm/dirty_expire_centisecs` 这个参数控制着写缓冲区中的数据多 “旧” 之后，就要被写入磁盘，单位是 1/100秒。调大该值也可以大大提升写性能。默认值 3000。
 
+```
+root@120:~# cat /proc/sys/vm/dirty_expire_centisecs
+3000
+```
 
+2.3. `/proc/sys/vm/dirty_background_ratio` 这个参数和 1.1. 中的 `/proc/sys/vm/dirty_ratio` 基本一致，建议这两个参数取值一致。默认值 10。
 
+```
+root@120:~# cat /proc/sys/vm/dirty_background_ratio
+20
+```
 
+2.4. `/proc/sys/vm/dirty_writeback_centisecs` 这个参数控制着脏数据刷新进程 pdflush 的运行间隔，单位是 1/100 秒。调大该值也可以适当提升写性能。
 
+3. 预读
 
+在非频繁的小文件 I/O 情况下，调大预读可以提高读性能，当然如果预读失败，可能反而会降低性能，主要还是看 I/O 场景。
 
+```
+# 查看设备的预读大小，单位 Byte
+root@120:~# blockdev --report
+RO    RA   SSZ   BSZ   StartSec            Size   Device
+rw   256   512  1024       2048       254803968   /dev/sda1
+```
 
-
-
-
-
-
-
-
+---
 
