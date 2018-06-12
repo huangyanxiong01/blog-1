@@ -20,7 +20,7 @@
 
 #### I/O Scheduler Layer
 
-根据[I/O 调度器的选择](https://github.com/hsxhr-10/blog/blob/master/Linux/【磁盘%20IO】--%20IO%20Scheduler%20Layer.md#io-调度器的选择)
+根据 [I/O 调度器的选择](https://github.com/hsxhr-10/blog/blob/master/Linux/【磁盘%20IO】--%20IO%20Scheduler%20Layer.md#io-调度器的选择)
 
 - Web 服务器，数据库服务 => Deadline
 - 非 SATA/SAS 接口的固态磁盘 => NOOP
