@@ -164,16 +164,7 @@ Device Boot      Start         End      Blocks   Id  System
 
 ---
 
-### 文件系统相关命令
-
-- fdisk -lu
-- mkfs.ext4
-- mount
-- umount
-- dd
-- debugfs
-
-#### 创建并挂载磁盘
+### 文件系统创建与挂载
 
 涉及命令：fdisk, mkfs.ext4, mount
 
