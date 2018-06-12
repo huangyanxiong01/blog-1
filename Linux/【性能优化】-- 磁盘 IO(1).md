@@ -87,7 +87,7 @@ root@120:~# getconf PAGE_SIZE
 4096
 
 # 修改 block size 和 inode size
-root@120:~# mkfs.ext4 -b 4096 -i 512 /dev/vdb1
+root@120:~# mkfs.ext4 -b 4096 -i 512 /dev/dm-0
 ```
 
 4. 修改日志模式
@@ -99,6 +99,19 @@ root@120:~# mkfs.ext4 -b 4096 -i 512 /dev/vdb1
 root@120:~# mount /dev/sda1 / -o defaults,noatime,data=writeback
 ```
 
+#### Page Cache Layer
+
+
+1. 调整 VM 系统内核参数
+
+1.1. `/proc/sys/vm/dirty_ratio` 这个参数控制着 Page Cache Layer 的写缓冲区大小，单位是百分比。代表当写缓冲区占物理内存的多少时，开始向磁盘写数据。增大该值可以极大提高磁盘 I/O 的写性能，当然也要结合场景，当需要实时写入磁盘时，就需要调小该值。
+
+```
+root@120:~# cat /proc/sys/vm/dirty_ratio
+20
+```
+
+1.2. `/proc/sys/vm/dirty_expire_centisecs` 这个参数控制着写缓冲区中的数据多 “旧” 之后，就要被写入磁盘，单位是 1/100秒。调大该值也可以大大提升写性能。
 
 
 
