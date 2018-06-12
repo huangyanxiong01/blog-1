@@ -20,19 +20,14 @@
 
 #### I/O Scheduler Layer
 
-根据 [I/O 调度器的选择](https://github.com/hsxhr-10/blog/blob/master/Linux/【磁盘%20IO】--%20IO%20Scheduler%20Layer.md#io-调度器的选择)
+1. 根据 [I/O 调度器的选择](https://github.com/hsxhr-10/blog/blob/master/Linux/【磁盘%20IO】--%20IO%20Scheduler%20Layer.md#io-调度器的选择)
 
 - Web 服务器，数据库服务 => Deadline
 - 非 SATA/SAS 接口的固态磁盘 => NOOP
 - 万金油，特别适用于桌面系统，多媒体应用服务 => CFQ
 
 ```
-# 查看 I/O Scheduler
-cat /sys/block/{DEVICE-NAME}/queue/scheduler
-# 修改 I/O Scheduler
-echo {SCHEDULER-NAME} > /sys/block/{DEVICE-NAME}/queue/scheduler
-
-# 例子
+# 查看
 root@120:~# cat /sys/block/sda/queue/scheduler 
 noop [deadline] cfq
 
@@ -43,5 +38,80 @@ root@120:~# echo cfq > /sys/block/sda/queue/scheduler
 root@120:~# cat /sys/block/sda/queue/scheduler 
 noop deadline [cfq] 
 ```
+
+2. 调整队列长度
+
+理论上，对于小文件，增大队列会提升性能；对于大文件，减小队列会提升性能。但是应该根据实际情况，边修改变测试，直到有一个能满足实际的值。
+
+```
+# 查看
+root@120:~# cat /sys/block/sda/queue/nr_requests
+128
+
+# 修改
+root@120:~# echo 256 > /sys/block/sda/queue/nr_requests
+```
+
+#### FS Layer
+
+1. 根据实际场景，选择合适的文件系统，参考[这里](https://github.com/hsxhr-10/blog/blob/master/Linux/【磁盘%20IO】--%20FS%20Layer.md#2-选择对照表)，总的来说，选 ext4 一般是不会出大错的。
+
+2. 根据 [这里](https://github.com/hsxhr-10/blog/blob/master/Linux/【磁盘%20IO】--%20FS%20Layer.md) 我们知道文件系统维护着元数据和实际数据两部分的数据，实际数据是不可能减少了，但是可以通过减少非必要的元数据来提升性能。对于很多场景，atime (文件的最后访问时间) 是非必须的，因此可以减少对 atime 的维护。
+
+```
+# 方法 1 挂载时指定
+root@120:~# mount /dev/sda1 / -o defaults,noatime
+
+# 方法 2 修改 /etc/fstab
+root@120:~# vim /etc/fstab
+
+/dev/sda1 / ext4 defaults,noatime 1 2
+```
+
+3. 通过增大 block size 和 inode size 来减少磁盘寻道时间和元数据操作时间，但是需要注意的是 block size 不能大于 page size。
+
+```
+# 查看 block size 和 inode size
+root@120:/usr/lib# debugfs /dev/dm-0
+debugfs 1.42.9 (4-Feb-2014)
+debugfs:  show_super_stats
+Filesystem volume name:   <none>
+...
+Block size:               1024
+...
+Inode size:               256
+...
+
+# 查看 page size
+root@120:~# getconf PAGE_SIZE
+4096
+
+# 修改 block size 和 inode size
+root@120:~# mkfs.ext4 -b 4096 -i 512 /dev/vdb1
+```
+
+4. 修改日志模式
+
+不建议关闭日志功能，建议修改日志模式。journal 元数据和数据都记录；ordered 只记录元数据；writeback 利用缓存的方式记录元数据。可靠性方面：journal > ordered (默认) > writeback，性能方面则相反。
+
+```
+# 挂载时指定日志模式
+root@120:~# mount /dev/sda1 / -o defaults,noatime,data=writeback
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
