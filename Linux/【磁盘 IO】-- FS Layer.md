@@ -177,8 +177,72 @@ Device Boot      Start         End      Blocks   Id  System
 
 涉及命令：fdisk, mkfs.ext4, mount
 
-1. 运行 `fdisk -lu` 查看磁盘设备名, 假设为 `/dev/vdb`
+1. 查看设备名。运行 `fdisk -lu`，假设设备名为 `/dev/vdb`。
 
+2. 磁盘分区。下面以单个分区，根据提示依次输入 `n, p, 1, 1, wq`。
+
+```
+root@120:~# fdisk /dev/vdb
+Device contains neither a valid DOS partition table, nor Sun, SGI or OSF disklabel
+Building a new DOS disklabel with disk identifier 0x5f46a8a2.
+Changes will remain in memory only, until you decide to write them.
+After that, of course, the previous content won't be recoverable.
+Warning: invalid flag 0x0000 of partition table 4 will be corrected by w(rite)
+WARNING: DOS-compatible mode is deprecated. It's strongly recommended to
+switch off the mode (command 'c') and change display units to
+sectors (command 'u').
+Command (m for help): n
+Command action
+e extended
+p primary partition (1-4)
+p
+Partition number (1-4): 1
+First cylinder (1-41610, default 1): 1
+Last cylinder, +cylinders or +size{K,M,G} (1-41610, default 41610):
+Using default value 41610
+Command (m for help): wq
+The partition table has been altered!
+Calling ioctl() to re-read partition table.
+Syncing disks.
+```
+
+3. 查看分区。执行 `fdisk -lu`，如果出现以下信息，说明已经成功创建了分区 `/dev/vdb1`。
+
+```
+root@120:~# fdisk -l
+Disk /dev/vda: 42.9 GB, 42949672960 bytes
+255 heads, 63 sectors/track, 5221 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x00053156
+Device Boot Start End Blocks Id System
+/dev/vda1 * 1 5222 41942016 83 Linux
+Disk /dev/vdb: 21.5 GB, 21474836480 bytes
+16 heads, 63 sectors/track, 41610 cylinders
+Units = cylinders of 1008 * 512 = 516096 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x5f46a8a2
+Device Boot Start End Blocks Id System
+/dev/vdb1 1 41610 20971408+ 83 Linux
+```
+
+4. 分区上创建文件系统。以 ext4 为例，输入 `mkfs.ext4 /dev/vdb1`。
+
+5. 写入新分区信息。执行 `echo /dev/vdb1 /mnt ext4 defaults 0 0 >> /etc/fstab`，其中 `/mnt` 为挂载点。
+
+6. 挂载创建好文件系统的分区到挂载点，执行 `mount /dev/vdb1 /mnt` (可以在此指定挂载选项以优化文件系统)。
+
+7. 查看挂载好的分区。执行 `df -h`。
+
+```
+root@120:~# df -h
+Filesystem Size Used Avail Use% Mounted on
+/dev/vda1 40G 6.6G 31G 18% /
+tmpfs 499M 0 499M 0% /dev/shm
+/dev/vdb1 20G 173M 19G 1% /mnt
+```
 
 ---
 
