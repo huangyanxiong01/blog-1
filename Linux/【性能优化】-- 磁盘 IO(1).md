@@ -16,7 +16,7 @@
 
 #### Block Device Driver Layer / Generic Block Layer / VFS Layer
 
-这两层的可操作程度相对来说是最低的，性价比最高的做法就是确保所安装的内核是信得过的，版本不要过低并且应该是 LTS 版本。
+这 3 层的可操作程度相对来说是最低的，性价比最高的做法就是确保所安装的内核是信得过的，版本不要过低并且应该是 LTS 版本。
 
 #### I/O Scheduler Layer
 
