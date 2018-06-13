@@ -149,6 +149,19 @@ RO    RA   SSZ   BSZ   StartSec            Size   Device
 rw   512   512  1024       2048       254803968   /dev/sda1
 ```
 
+4. swappiness
+
+调小 swappiness 的值，减少交换操作导致的性能急剧下降。默认值 60。
+
+```
+# 查看
+root@120:~# cat /proc/sys/vm/swappiness 
+60
+
+# 修改
+root@120:~# echo 1 > /proc/sys/vm/swappiness
+```
+
 ---
 
 ### 总结
