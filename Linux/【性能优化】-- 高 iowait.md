@@ -1,1 +1,1 @@
-
+pid --> gdb/file --> code
