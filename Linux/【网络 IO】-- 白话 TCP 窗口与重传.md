@@ -145,7 +145,7 @@ RFC 建议拥塞窗口调整为 ssthres+3*MSS。
 
 通过抓包直观看下快速重传，演示如下：
 
-![]()
+![](https://raw.githubusercontent.com/hsxhr-10/picture/master/快速重传.png)
 
 
 
