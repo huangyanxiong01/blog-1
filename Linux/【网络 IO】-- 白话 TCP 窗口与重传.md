@@ -154,9 +154,9 @@ RFC 建议拥塞窗口调整为 ssthres+3*MSS。
 7. 一些实用建议
 
 - 关于 rto：如果通过 `ss -i` 检查到 rto 的值太大 (默认 200ms)，比如 1s，不要犹豫立马改 => `ip route change default via 你的网关 dev 你的网卡设备号 rto_min 5ms`
-- 关于拥塞点：如果频繁发生超时重传，可以根据 wireshark 提供的统计图计 -- io graphs，由 package/s 和 mss 计算出这些重传时刻的拥塞点是多少；然后通过将接受窗口的大小控制在这个拥塞点之下，从未让发送窗口可以避免触点，减少超时重传的发生
+- 关于拥塞点：如果频繁发生超时重传，可以根据 wireshark 提供的统计图计 -- io graphs，由 package/s 和 mss 计算出这些重传时刻的拥塞点是多少；然后通过将接受窗口的大小控制在这个拥塞点之下，从而让发送窗口可以避免触点，减少超时重传的发生。演示如下：
 
-
+![](https://raw.githubusercontent.com/hsxhr-10/picture/master/拥塞点.png)
 
 
 
