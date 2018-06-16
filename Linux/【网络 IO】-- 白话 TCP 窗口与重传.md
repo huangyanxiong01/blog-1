@@ -32,10 +32,14 @@ TCP 窗口之间的关系：min(接收窗口，拥塞窗口) => 发送窗口，�
 ```
 Linux[edit]
 
-This section contains instructions, advice, or how-to content. The purpose of Wikipedia is to present facts, not to train. Please help improve this article either by rewriting the how-to content or by moving it to Wikiversity, Wikibooks or Wikivoyage. (February 2016)
-Linux kernels (from 2.6.8, August 2004) have enabled TCP Window Scaling by default. The configuration parameters are found in the /proc filesystem, see pseudo-file /proc/sys/net/ipv4/tcp_window_scaling and its companions /proc/sys/net/ipv4/tcp_rmem and /proc/sys/net/ipv4/tcp_wmem (more information: man tcp, section sysctl).[7]
+This section contains instructions, advice, or how-to content. The purpose of Wikipedia is to present facts, not to train. Please help 
+improve this article either by rewriting the how-to content or by moving it to Wikiversity, Wikibooks or Wikivoyage. (February 2016)
+Linux kernels (from 2.6.8, August 2004) have enabled TCP Window Scaling by default. The configuration parameters are found in the /proc 
+filesystem, see pseudo-file /proc/sys/net/ipv4/tcp_window_scaling and its companions /proc/sys/net/ipv4/tcp_rmem and 
+/proc/sys/net/ipv4/tcp_wmem (more information: man tcp, section sysctl).[7]
 
-Scaling can be turned off by issuing the command sysctl -w "net.ipv4.tcp_window_scaling=0" as root. To maintain the changes after a restart, include the line "net.ipv4.tcp_window_scaling=0" in /etc/sysctl.conf (or /etc/sysctl.d/99-sysctl.conf as of systemd 207).
+Scaling can be turned off by issuing the command sysctl -w "net.ipv4.tcp_window_scaling=0" as root. To maintain the changes after a 
+restart, include the line "net.ipv4.tcp_window_scaling=0" in /etc/sysctl.conf (or /etc/sysctl.d/99-sysctl.conf as of systemd 207).
 ```
 
 3. 查看和调整接收窗口大小
