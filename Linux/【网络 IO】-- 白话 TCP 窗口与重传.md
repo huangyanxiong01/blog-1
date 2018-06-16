@@ -91,10 +91,35 @@ cubic
 
 2. 慢启动
 
-慢启动主要是初始化拥塞窗口的大小，并试逐渐增加拥塞窗口的大小。刚建立连接后，发送方对网络环境一无所知，如果一口气发太多数据可能会立刻触碰到拥塞点。RFC 建议拥塞窗口的初始大小为 2～4 个 MSS (每个 TCP 包能携带的最大数据量，一般是 MTU - 40B = 1460B，40 是 TCP 头和 IP 头的大小之和)。如果发出去的包
+慢启动主要是初始化拥塞窗口的大小，并试逐渐增加拥塞窗口的大小。刚建立连接后，发送方对网络环境一无所知，如果一口气发太多数据可能会立刻触碰到拥塞点。RFC 建议拥塞窗口的初始大小为 2～4 个 MSS (每个 TCP 包能携带的最大数据量，一般是 MTU - 40B = 1460B，40 是 TCP 头和 IP 头的大小之和)。如果发出去的包都得到了确认，则表明没有触碰到拥塞点，可以继续增大拥塞窗口。
 
+RFC 建议在慢启动阶段，没得到 n 个确认，就将拥塞窗口增加 n 个 MSS。
 
+3. 拥塞避免
 
+慢启动持续一段时间后，拥塞窗口就会增长得很大，也更容易触碰到拥塞点。此时，内核通过 sstresh 参数来控制拥塞窗口的增长，一旦拥塞窗口的大小超过 sstresh 就会进入拥塞避免阶段。相比慢启动，拥塞避免对于拥塞窗口增长的控制非常严格。
+
+RFC 建议每得到一个确认，就增加 1 个 MSS。
+
+sstresh 的值可以通过 `ss` 命令查看，演示如下：
+
+```
+shell> ss -i | grep ssthres
+	 cubic wscale:5,7 rto:204 rtt:0.169/0.029 ato:40 mss:1448 cwnd:3 ssthresh:2 send 205.6Mbps retrans:0/79 rcv_rtt:4 rcv_space:28960
+	 cubic wscale:5,7 rto:204 rtt:0.185/0.029 ato:64 mss:1448 cwnd:10 ssthresh:7 send 626.2Mbps retrans:0/13 rcv_rtt:4 rcv_space:28960
+	 cubic wscale:5,7 rto:204 rtt:0.213/0.024 ato:40 mss:1448 cwnd:10 ssthresh:13 send 543.8Mbps rcv_rtt:4 rcv_space:28960
+	 cubic wscale:5,7 rto:204 rtt:0.191/0.051 ato:40 mss:1448 cwnd:10 ssthresh:7 send 606.5Mbps rcv_rtt:4 rcv_space:28960
+```
+
+- `wscale`：window scale
+- `rto`：超时等待时间
+- `rtt`：往返时间
+- `cwnd`：拥塞窗口大小
+- `ssthresh`：拥塞避免临界值
+
+4. 拥塞发生
+
+拥塞避免阶段如履薄冰，因为网络环境一旦变差，发送发就会触碰到拥塞点，接着要么是触发超时重传，要么是触发快速重传。两者都会影响性能，只是后者更小。
 
 
 
