@@ -129,7 +129,11 @@ RFC 建议拥塞窗口调整为 max(没被确定的数据量的 1/2，2*MSS)。
 
 超时之所以对性能影响大，正式因为在 rto 时间内，是没有做任何事情的，干等着，同时，拥塞窗口还会大幅度的下降，又要重新走一遍慢启动。
 
+通过抓包找到的疑似重传的数据包，演示如下：
 
+![](https://raw.githubusercontent.com/hsxhr-10/picture/master/超时重传1.png)
+
+![](https://raw.githubusercontent.com/hsxhr-10/picture/master/超时重传2.png)
 
 
 
