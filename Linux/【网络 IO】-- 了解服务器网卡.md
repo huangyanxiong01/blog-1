@@ -8,6 +8,8 @@
 
 价格方面。常见的服务器网卡厂商有：Intel、3COM、Marvell、Broadcom等。这些牌子的网卡几百块算是入门的，几千块是正常的。并且这些大厂的网卡会分得很细，比如桌面版和服务器版会分开，甚至哪个型号的网卡会对应哪些应用服务也会标注。
 
+![](https://raw.githubusercontent.com/hsxhr-10/picture/master/服务器网卡.jpg)
+
 带宽方面。比如 100Mb 的网卡，它的理论传输速率就是 12.5MB/s，1000Mb 的网卡，其理论传输速率是 125MB/s。同时要注意的是网卡和主板对应的接口类型，服务器网卡的常见接口类型有 PCIX, PCIE。其中 PCIE 的接口总线大约 1066MB/s，只有当接口总线大于传输速率时，才能真正发挥网卡的性能。并且，如果主板提供了 PCIX 总线接口，因为 1066MB/s 大于 125MB/s，此时可以绑定单个 ip 到多张网卡，实现负载均衡，进一步提升单台服务器的网络带宽、传输速率和吞吐量。
 
 ![](https://raw.githubusercontent.com/hsxhr-10/picture/master/pci-slots.jpg)
