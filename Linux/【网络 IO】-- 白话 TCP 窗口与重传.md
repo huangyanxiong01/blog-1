@@ -10,10 +10,14 @@ TCP 窗口之间的关系：min(接收窗口，拥塞窗口) => 发送窗口，�
 
 #### 接收窗口
 
+1. 直观认识接收窗口
+
 接收窗口是几个窗口中最简单的。接收窗口指的是接收方自身的接收缓存大小，是在 TCP 3 次握手中告知对方的一个信息。下图演示的就是 192.168.1.102 和 59.37.96.63 在 3 次握手中分别交换的接收窗口大小信息：
 
 ![](https://raw.githubusercontent.com/hsxhr-10/picture/master/客户端接收窗口.png)
 
 ![](https://raw.githubusercontent.com/hsxhr-10/picture/master/服务端接收窗口.png)
 
+
+2. TCP Window Scale
 
