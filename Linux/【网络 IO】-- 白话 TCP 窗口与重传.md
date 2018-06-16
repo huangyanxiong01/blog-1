@@ -72,12 +72,19 @@ shell> echo 1048576 1048576 1048576 > /proc/sys/net/ipv4/tcp_rmem
 
 #### 拥塞窗口
 
-拥塞窗口是由内核提供的拥塞算法维护的，可以通过 `cat /proc/sys/net/ipv4/tcp_congestion_control` 查看，演示如下：
+拥塞窗口是由内核提供的拥塞控制算法维护的，可以通过 `/proc/sys/net/ipv4/tcp_congestion_control` 查看，演示如下：
 
 ```
 shell> cat /proc/sys/net/ipv4# cat tcp_congestion_control 
 cubic
 ```
+
+拥塞窗口的维护阶段：建立连接 -- 慢启动 -- 拥塞避免 -- 拥塞发生 -- 超时重传 -- 慢启动 -- 拥塞避免
+                                                           |
+                                                           -- 重复确认 -- 快速重传 -- 快速回复
+
+1. 慢启动
+
 
 
 
