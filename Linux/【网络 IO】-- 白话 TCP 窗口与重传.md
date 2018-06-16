@@ -42,6 +42,8 @@ Scaling can be turned off by issuing the command sysctl -w "net.ipv4.tcp_window_
 restart, include the line "net.ipv4.tcp_window_scaling=0" in /etc/sysctl.conf (or /etc/sysctl.d/99-sysctl.conf as of systemd 207).
 ```
 
+可以得知 linux 下的 window scale 默认是开启的，并且可以通过 `/proc/sys/net/ipv4/tcp_window_scaling` 控制开启和关闭，1 代表开启，0 代表关闭。同时 `/proc/sys/net/ipv4/tcp_rmem` 和 `/proc/sys/net/ipv4/tcp_wmem` 的调优也是在 window scale 开启的状态下才有作用的。
+
 3. 查看和调整接收窗口大小
 
 ```
