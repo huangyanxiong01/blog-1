@@ -21,3 +21,6 @@ TCP 窗口之间的关系：min(接收窗口，拥塞窗口) => 发送窗口，�
 
 2. TCP Window Scale
 
+在 TCP 刚被发明实现出来时，世界的网络带宽都很小，最大的接收窗口只有 65535B，也就差不多 65KB 大小。随着硬件的不断进步，65KB 早就成了性能瓶颈，由于 TCP 头留给接收窗口只有 16bit，所以最大也只能 2^16-1 个字节 (刚好就是65535B)。所以想在这个 TCP 头字段做文章是不可能了 (排除 IPv6)，幸好 TCP 头里面还有一个万能的 option 字段，因此在 option 字段中可以再通过 window scale 字段来扩展接收窗口的大小。如下图演示：
+
+![](https://raw.githubusercontent.com/hsxhr-10/picture/master/WindowScale.png)
