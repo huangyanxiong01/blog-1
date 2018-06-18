@@ -19,3 +19,5 @@
 
 ![](https://raw.githubusercontent.com/hsxhr-10/picture/master/从wireshark看三次握手.png)
 
+6~8 号数据包就是一个三次握手的过程，192.168.1.101 是客户端，220.181.57.216 是服务端。在握手的过程中，客户端可服务端还相互交换了彼此的信息，比接收窗口有多大 (`Win` 字段)，是否有开启 window scale (`WS` 字段)，MSS 是多大。关于 window size 的大小计算可以参考 [这里](https://github.com/hsxhr-10/blog/blob/master/Linux/【网络%20IO】--%20白话%20TCP%20窗口与重传.md#接收窗口)。
+
