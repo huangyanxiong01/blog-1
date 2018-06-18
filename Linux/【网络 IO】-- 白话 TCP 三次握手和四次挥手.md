@@ -54,7 +54,7 @@
 
 ![](https://raw.githubusercontent.com/hsxhr-10/picture/master/四次挥手1.png)
 
-第二种情况则是发送方的 FIN 包在传输的途中时 (即接收方还没收到这个 FIN 包)，接收方也发出了 FIN 包，既可以认为发送方和接收方同时发出 FIN 包，并且发送方先收到接收方的 FIN 包，再收到响应的 ACK 包。
+第二种情况则是发送方的 FIN 包在传输的途中时 (即接收方还没收到这个 FIN 包)，接收方也发出了 FIN 包，既可以认为发送方和接收方同时发出 FIN 包，并且发送方先收到接收方的 FIN 包，再收到响应的 ACK 包。 (下图 TIME_WAIT 到 CLOSED 画漏了 ACK 包)
 
 ![](https://raw.githubusercontent.com/hsxhr-10/picture/master/四次挥手2.png)
 
