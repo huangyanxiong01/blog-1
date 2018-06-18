@@ -26,8 +26,8 @@
 问题1：通过 `netstat antp` 命令发现服务器存在大量 SYN_RECV 状态的 TCP 连接。
 
 - 第一种情况是大量的客户端有没有收到服务端的 [SYN, ACK] 响应从而进行重发了，这种情况下从服务端 ping 客户端一般是不通的
-- 第二种情况是客户端收到了响应，这里又要分两种情况
-  - 客户端收到了，但是没想过要回 ACK，这就是 SYN Flood 攻击了，临时的处理办法是通过 iptables 控制 `iptables -A INPUT -p tcp --syn -m limit --limit 500/s -j ACCEPT`
-  - 另外一种是客户端收到了
+- 第二种情况是客户端收到了响应
+  - 客户端虽然收到了，但是没想过要回 ACK。这就是 SYN Flood 攻击了，临时的处理办法是通过 iptables 控制 `iptables -A INPUT -p tcp --syn -m limit --limit 500/s -j ACCEPT`
+  - 客户端收到了有问题的 [SYN, ACK]。分析客户端的 SYN 包中的目的 ip 是否等于服务端 [SYN, ACK] 包中的源 ip，肯是否在转发的过程中 ip 地址被负载均衡器、防火墙等设备错误修改了
 
 
