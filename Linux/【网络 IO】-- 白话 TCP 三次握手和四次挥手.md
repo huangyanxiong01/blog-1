@@ -4,7 +4,7 @@
 
 ![](https://raw.githubusercontent.com/hsxhr-10/picture/master/三次握手.jpeg)
 
-1. 过程及状态
+1. 状态及过程
 
 - CLOSED：为了方便描述初始状态的一个假想状态
 - LISTEN：服务端调用 socket api 中的 `socket`, `bind`, `listen`，并进入监听请求状态
