@@ -28,17 +28,18 @@
 - 第一种情况是大量的客户端有没有收到服务端的 [SYN, ACK] 响应从而进行重发了
   - 解决：通过从服务端 ping 客户端来确定
 - 第二种情况是客户端收到了响应
-  - 客户端虽然收到了，但是没想过要回 ACK。这就是 SYN Flood 攻击了
-    - 解决1：通过 iptables 控制
+  - 客户端虽然收到了，但是没想过要回 ACK (这就是 SYN Flood 攻击了)
+    - 解决 1：通过 iptables 控制
       ```
       iptables -A INPUT -p tcp --syn -m limit --limit 500/s -j ACCEPT
       ```
-    - 解决2：通过内核 TCP SYNC 参数
+    - 解决 2：通过内核 TCP SYNC 参数
       ```
       echo 1 > /proc/sys/net/ipv4/tcp_syncookies  # 开启 syncookies 协助抵御 SYN Flood
       echo 2048 > /proc/sys/net/ipv4/tcp_max_syn_backlog  # 增大 sync 队列长度
       echo 3 > /proc/sys/net/ipv4/tcp_synack_retries  # 减少服务端 [SYNC, ACK] 重传次数
       ```
-  - 客户端收到了有问题的 [SYN, ACK]。分析客户端的 SYN 包中的目的 ip 是否等于服务端 [SYN, ACK] 包中的源 ip，肯是否在转发的过程中 ip 地址被负载均衡器、防火墙等设备错误修改了
+  - 客户端收到了有问题的 [SYN, ACK]
+    - 解决：通过抓包工具分析客户端的 SYN 包中的目的 ip 是否等于服务端 [SYN, ACK] 包中的源 ip。看是否在响应过程中 [SYNC, ACK] 包的源 ip 地址被错误修改成了负载均衡器、防火墙等设备的地址
 
 
