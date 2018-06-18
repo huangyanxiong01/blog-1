@@ -23,7 +23,9 @@
 
 3. 相关问题及解决
 
-问题 1：通过 `netstat antp` 命令发现服务器存在大量 SYN_RECV 状态的 TCP 连接。
+(对于服务端)
+
+问题：存在大量 SYN_RECV
 
 - (1) 大量客户端有没有收到服务端的 [SYN, ACK] 响应，从而使服务端停留在 SYN_RECV 状态不断重发
   - 解决：通过从服务端 ping 客户端来确定是否网络不通
@@ -99,6 +101,8 @@ shell> cat /proc/sys/net/ipv4/tcp_fin_timeout
 SHELL> echo 5 > /proc/sys/net/ipv4/tcp_fin_timeout
 ```
 
+> /proc/sys/net/ipv4/tcp_fin_timeout 控制着 FIN_WAIT2 和 TIME_WAIT 状态的持续时间
+
 TIME_WAIT 状态下等待 2 个 MSL 的原因：
 
 - 如果发送方在发送完最后一个 ACK 包之后立刻关闭，且 ACK 包在传输过程中丢包了，那么接收方将会发起重传，但是发送方已经关闭了，因此会导致接收方无法正确关闭连接。TCP 是全双工通信，关闭时也需要确保双方都能顺利关闭连接
@@ -106,9 +110,9 @@ TIME_WAIT 状态下等待 2 个 MSL 的原因：
 
 4. 相关问题及解决
 
-(PS：对于发送方来说)
+(对于发送方)
 
-问题 1：通过 `netstat -antp` 发现有大量 FIN_WAIT1 状态的 TCP 连接。
+问题 1：存在大量 FIN_WAIT1
 
 - 网络环境导致，FIN_WAIT1 无法接收到 ACK，也就无法进入下一个状态 (FIN_WAIT2/CLOSING)
 - 留意 `netstat` 命令结果中的 `Foreign Address` 和 `PID/Program name` 字段，看是否有可疑的进程在搞事
@@ -140,7 +144,7 @@ TIME_WAIT 状态下等待 2 个 MSL 的原因：
   netstat -an|grep FIN_WAIT1
   ```
 
-问题 2：通过 `netstat -antp` 发现有大量 FIN_WAIT2 状态的 TCP 连接。
+问题 2：存在大量 FIN_WAIT2
 
 - 网络环境导致，FIN_WAIT2 无法 接收到 FIN，也就无法进入 TIME_WAIT 状态了
 - 检查接收方是否没有执行 `close`，无论有意或无意
@@ -153,7 +157,7 @@ TIME_WAIT 状态下等待 2 个 MSL 的原因：
   shell> echo 30 > /proc/sys/net/ipv4/tcp_fin_timeout
   ```
 
-问题 3：通过 `netstat -antp` 发现有大量 TIME_WAIT 状态的 TCP 连接。
+问题 3：存在大量 TIME_WAIT
 
 - 通过调整内核参数加快 TIME_WAIT 连接的回收
 
@@ -166,9 +170,9 @@ shell> /proc/sys/net/ipv4/net.ipv4.tcp_tw_recycle
 shell> /proc/sys/net/ipv4/net.ipv4.tcp_fin_timeout
 ```
 
-(PS：对于接收方来说)
+(对于接收方)
 
-问题 1：通过 `netstat -antp` 发现有大量 CLOSE_WAIT 状态的 TCP 连接。
+问题：存在大量 CLOSE_WAIT
 
 - 通过 `PID/Program name` 字段检查进程是否没有正常的 `close`
 
