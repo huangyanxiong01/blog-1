@@ -27,7 +27,14 @@
 
 - 第一种情况是大量的客户端有没有收到服务端的 [SYN, ACK] 响应从而进行重发了，这种情况下从服务端 ping 客户端一般是不通的
 - 第二种情况是客户端收到了响应
-  - 客户端虽然收到了，但是没想过要回 ACK。这就是 SYN Flood 攻击了，临时的处理办法是通过 iptables 控制 `iptables -A INPUT -p tcp --syn -m limit --limit 500/s -j ACCEPT`
+  - 客户端虽然收到了，但是没想过要回 ACK。这就是 SYN Flood 攻击了
+    - 临时的处理办法：通过 iptables 控制 `iptables -A INPUT -p tcp --syn -m limit --limit 500/s -j ACCEPT`
+    - 修改内核 TCP 参数
+      ```
+      echo 1 > /proc/sys/net/ipv4/tcp_syncookies
+      echo 2048 > /proc/sys/net/ipv4/tcp_max_syn_backlog
+      echo 3 > /proc/sys/net/ipv4/tcp_synack_retries
+      ```
   - 客户端收到了有问题的 [SYN, ACK]。分析客户端的 SYN 包中的目的 ip 是否等于服务端 [SYN, ACK] 包中的源 ip，肯是否在转发的过程中 ip 地址被负载均衡器、防火墙等设备错误修改了
 
 
