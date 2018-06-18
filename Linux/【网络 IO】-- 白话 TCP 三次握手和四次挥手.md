@@ -86,6 +86,9 @@
 
 > 两种情况的主要区别是接受方是否在还没有收到 FIN 包之前就发起了关闭请求。
 
+2. 从 wireshark 看四次挥手
+
+![](https://raw.githubusercontent.com/hsxhr-10/picture/master/从wireshark看四次挥手.png)
 
 
 
