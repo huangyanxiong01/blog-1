@@ -25,10 +25,10 @@
 
 问题 1：通过 `netstat antp` 命令发现服务器存在大量 SYN_RECV 状态的 TCP 连接。
 
-- (1) 大量的客户端有没有收到服务端的 [SYN, ACK] 响应从而进行重发了
-  - 解决：通过从服务端 ping 客户端来确定
+- (1) 大量客户端有没有收到服务端的 [SYN, ACK] 响应，从而使服务端停留在 SYN_RECV 状态不断重发
+  - 解决：通过从服务端 ping 客户端来确定是否网络不通
 - (2) 客户端收到了响应
-  - (2.1) 客户端虽然收到了，但是没想过要回 ACK (这就是 SYN Flood 攻击了)
+  - (2.1) 客户端虽然收到了，但是压根没想过要回 ACK (这就是 SYN Flood 攻击了)
     - 解决 1：通过 iptables 控制
       ```
       iptables -A INPUT -p tcp --syn -m limit --limit 500/s -j ACCEPT
@@ -114,7 +114,9 @@ TIME_WAIT 状态下等待 2 个 MSL 的原因：
 
 (PS：对于发送方来说)
 
-问题 1：通过 `netstat -antp` 发现有大量 FIN_WAIT1 状态的 TCP 连接
+问题 1：通过 `netstat -antp` 发现有大量 FIN_WAIT1 状态的 TCP 连接。
+
+- 
 
 
 
