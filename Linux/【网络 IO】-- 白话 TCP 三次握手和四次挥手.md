@@ -23,12 +23,12 @@
 
 3. 相关问题及解决
 
-问题 1：通过 `netstat antp` 命令发现服务器存在大量 SYN_RECV 状态的 TCP 连接。
+问题 1：通过 `netstat antp` 命令发现服务器存在大量 SYN_RECV 状态的 TCP 连接。分两种情况：
 
-- 第一种情况是大量的客户端有没有收到服务端的 [SYN, ACK] 响应从而进行重发了
+- (1) 大量的客户端有没有收到服务端的 [SYN, ACK] 响应从而进行重发了
   - 解决：通过从服务端 ping 客户端来确定
-- 第二种情况是客户端收到了响应
-  - 客户端虽然收到了，但是没想过要回 ACK (这就是 SYN Flood 攻击了)
+- (2) 客户端收到了响应，分两种情况：
+  - (2.1) 客户端虽然收到了，但是没想过要回 ACK (这就是 SYN Flood 攻击了)
     - 解决 1：通过 iptables 控制
       ```
       iptables -A INPUT -p tcp --syn -m limit --limit 500/s -j ACCEPT
@@ -39,7 +39,7 @@
       echo 2048 > /proc/sys/net/ipv4/tcp_max_syn_backlog  # 增大 sync 队列长度
       echo 3 > /proc/sys/net/ipv4/tcp_synack_retries  # 减少服务端 [SYNC, ACK] 重传次数
       ```
-  - 客户端收到了有问题的 [SYN, ACK]
+  - (2.2) 客户端收到了有问题的 [SYN, ACK]
     - 解决：通过抓包工具分析客户端的 SYN 包中的目的 ip 是否等于服务端 [SYN, ACK] 包中的源 ip。看是否在响应过程中 [SYNC, ACK] 包的源 ip 地址被错误修改成了负载均衡器、防火墙等设备的地址
 
 ---
