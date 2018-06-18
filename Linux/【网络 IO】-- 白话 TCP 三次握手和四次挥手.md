@@ -50,17 +50,17 @@
 
 第一种情况是比较理想的，接收方在收到发送方的 FIN 包之后才回应 FIN 包。
 
-![]()
+![](https://raw.githubusercontent.com/hsxhr-10/picture/master/四次挥手1.png)
 
 > 这种情况下发送方的状态变化是 ESTABLISHED => FIN_WAIT1 => FIN_WAIT2 => TIME_WAIT => CLOSED
 
-第二种情况则是发送方的 FIN 包在传输的途中时 (即接收方还没收到这个 FIN 包)，接收方也发出了 FIN 包，并且发送方先收到接收方的 FIN 包，再收到响应的 ACK 包。
+第二种情况则是发送方的 FIN 包在传输的途中时 (即接收方还没收到这个 FIN 包)，接收方也发出了 FIN 包，既可以认为发送方和接收方同时发出 FIN 包，并且发送方先收到接收方的 FIN 包，再收到响应的 ACK 包。
 
-![]()
+![](https://raw.githubusercontent.com/hsxhr-10/picture/master/四次挥手2.png)
 
 > 这种情况下发送方的状态变化是 ESTABLISHED => FIN_WAIT1 => CLOSING => TIME_WAIT => CLOSED
 
-第三种情况则是发送方的 FIN 包在传输的途中时 (即接收方还没收到这个 FIN 包)，接收方也发出了 FIN 包，并且发送方先收到响应的 ACK 包，再收到接收方的 FIN 包。
+第三种情况则是发送方的 FIN 包在传输的途中时 (即接收方还没收到这个 FIN 包)，接收方也发出了 FIN 包，既可以认为发送方和接收方同时发出 FIN 包，并且发送方先收到响应的 ACK 包，再收到接收方的 FIN 包。
 
 ![]()
 
