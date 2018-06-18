@@ -116,6 +116,35 @@ TIME_WAIT 状态下等待 2 个 MSL 的原因：
 
 问题 1：通过 `netstat -antp` 发现有大量 FIN_WAIT1 状态的 TCP 连接。
 
+- 留意 `netstat` 命令结果中的 `Foreign Address` 和 `PID/Program name` 字段，看是否有可疑的进程在搞事
+- 尝试搞清楚接收方的网络情况，如果接收方网络故障，FIN_WAIT1 自然是无法进入到下一个状态
+- 通过调整内核参数减少 FIN_WAIT1 的失败重试次数
+  ```
+  # 0 代表默认重试 8 次，参考 http://man7.org/linux/man-pages/man7/tcp.7.html
+  shell> cat /proc/sys/net/ipv4/tcp_orphan_retries
+  0
+  
+  # 改成两次
+  shell> echo 2 > /proc/sys/net/ipv4/tcp_orphan_retries
+  ```
+- 可以通过下面的方法释放 FIN_WAIT1 连接的资源占用
+  ```
+  # record what tcp_max_orphans's current value
+  original_value=$(cat /proc/sys/net/ipv4/tcp_max_orphans)
+
+  #set the tcp_max_orphans to 0 temporarily
+  echo 0 > /proc/sys/net/ipv4/tcp_max_orphans
+
+  # watch /var/log/messages
+  # it will split out "kernel: TCP: too many of orphaned sockets"
+  # it won't take long for the connections to be killed
+
+  # restore the value of tcp_max_orphans whatever it was before. 
+  echo $original_value > /proc/sys/net/ipv4/tcp_max_orphans
+
+  # verify with 
+  netstat -an|grep FIN_WAIT1
+  ```
 - 
 
 
