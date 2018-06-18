@@ -62,15 +62,17 @@
 
 > 这种情况下发送方的状态变化是 ESTABLISHED => FIN_WAIT1 => CLOSING => TIME_WAIT => CLOSED
 
-第三种情况则是发送方的 FIN 包在传输的途中时 (即接收方还没收到这个 FIN 包)，接收方也发出了 FIN 包，既可以认为发送方和接收方同时发出 FIN 包，并且发送方先收到响应的 ACK 包，再收到接收方的 FIN 包。
-
-![](https://raw.githubusercontent.com/hsxhr-10/picture/master/四次挥手3.png)
-
-> 这种情况下发送方的状态变化是 ESTABLISHED => FIN_WAIT1 => TIME_WAIT => CLOSED
-
 1. 状态及过程
 
+第一种情况：
 
+- FIN_WAIT1：发送方调用 socket api 中的 `close`，向接收方发送 FIN 包，状态从 ESTABLISHED 进入 FIN_WAIT1
+- CLOSE_WAIT：接收方接收到 FIN 包，并回应 ACK 包，状态从 ESTABLISHED 进入 CLOSE_WAIT (处于该状态往往是因为还有数据交换操作没完成，或者是等待上层应用调用 `close`)
+- FIN_WAIT2：发送方接收到 ACK 包，状态从 FIN_WAIT1 进入 FIN_WAIT2
+- LAST_ACK：接收方调用 `close` 发送 FIN 包，状态从 CLOSE_WAIT 进入 LAST_ACK
+- TIME_WAIT：发送方接收到 FIN 包，状态从 FIN_WAIT2 进入 TIME_WAIT，并回应 ACK 包
+- 接收方 CLOSED：接收方接收 ACK 包，状态从 LAST_ACK 进入 CLOSED
+- 发送方 CLOSED：发送方等待 2 个 MSL 时间后，状态从 TIME_WAIT 进入 CLOSED
 
 
 
