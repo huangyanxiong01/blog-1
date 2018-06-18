@@ -74,9 +74,17 @@
 - 接收方 CLOSED：接收方接收 ACK 包，状态从 LAST_ACK 进入 CLOSED
 - 发送方 CLOSED：发送方等待 2 个 MSL 时间后，状态从 TIME_WAIT 进入 CLOSED
 
+第二种情况：
 
+- FIN_WAIT1：发送方调用 socket api 中的 `close` 向接收方发送 FIN 包，状态从 ESTABLISHED 进入 FIN_WAIT1
+- (close)：在 FIN 包还在网络上传输的时候，接收方调用了 `close` 向发送方发送 FIN 包
+- CLOSING：发送方接收到 FIN 包，状态从 FIN_WAIT1 进入 CLOSING
+- LAST_ACK：接收方接收到 FIN 包，进入 LAST_ACK 状态，并回应 ACK 包
+- TIME_WAIT：发送发接收到 ACK 包，状体从 CLOSING 进入 TIME_WAIT，并回应 ACK 包
+- 接收方 CLOSED：接收方接收到 ACK 包，状态从 LAST_ACK 进入 CLOSED
+- 发送方 CLOSED：发送方等待 2 个 MSL 时间后，状态从 TIME_WAIT 进入 CLOSED
 
-
+> 两种情况的主要区别是接受方是否在还没有收到 FIN 包之前就发起了关闭请求。
 
 
 
