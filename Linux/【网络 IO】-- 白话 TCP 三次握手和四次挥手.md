@@ -23,7 +23,7 @@
 
 3. 相关的状态问题及解决
 
-3.1. 通过 `netstat antp` 命令发现服务器存在大量 SYN_RECV 状态的 TCP 连接
+问题1：通过 `netstat antp` 命令发现服务器存在大量 SYN_RECV 状态的 TCP 连接。
 
 
 
