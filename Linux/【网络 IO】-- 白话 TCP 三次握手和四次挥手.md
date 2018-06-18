@@ -52,12 +52,30 @@
 
 ![]()
 
+> 这种情况下发送方的状态变化是 ESTABLISHED => FIN_WAIT1 => FIN_WAIT2 => TIME_WAIT => CLOSED
+
 第二种情况则是发送方的 FIN 包在传输的途中时 (即接收方还没收到这个 FIN 包)，接收方也发出了 FIN 包，并且发送方先收到接收方的 FIN 包，再收到响应的 ACK 包。
 
 ![]()
 
+> 这种情况下发送方的状态变化是 ESTABLISHED => FIN_WAIT1 => CLOSING => TIME_WAIT => CLOSED
+
 第三种情况则是发送方的 FIN 包在传输的途中时 (即接收方还没收到这个 FIN 包)，接收方也发出了 FIN 包，并且发送方先收到响应的 ACK 包，再收到接收方的 FIN 包。
 
 ![]()
+
+> 这种情况下发送方的状态变化是 ESTABLISHED => FIN_WAIT1 => TIME_WAIT => CLOSED
+
+
+
+
+
+
+
+
+
+
+
+
 
 
