@@ -56,6 +56,8 @@
 
 ![](https://raw.githubusercontent.com/hsxhr-10/picture/master/四次挥手2.png)
 
+> 第一种情况下发送方的状态变化是 ESTABLISHED => FIN_WAIT1 => FIN_WAIT2 => TIME_WAIT => CLOSED。第二种情况下发送方的状态变化是 ESTABLISHED => FIN_WAIT1 => CLOSING => TIME_WAIT => CLOSED。两种情况的主要区别是接收方是否在还没有收到 FIN 包之前就发起了关闭请求。
+
 1. 状态及过程
 
 第一种情况：
@@ -77,8 +79,6 @@
 - TIME_WAIT：发送发接收到 ACK 包，状体从 CLOSING 进入 TIME_WAIT，并回应 ACK 包
 - 接收方 CLOSED：接收方接收到 ACK 包，状态从 LAST_ACK 进入 CLOSED
 - 发送方 CLOSED：发送方等待 2 个 MSL 时间后，状态从 TIME_WAIT 进入 CLOSED
-
-> 第一种情况下发送方的状态变化是 ESTABLISHED => FIN_WAIT1 => FIN_WAIT2 => TIME_WAIT => CLOSED。第二种情况下发送方的状态变化是 ESTABLISHED => FIN_WAIT1 => CLOSING => TIME_WAIT => CLOSED。两种情况的主要区别是接收方是否在还没有收到 FIN 包之前就发起了关闭请求。
 
 2. 从 wireshark 看四次挥手
 
