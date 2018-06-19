@@ -41,6 +41,8 @@
 - Checksum：对应 TCP 头中的 16 位校验和。用于确保数据在传输过程中没有损坏
 - Urgent pointer：对应 TCP 头中的 16 位紧急指针
 
+3. rst
+
 
 
 
