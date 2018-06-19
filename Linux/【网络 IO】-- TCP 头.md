@@ -20,6 +20,11 @@
 
 字段详解：
 
-- Source Port
-- Destination Port
+- Source Port：源端口号
+- Destination Port：目的端口号
+- [TCP Segment Len]：TCP 数据包长度。下一次的 Sequence number = 当前 Sequence number + 当前 [TCP Segment Len]
+- Sequence number：当前的 TCP 数据包序列号
+- [Next Sequence number]：下一次的 TCP 数据包序列号
+- Acknowledgment number：TCP 数据包应答号。下一次的 Acknowledgment number = 当前 Acknowledgment number + 下一次接收到的 [TCP Segment Len]
+- Head Length：TCP 头大小
 - 
