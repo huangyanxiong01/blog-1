@@ -18,6 +18,8 @@
 
 ![](https://raw.githubusercontent.com/hsxhr-10/picture/master/从wireshark看tcp头2.png)
 
+字段详解：
+
 - Source Port
 - Destination Port
 - 
