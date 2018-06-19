@@ -12,7 +12,7 @@
 
 2. 通过 wireshark 看 TCP 头
 
-*对于 wireshark 额外添加的字段，只对有必要的进行说明*
+*对于 wireshark 额外添加的字段，只对有必要的进行说明。*
 
 ![](https://raw.githubusercontent.com/hsxhr-10/picture/master/从wireshark看tcp头1.png)
 
