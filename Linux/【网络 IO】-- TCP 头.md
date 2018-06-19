@@ -1,4 +1,4 @@
-1. 下面是经典的 TCP 头结构：
+#### 1. 下面是经典的 TCP 头结构：
 
 ![](https://raw.githubusercontent.com/hsxhr-10/picture/master/TCP头.png)
 
@@ -11,7 +11,7 @@
 - 16 位窗口大小：意味着接收窗口在还没算上 window scale 之前最大只能是 65535B
 - TCP 头大小：(16+16+32+32+4+6+6+16+16+16)bit / 8 = 20B
 
-2. 通过 wireshark 看 TCP 头
+#### 2. 通过 wireshark 看 TCP 头
 
 *对于 wireshark 额外添加的字段，只对有必要的进行说明。*
 
@@ -41,7 +41,7 @@
 - Checksum：对应 TCP 头中的 16 位校验和。用于确保数据在传输过程中没有损坏
 - Urgent pointer：对应 TCP 头中的 16 位紧急指针
 
-3. ACK 发送情景
+#### 3. ACK 发送情景
 
 正常情况：
 
@@ -55,7 +55,7 @@
 
 - 触发快速重传时会连续回发 3 个 ACK 包，乱序和快速重传的区别参考 [这里](https://github.com/hsxhr-10/blog/blob/master/Linux/【网络%20IO】--%20白话%20TCP%20窗口与重传.md#拥塞窗口)
 
-4. RST 发送情景
+#### 4. RST 发送情景
 
 - 连接一个没被监听的端口号
 - 像一个已经关闭的连接读写数据
