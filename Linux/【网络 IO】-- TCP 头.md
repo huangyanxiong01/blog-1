@@ -9,3 +9,9 @@
 - 32 位序列号：意味着序列号的总个数是 2^32=4294967296 (42亿)
 - 32 位确认号：同上
 - TCP 头大小：(16+16+32+32+4+6+6+16+16+16)bit / 8 = 20B
+
+2. 通过 wireshark 看 TCP 头
+
+![](https://raw.githubusercontent.com/hsxhr-10/picture/master/从wireshark看tcp头1.png)
+
+![](https://raw.githubusercontent.com/hsxhr-10/picture/master/从wireshark看tcp头2.png)
