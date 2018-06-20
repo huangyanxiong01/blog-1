@@ -1,4 +1,4 @@
-在[【性能优化】-- 高内存占用(1)](https://github.com/hsxhr-10/blog/blob/master/Linux/%E3%80%90%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E3%80%91--%20%E9%AB%98%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8(1).md)
+在[【故障排查】-- 高内存占用(1)](https://github.com/hsxhr-10/blog/blob/master/Linux/【故障排查】--%20高内存占用(1).md)
 中讨论了 `gdb`, `pyrasite`, `guppy`, `objgraph` 等几个非常好用的故障排查工具，这里再了解一个同样好用的工具箱 --- gperftools。
 
 gperftools 包含 4 个组件，TCMalloc, heap-checker, heap-profiler 和 cpu-profiler。其中第 1 个是优化过的内存管理器，后面 3 个是性能调优工具。gperftools 所提供的性能调优工具最大的特色是以函数调用关系为核心，通过生成一幅函数调用关系图快速且明确地告诉你，哪个函数占用的 CPU 时间最多，哪个函数占用的内存最多。
@@ -36,7 +36,7 @@ sudo apt-get install google-perftools -y
 
 ### <font color=#00b0f0>TCMalloc</font>
 
-TCMalloc 是 glibc 2.3 malloc 的一个优化替代方案。根据官方说法，TCMalloc 在 malloc/free 的操作上比 malloc 要快 6 倍左右，而且 TCMalloc 能产生更少的内存碎片，这对于高并发场景下的内存操作性能提升很大。关于 TCMalloc 和 malloc 的性能测试对比可以参考[这里](https://gperftools.github.io/gperftools/tcmalloc.html)
+TCMalloc 是 glibc 2.3 malloc 的一个优化替代方案。根据官方说法，TCMalloc 在 malloc/free 的操作上比 malloc 要快 6 倍左右，而且 TCMalloc 能产生更少的内存碎片，这对于高并发场景下的内存操作性能提升很大。关于 TCMalloc 和 malloc 的性能测试对比可以参考 [这里](https://gperftools.github.io/gperftools/tcmalloc.html)
 
 TCMalloc 的使用非常简单：
 
@@ -50,7 +50,7 @@ LD_PRELOAD=/usr/lib/libtcmalloc.so.4 python YOUR_SCRIPT.py
 
 ### <font color=#00b0f0>heap-profiler</font>
 
-heap-profiler 可以帮助我们排查内存泄漏问题，以[【性能优化】-- 高内存占用(1)](https://github.com/hsxhr-10/blog/blob/master/Linux/%E3%80%90%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E3%80%91--%20%E9%AB%98%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8(1).md)
+heap-profiler 可以帮助我们排查内存泄漏问题，以[【故障排查】-- 高内存占用(1)](https://github.com/hsxhr-10/blog/blob/master/Linux/【故障排查】--%20高内存占用(1).md)
 中的 `mock_high_memory_pure.py` 为例：
 
 ```
@@ -129,4 +129,4 @@ root@ubuntu:/tmp# google-pprof --gif `which python` /tmp/profile > 2.gif
 
 ### <font color=#00b0f0>总结</font>
 
-在[【性能优化】-- 高 CPU 占用](https://github.com/hsxhr-10/blog/blob/master/Linux/%E3%80%90%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E3%80%91--%20%E9%AB%98%20CPU%20%E5%8D%A0%E7%94%A8.md) 和[【性能优化】-- 高内存占用(1)](https://github.com/hsxhr-10/blog/blob/master/Linux/%E3%80%90%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E3%80%91--%20%E9%AB%98%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8(1).md)中，都是先通过 gdb 来定位线程正在执行的代码上下文，但是这个上下文的范围往往不是很明确，如果不借助其他工具，多数只能带着猜测去验证，但是如果结合本文中的 gperftools，在定位到上下文范围的同时，进一步定位函数及函数调用关系，那么排查将会更加的稳。同时 gperftools 的各个工具还有很多参数可用，需要的可以参考下官方文档；在高并发场景下的内存优化不妨可以考虑下 TCMalloc，现在很多常用的服务组件在官方上已经支持 TCMalloc 了，比如 MySQL, Nginx, Redis
+在[【性能优化】-- 高 CPU 占用](https://github.com/hsxhr-10/blog/blob/master/Linux/%E3%80%90%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E3%80%91--%20%E9%AB%98%20CPU%20%E5%8D%A0%E7%94%A8.md) 和[【故障排查】-- 高内存占用(1)](https://github.com/hsxhr-10/blog/blob/master/Linux/【故障排查】--%20高内存占用(1).md)中，都是先通过 gdb 来定位线程正在执行的代码上下文，但是这个上下文的范围往往不是很明确，如果不借助其他工具，多数只能带着猜测去验证，但是如果结合本文中的 gperftools，在定位到上下文范围的同时，进一步定位函数及函数调用关系，那么排查将会更加的稳。同时 gperftools 的各个工具还有很多参数可用，需要的可以参考下官方文档；在高并发场景下的内存优化不妨可以考虑下 TCMalloc，现在很多常用的服务组件在官方上已经支持 TCMalloc 了，比如 MySQL, Nginx, Redis
