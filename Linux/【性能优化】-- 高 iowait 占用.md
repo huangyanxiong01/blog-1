@@ -1,5 +1,9 @@
 pid --> gdb/file --> code
 
+### 概述
+
+对于一般的高 iowait 占用问题的解决思路如下：`iostat` 了解 I/O 环境 --> `iotop` 定位问题进程 --> `lsof` 定位问题文件 --> 由文件定位源码位置。
+
 #### 1. iostat
 
 通过 `iostat` 命令查看 I/O 的合并情况、读频繁还是写频繁、读写的数据量、I/O 队列长度、iowait 等信息，对 I/O 有个总体的把握，关于 `iostat` 可以参考 [这里](https://github.com/hsxhr-10/blog/blob/master/Linux/【内置工具】--%20iostat.md)。演示如下：
