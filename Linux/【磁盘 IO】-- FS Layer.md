@@ -162,6 +162,8 @@ Device Boot      Start         End      Blocks   Id  System
 # 转化成根据 block 查找文件路径
 ```
 
+> 无论起始 block 还是结束 block 算出来都是同一个 inode，也就是同一个文件
+
 ---
 
 ### 文件系统创建与挂载
