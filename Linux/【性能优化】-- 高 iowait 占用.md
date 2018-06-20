@@ -62,7 +62,7 @@ python  3697 root    1u   CHR  136,3         0t0       6 /dev/pts/3
 python  3697 root    2u   CHR  136,3         0t0       6 /dev/pts/3
 python  3697 root    3u   REG  252,0 16149295104 3686436 /opt/build_img.sh
 
-# 十几秒后
+# 几秒后
 Every 2.0s: lsof -p 3697                                                                                                            Tue Jun 19 07:44:13 2018
 
 COMMAND  PID USER   FD   TYPE DEVICE    SIZE/OFF    NODE NAME
