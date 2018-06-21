@@ -18,7 +18,7 @@ DISTRIB_DESCRIPTION="Ubuntu 14.04.2 LTS"
 
 虽然每种编程语言都或多或少有一套自己的调试工具，在实际解决问题时也应该优先考虑这些工具。但是 GDB 作为 Linux 环境下的标准调试器，只要你的应用需要跑在 Linux 下，那么了解如何使用 GDB 还是非常有必要的，因为在其他工具都无法提供帮助的时候，回归平台原生的工具或许是个好选择。
 
-本文以 GDB 调试可执行文件为例，介绍 GDB 最基本的使用流程：使用前准备 --> 启动 --> 设置 (设置断点 / 设置监控点) --> 运行 (单步调试 / continue 调试) --> 查看 (栈帧显示 / 值显示 / 修改变量值) --> 结束调试
+本文以 GDB 调试可执行文件为例，介绍 GDB 最基本的使用流程：使用前准备 --> 启动 --> 设置 (设置断点 / 设置监控点) --> 运行 (单步运行 / continue 运行) --> 查看 (栈帧显示 / 值显示) --> 结束调试
 
 待调试源码 `demo.c` 如下：
 
@@ -84,9 +84,11 @@ Temporary breakpoint 1, main () at demo.c:5
 
 #### 3. 设置
 
+断点的作用：当进程运行到断点处的时候会暂停运行，此时可以查看该时刻的变量值、栈帧。3.1~3.3 是断点相关的操作。
+
 3.1 设置断点
 
-命令 `break` 简写 `b` + 断点位置，具体支持的格式如下：
+`break` (简写 `b`) + 断点位置。具体支持的格式如下：
 
 - b 函数名
 - b 行号
@@ -96,18 +98,154 @@ Temporary breakpoint 1, main () at demo.c:5
 - b -当前位置的偏移量
 - b *内存地址 (16 进制)
 
+演示如下：
+
+```
+# 在 printf 函数调用处设置断点
+(gdb) b printf
+Breakpoint 2 at 0x7ffff7a65340: file printf.c, line 28.
+(gdb)
+```
+
+3.2. 查看断点
+
+演示如下：
+
+`info` + `b`。演示如下：
+
+```
+(gdb) info b
+Num     Type           Disp Enb Address            What
+2       breakpoint     keep y   0x00007ffff7a65340 in __printf at printf.c:28
+(gdb) 
+```
+
+3.3. 删除断点
+
+`d` + 断点的 Num。演示如下：
+
+```
+(gdb) d 2
+(gdb)
+(gdb) info b
+No breakpoints or watchpoints.
+(gdb) 
+```
+
+监控点的作用：实际环境下变量的值可能会被大量地传递和修改，想要人为去观察是很累的，监控点就是帮助我们跟踪变量的变化的，当有变化时就会暂停下来等待我们检查。3.4~3.6 是监控点相关操作。
+
+3.4. 设置监控点
+
+`watch/awatch/rwatch` + 表达式 (一般就是变量名了)。支持的格式如下：
+
+- `watch` + 变量名：当变量被写时暂停
+- `rwatch` + 变量名：当变量被读时暂停
+- `awatch` + 变量名：当变量被读或写时暂停
+
+演示如下：
+
+```
+# 给 result 变量设置读监控点
+(gdb) rwatch result
+Hardware read watchpoint 3: result
+(gdb)
+# 源码第 10 行 printf("%d\n", result); 读变量了，所以在此处暂停了下来
+(gdb) c
+Continuing.
+Hardware read watchpoint 3: result
+
+Value = 4
+0x000000000040055f in main () at demo.c:10
+10		printf("%d\n", result);
+(gdb) 
+```
+
+3.5. 查看监控点
+
+`info watch`。演示如下：
 
 
+```
+(gdb) info watch       
+Num     Type            Disp Enb Address    What
+4       read watchpoint keep y              result
+```
 
+3.6. 删除监控点
 
+`d` + 监控点 Num。演示如下：
 
+```
+(gdb) d 4
+(gdb) info watch
+No watchpoints.
+(gdb)
+```
 
+#### 4. 运行
 
+4.1. 单步运行
 
+也就是按照代码的逻辑顺序一步步地运行，会在每一步都暂停下来。演示如下：
 
+```
+(gdb) start
+Temporary breakpoint 1 at 0x400535: file demo.c, line 5.
+Starting program: /root/demo 
 
+Temporary breakpoint 1, main () at demo.c:5
+5		int num1 = 1;
+(gdb) n
+6	  	num1 = 2;
+(gdb) n
+7		int num2 = 2;
+(gdb) n
+8		int result = num1 + num2;
+(gdb) n
+9		int var1 = 0;
+(gdb) n
+10		printf("%d\n", result);
+(gdb) n
+4
+12		return 0;
+(gdb) n
+13	}
+(gdb) n
+__libc_start_main (main=0x40052d <main>, argc=1, argv=0x7fffffffe6a8, init=<optimized out>, fini=<optimized out>, rtld_fini=<optimized out>, 
+    stack_end=0x7fffffffe698) at libc-start.c:321
+321	libc-start.c: ?????????.
+(gdb) n
+[Inferior 1 (process 2639) exited normally]
+(gdb) n
+The program is not being run.
+(gdb) 
+```
 
+需要注意的是，当 GDB 显示 `8		int result = num1 + num2;` 时指的不是运行完这一步，而是将要运行这一步。比如下面的代码片段中，在 `8		int result = num1 + num2;` 之后输出 result 变量的值 (`p result`) 发现还是 0，只有当执行到 `9		int var1 = 0;` 后，result 变量的值才是 4。演示如下：
 
+```
+(gdb) start 
+Temporary breakpoint 4 at 0x400535: file demo.c, line 5.
+Starting program: /root/demo 
+
+Temporary breakpoint 4, main () at demo.c:5
+5		int num1 = 1;
+(gdb) n
+6	  	num1 = 2;
+(gdb) n
+7		int num2 = 2;
+(gdb) n
+8		int result = num1 + num2;
+(gdb) p result
+$2 = 0
+(gdb) n
+9		int var1 = 0;
+(gdb) p result
+$3 = 4
+(gdb) 
+```
+
+4.2. continue 调试
 
 
 
