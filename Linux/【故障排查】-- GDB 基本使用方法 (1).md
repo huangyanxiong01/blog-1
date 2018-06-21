@@ -48,7 +48,7 @@ int main(void)
 
 #### 2. 启动
 
-gdb + 可执行文件名，看到提示符 `(gdb)` 即可。演示如下：
+2.1. gdb + 可执行文件名，看到提示符 `(gdb)` 即可。演示如下：
 
 ```
 shell> gdb demo
@@ -70,6 +70,18 @@ Reading symbols from demo...done.
 (gdb)
 ```
 
+2.2. 运行 `start` 命令 (非必须，方便设置监控点)，默认进入到 `main` 函数。演示如下
+
+```
+(gdb) start
+Temporary breakpoint 1 at 0x400535: file demo.c, line 5.
+Starting program: /root/demo 
+
+Temporary breakpoint 1, main () at demo.c:5
+5		int num1 = 1;
+(gdb)
+```
+
 #### 3. 设置
 
 3.1 设置断点
@@ -83,6 +95,17 @@ Reading symbols from demo...done.
 - b +当前位置的偏移量
 - b -当前位置的偏移量
 - b *内存地址 (16 进制)
+
+
+
+
+
+
+
+
+
+
+
 
 
 
