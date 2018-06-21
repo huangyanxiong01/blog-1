@@ -186,7 +186,7 @@ No watchpoints.
 
 4.1. 单步运行
 
-也就是按照代码的逻辑顺序一步步地运行，会在每一步都暂停下来。演示如下：
+也就是按照代码的逻辑顺序一步步地运行，会在每一步都暂停下来。对应命令简写 `n`。演示如下：
 
 ```
 (gdb) start
@@ -245,11 +245,42 @@ $3 = 4
 (gdb) 
 ```
 
-4.2. continue 调试
+4.2. continue 运行
 
+相比单步运行的每一步都会暂停，continue 运行只会在断点处，或者监控点处暂停。对应命令简写 `c`。演示如下：
 
+```
+# 在 printf 函数调用处设置了断点，在 printf 处暂停
+(gdb) start
+Temporary breakpoint 5 at 0x400535: file demo.c, line 5.
+Starting program: /root/demo 
 
+Temporary breakpoint 5, main () at demo.c:5
+5		int num1 = 1;
+(gdb) b printf
+Breakpoint 6 at 0x7ffff7a65340: file printf.c, line 28.
+(gdb) c
+Continuing.
 
+Breakpoint 6, __printf (format=0x400604 "%d\n") at printf.c:28
+28	printf.c: ?????????.
+(gdb) 
+
+# 没有设置断点，直接运行结束
+(gdb) start
+Temporary breakpoint 8 at 0x400535: file demo.c, line 5.
+Starting program: /root/demo 
+
+Temporary breakpoint 8, main () at demo.c:5
+5		int num1 = 1;
+(gdb) c
+Continuing.
+4
+[Inferior 1 (process 2659) exited normally]
+(gdb) c
+The program is not being run.
+(gdb) 
+```
 
 
 
