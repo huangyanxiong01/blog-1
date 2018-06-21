@@ -1,3 +1,21 @@
+### <font color=#00b0f0>运行环境</font>
+
+```
+# uname -a
+Linux ubuntu 3.16.0-30-generic #40~14.04.1-Ubuntu SMP Thu Jan 15 17:43:14 UTC 2015 x86_64 x86_64 x86_64 GNU/Linux
+
+# python2 --version
+Python 2.7.9
+
+# cat /etc/*-release
+DISTRIB_DESCRIPTION="Ubuntu 14.04.2 LTS"
+
+# 内存：2G
+# CPU：2核
+```
+
+---
+
 ### 概述
 
 对于一般的高 iowait 问题的解决思路如下：`iostat` 了解 I/O 环境 --> `iotop` 定位问题进程 --> `lsof` 定位问题文件 --> 由文件定位源码位置。
