@@ -18,7 +18,7 @@ DISTRIB_DESCRIPTION="Ubuntu 14.04.2 LTS"
 
 虽然每种编程语言都或多或少有一套自己的调试工具，在实际解决问题时也应该优先考虑这些工具。但是 GDB 作为 Linux 环境下的标准调试器，只要你的应用需要跑在 Linux 下，那么了解如何使用 GDB 还是非常有必要的，因为在其他工具都无法提供帮助的时候，回归平台原生的工具或许是个好选择。
 
-本文以 GDB 调试可执行文件为例，介绍 GDB 最基本的使用流程：使用前准备 --> 启动 --> 设置 (设置断点 / 设置监控点) --> 运行 (单步运行 / continue 运行) --> 查看 (栈帧显示 / 值显示) --> 结束调试
+本文以 GDB 调试可执行文件为例，介绍 GDB 最基本的使用流程：使用前准备 --> 启动 --> 设置 (设置断点 / 设置监控点) --> 运行 (单步运行 / continue 运行) <--> 查看 (查看栈帧 / 查看变量值) --> 结束调试
 
 待调试源码 `demo.c` 如下：
 
@@ -282,10 +282,76 @@ The program is not being run.
 (gdb) 
 ```
 
+#### 5. 查看
 
+5.1. 查看栈帧
 
+命令简写 `bt`。支持的格式如下：
 
+- bt：显示该时刻所有的栈帧
+- bt full：显示该时刻所有的栈帧和局部变量
+- bt N：显示该时刻前 N 个栈帧
+- bt -N：显示该时刻倒数 N 个栈帧
+- bt full N：同理
+- bt fill -N：同理
 
+演示如下：
+
+```
+(gdb) start
+Temporary breakpoint 12 at 0x400535: file demo.c, line 5.
+Starting program: /root/demo 
+
+Temporary breakpoint 12, main () at demo.c:5
+5		int num1 = 1;
+
+# 设置断点
+(gdb) b printf
+Breakpoint 13 at 0x7ffff7a65340: file printf.c, line 28.
+
+# continue 运行
+(gdb) c
+Continuing.
+
+# 断点处暂停
+Breakpoint 13, __printf (format=0x400604 "%d\n") at printf.c:28
+28	printf.c: ?????????.
+
+# 查看所有栈帧
+(gdb) bt 
+#0  __printf (format=0x400604 "%d\n") at printf.c:28
+#1  0x0000000000400570 in main () at demo.c:10
+
+# 查看所有栈帧和局部变量
+(gdb) bt full
+#0  __printf (format=0x400604 "%d\n") at printf.c:28
+        arg = {{gp_offset = 4160689488, fp_offset = 32767, overflow_arg_area = 0x1, reg_save_area = 0x601018 <printf@got.plt>}}
+        done = 0
+#1  0x0000000000400570 in main () at demo.c:10
+        num1 = 2
+        num2 = 2
+        result = 4
+        var1 = 0
+(gdb) 
+```
+
+5.2. 查看局部变量值
+
+命令简写 `p` (其实 `bt full` 也多多少少有这个功能了)。演示如下：
+
+```
+(gdb) c
+Continuing.
+
+Breakpoint 1, main () at demo.c:9
+9		int var1 = 0;
+(gdb) p num1
+$1 = 2
+(gdb) p num2
+$2 = 2
+(gdb) p result
+$3 = 4
+```
 
 
 
