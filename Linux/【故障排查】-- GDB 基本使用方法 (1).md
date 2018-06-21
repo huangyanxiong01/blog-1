@@ -339,7 +339,7 @@ Breakpoint 13, __printf (format=0x400604 "%d\n") at printf.c:28
 (gdb) 
 ```
 
-5.2. 查看局部变量值
+5.2. 查看变量值
 
 命令简写 `p` (其实 `bt full` 也多多少少有这个功能了)。演示如下：
 
