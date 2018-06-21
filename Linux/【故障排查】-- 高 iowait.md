@@ -4,9 +4,6 @@
 # uname -a
 Linux ubuntu 3.16.0-30-generic #40~14.04.1-Ubuntu SMP Thu Jan 15 17:43:14 UTC 2015 x86_64 x86_64 x86_64 GNU/Linux
 
-# python2 --version
-Python 2.7.9
-
 # cat /etc/*-release
 DISTRIB_DESCRIPTION="Ubuntu 14.04.2 LTS"
 
