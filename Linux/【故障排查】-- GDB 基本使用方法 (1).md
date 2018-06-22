@@ -365,18 +365,12 @@ $3 = 4
 
 命令格式：
 
-- info + frame + 栈帧编号：查看栈帧整体信息
-- frame + 栈帧编号：查看栈帧对应的源码 (**很好用**)
+- `frame`：查看当前所处的栈帧
+- `frame 栈帧编号`：切换栈帧，并查看栈帧对应的源码 (**很好用**)
 
 演示如下：
 
 ```
-
-# 查看栈帧对应的源码
-(gdb) frame 6
-#6  0x00007f5237e243d9 in __printf (format=<optimized out>) at printf.c:33
-33	printf.c: ?????????.
-
 # 查看第 7 个栈帧对应的源码
 (gdb) frame 7
 #7  0x0000000000400545 in main () at mock_high_cpu_load.c:7
