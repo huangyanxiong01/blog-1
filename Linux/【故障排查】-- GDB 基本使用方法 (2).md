@@ -14,12 +14,74 @@ DISTRIB_DESCRIPTION="Ubuntu 14.04.2 LTS"
 
 ---
 
+### 概述
 
+[【故障排查】-- GDB 基本使用方法 (1)](https://github.com/hsxhr-10/blog/blob/master/Linux/【故障排查】--%20GDB%20基本使用方法%20(1).md) 中以调试可执行程序为例，介绍了 GDB 的基本使用方法。本文主要介绍 GDB 的另外一种调试形式 attach，这种形式适用于已经运行的进程，**常见的场景有：单纯逻辑错误导致的死循环、I/O 阻塞、死锁。症状为系统负载高、CPU 占用率高、进程无响应。**
 
+attach 使用流程：定位待调试进程的 pid --> 启动 --> attach <pid> --> GDB 的基本操作
 
+待调试源码 `mock_high_cpu_load.c` 如下：
 
+```
+#include <stdio.h>
 
+int main(void)
+{
+	while(1)
+	{
+		printf("%s", "hello");
+	}
 
+	return 0;
+}
+```
+
+---
+
+### 使用技巧
+
+#### 1. 定位 pid
+
+通过 `top` 命令定位 pid。演示如下：
+
+```
+shell> top
+
+top - 20:25:53 up  8:06,  4 users,  load average: 0.39, 0.13, 0.08
+Tasks: 178 total,   5 running, 173 sleeping,   0 stopped,   0 zombie
+%Cpu0  : 23.4 us, 14.1 sy,  0.0 ni, 62.5 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+%Cpu1  : 31.3 us, 15.6 sy,  0.0 ni, 49.0 id,  0.0 wa,  0.0 hi,  4.1 si,  0.0 st
+KiB Mem:   1014068 total,   379688 used,   634380 free,    17824 buffers
+KiB Swap:  1044476 total,        0 used,  1044476 free.   261048 cached Mem
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND                                                                                
+ 3099 root      20   0    4208    620    552 R  48.9  0.1   0:05.50 mock_high_cpu_l 
+```
+
+#### 2. 启动
+
+直接 `gdb` 即可。演示如下：
+
+```
+shell> gdb
+GNU gdb (Ubuntu 7.7.1-0ubuntu5~14.04.3) 7.7.1
+Copyright (C) 2014 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word".
+(gdb) 
+```
+
+#### 3. attach <pid>
 
 
 
