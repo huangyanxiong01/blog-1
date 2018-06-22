@@ -371,12 +371,12 @@ $3 = 4
 演示如下：
 
 ```
-# 查看第 7 个栈帧对应的源码
+# 切换并查看第 7 个栈帧对应的源码
 (gdb) frame 7
 #7  0x0000000000400545 in main () at mock_high_cpu_load.c:7
 7			printf("%s", "hello");
 
-# 并用 list 进一步查看第 7 附近的源码
+# 用 list 进一步查看第 7 行附近的源码
 (gdb) l 7
 2	
 3	int main(void)
