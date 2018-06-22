@@ -83,7 +83,7 @@ Type "apropos word" to search for commands related to "word".
 
 #### 3. attach pid
 
-`attach` + <pid>。演示如下：
+`attach` + pid。演示如下：
 	
 ```
 (gdb) attach 3099
