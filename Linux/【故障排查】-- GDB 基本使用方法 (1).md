@@ -288,6 +288,10 @@ The program is not being run.
 
 #### 5. 查看
 
+5.0. 查看某行附近的源码
+
+命令 `list` 简写 `l`。显示第 10 行附近的源码：`l 10`。
+
 5.1. 查看栈帧
 
 命令简写 `bt`。支持的格式如下：
@@ -359,7 +363,38 @@ $3 = 4
 
 5.3. 查看某个栈帧
 
-命令格式：info + frame + 栈帧编号，如 `info frame 0`。
+命令格式：
+
+- info + frame + 栈帧编号：查看栈帧整体信息
+- frame + 栈帧编号：查看栈帧对应的源码 (**很好用**)
+
+演示如下：
+
+```
+
+# 查看栈帧对应的源码
+(gdb) frame 6
+#6  0x00007f5237e243d9 in __printf (format=<optimized out>) at printf.c:33
+33	printf.c: ?????????.
+
+# 查看第 7 个栈帧对应的源码
+(gdb) frame 7
+#7  0x0000000000400545 in main () at mock_high_cpu_load.c:7
+7			printf("%s", "hello");
+
+# 并用 list 进一步查看第 7 附近的源码
+(gdb) l 7
+2	
+3	int main(void)
+4	{
+5		while(1)
+6		{
+7			printf("%s", "hello");
+8		}
+9	
+10		return 0;
+11	}
+```
 
 #### 6. 其他小技巧
 
