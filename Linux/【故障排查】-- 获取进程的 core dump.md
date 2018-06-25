@@ -31,6 +31,13 @@ shell> sysctl -w kernel.core_pattern="|/usr/local/sbin/coredump_helper %t %e %p 
 shell> sysctl -p
 ```
 
+kernel.core_pattern 支持的格式符：
+
+- %t：core dump 时间
+- %e：可执行文件名称
+- %p：pid
+- %c：core 文件大小上限
+
 验证一下，运行下面这段代码，就会在 `/var/core` 目录下发现压缩后的 core 文件了。
 
 ```
@@ -59,10 +66,8 @@ sysctl -w kernel.core_pattern="|/usr/local/sbin/coredump_helper %t %e %p %c"
 sysctl -p
 ```
 
+#### 4. GDB 使用 core 文件
 
+以 2 中的测试代码为例，演示 GDB 如何使用 core 文件进行调试。
 
-
-
-
-
-
+```
