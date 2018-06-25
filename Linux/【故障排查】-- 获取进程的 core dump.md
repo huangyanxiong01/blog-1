@@ -9,12 +9,9 @@
 #### 1. 启动内核 core dump 功能
 
 ```
-# 0 代表内核还没启动该功能
-shell> ulimit -c
-0
-
 # 启动，并且不限制 core 文件的大小
 shell> ulimit -c unlimited
+shell> echo 1 > /proc/sys/kernel/core_uses_pid
 
 # 启动，但限制 core 文件大小为 1G
 shell> ulimit -c 1073741824
@@ -34,7 +31,7 @@ shell> sysctl -w kernel.core_pattern="|/usr/local/sbin/coredump_helper %t %e %p 
 shell> sysctl -p
 ```
 
-运行下面这段代码，就会在 `/var/core` 目录下发现压缩后的 core 文件了。
+验证一下，运行下面这段代码，就会在 `/var/core` 目录下发现压缩后的 core 文件了。
 
 ```
 #include <stdlib.h>
@@ -50,7 +47,17 @@ int main(void)
 }
 ```
 
+#### 3. 配置启动脚本确保开启
 
+
+```
+1. vim /etc/rc.local
+2. 输入如下内容：
+ulimit -c unlimited
+echo 1 > /proc/sys/kernel/core_uses_pid
+sysctl -w kernel.core_pattern="|/usr/local/sbin/coredump_helper %t %e %p %c"
+sysctl -p
+```
 
 
 
