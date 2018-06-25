@@ -129,4 +129,4 @@ root@ubuntu:/tmp# google-pprof --gif `which python` /tmp/profile > 2.gif
 
 ### <font color=#00b0f0>总结</font>
 
-在[【故障排查】-- 高 CPU 占用](https://github.com/hsxhr-10/blog/blob/master/Linux/【故障排查】--%20高%20CPU%20占用.md) 和[【故障排查】-- python 内存泄露](https://github.com/hsxhr-10/blog/blob/master/Linux/【故障排查】--%20python%20内存泄漏.md)中，都是先通过 gdb 来定位线程正在执行的代码上下文，但是这个上下文的范围往往不是很明确，如果不借助其他工具，多数只能带着猜测去验证，但是如果结合本文中的 gperftools，在定位到上下文范围的同时，进一步定位函数及函数调用关系，那么排查将会更加的稳。同时 gperftools 的各个工具还有很多参数可用，需要的可以参考下官方文档；在高并发场景下的内存优化不妨可以考虑下 TCMalloc，现在很多常用的服务组件在官方上已经支持 TCMalloc 了，比如 MySQL, Nginx, Redis
+在[【故障排查】-- CPU 高负载](https://github.com/hsxhr-10/blog/blob/master/Linux/【故障排查】--%20CPU%20高负载%20(1).md) 和[【故障排查】-- python 内存泄露](https://github.com/hsxhr-10/blog/blob/master/Linux/【故障排查】--%20python%20内存泄漏.md)中，都是先通过 gdb 来定位线程正在执行的代码上下文，但是这个上下文的范围往往不是很明确，如果不借助其他工具，多数只能带着猜测去验证，但是如果结合本文中的 gperftools，在定位到上下文范围的同时，进一步定位函数及函数调用关系，那么排查将会更加的稳。同时 gperftools 的各个工具还有很多参数可用，需要的可以参考下官方文档；在高并发场景下的内存优化不妨可以考虑下 TCMalloc，现在很多常用的服务组件在官方上已经支持 TCMalloc 了，比如 MySQL, Nginx, Redis
