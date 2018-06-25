@@ -26,8 +26,8 @@ shell> ulimit -c 1073741824
 # 编写压缩脚本
 1. vim /usr/local/sbin/coredump_helper
 2. 输入如下内容
-    #!/bin/bash
-    exec gzip - > /var/core/$1-$2-$3-$4.core.gz
+#!/bin/bash
+exec gzip - > /var/core/$1-$2-$3-$4.core.gz
 
 
 shell> ssysctl -w kernel.core_pattern="|/usr/local/sbin/coredump_helper %t %e %p %c"
