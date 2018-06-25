@@ -92,7 +92,17 @@ shell> gdb demo5 1529921578-demo5-1386-18446744073709551615.core
 #5  0x00000000004005ab in main () at demo5.c:9
 9		free(x);
 
-# 查看
+# 查看对应位置的源码
+(gdb) list 9
+4	
+5	int main(void)
+6	{
+7		int *x = malloc(10);
+8		free(x);
+9		free(x);
+10		return 0;
+11	}
 
+# 发现双重释放
 ```
 
