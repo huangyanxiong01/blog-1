@@ -25,16 +25,30 @@ shell> ulimit -c 1073741824
 ```
 # 编写压缩脚本
 1. vim /usr/local/sbin/coredump_helper
-2. 输入如下内容
+2. 输入如下内容：
 #!/bin/bash
 exec gzip - > /var/core/$1-$2-$3-$4.core.gz
 
-
-shell> ssysctl -w kernel.core_pattern="|/usr/local/sbin/coredump_helper %t %e %p %c"
-shell> ssysctl -p
+# 编辑内核配置文件
+shell> sysctl -w kernel.core_pattern="|/usr/local/sbin/coredump_helper %t %e %p %c"
+shell> sysctl -p
 ```
 
+运行下面这段代码，就会在 `/var/core` 目录下发现压缩后的 core 文件了。
 
+```
+#include <stdlib.h>
+#include <stdio.h>
+
+
+int main(void)
+{
+	int *x = malloc(10);
+	free(x);
+	free(x);
+	return 0;
+}
+```
 
 
 
