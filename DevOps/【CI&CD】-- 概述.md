@@ -25,23 +25,23 @@ CI 代表持续集成，CD 代表持续交付或持续部署。个人认为，�
 
 CI&CD 流水线上的步骤相对灵活，个人认为，总的来说有以下几个是必须的：
 
-- PLAN
-- CODE
-- BUILD
-- TEST
-- DEPLOY STAGING
-- ACCEPTANCE TEST
-- REVIEW
-- DEPLOY PRODUCTION
-- MONITOR
+- PLAN：需求落实。可以是业务需求、技术需求、fix bug 需求等，这一步着重的是人与人之间的交流探讨，最好能有文档落地
+- CODE：编码。现实情况是很多时候只有在编码时才能发现 PLAN 的漏洞或错误，所以 CODE 和 PLAN 时互相影响的
+- BUILD：构建。编译型语言需要，解析型语言无需这步
+- TEST：测试。可以包括单元测试、集成测试 (如接口测试)、UI 测试，注意人工的功能性验收不属于这一步
+- DEPLOY STAGING：部署 STAGING 环境。STAGING 是一个尽可能与线上环境一致的环境，包括架构一致、业务代码一致、数据一致
+- ACCEPTANCE TEST：接纳测试。当 TEST 没问题，DEPLOY STAGING 之后的验收没问题，就意味着 ACCEPTANCE TEST 也没问题
+- REVIEW：当 ACCEPTANCE TEST 通过了，意味着代码已经准备好部署到线上环境了，此时可以发起 code view，这些 view 着重于技术层面
+- DEPLOY PRODUCTION：部署 PRODUCTION 环境。也就是线上环境
+- MONITOR：监控报警/日志收集。对部署到线上的服务进行监控，一旦发现问题立刻通知相关人员进行处理。强调自动化
 
 ## PREPARE
 
-PLAN --> CODE 属于 PREPARE 阶段。需求如何扎实地交付给开发？需求文档要不要写，要写的话如何写？如何让需求文档和代码实现之间可以比较好地映射起来？这些都是这一层要思考的，这一层却很容易被弱化甚至忽略，轻 PLAN 重 CODE 往往会导致代码容易出现 bug，试想 PLAN 已经有漏洞了，实现的 CODE 肯定也会有问题的。
+PLAN <--> CODE 属于 PREPARE 阶段。需求如何扎实地交付给开发？需求文档要不要写，要写的话如何写？如何让需求文档和代码实现之间可以比较好地映射起来？这些都是这一层要思考的，这一层却很容易被弱化甚至忽略，轻 PLAN 重 CODE 往往会导致代码容易出现 bug，试想 PLAN 已经有漏洞了，实现的 CODE 肯定也会有问题的。
 
 ## CI PIPELINE
 
-BUILD --> TEST --> DEPLOY STAGING 属于 CI PIPELINE 阶段。开发人员将某条分支的业务代码和对应的测试代码提交到代码仓库；触发 BUILD 来构建代码 (解析型语言无需这步)；构建成功后触发 TEST 来跑测试代码；测试成功后会将该条分支合并到 STAGING 环境的代码分支 (可能这条分支就叫 staging) 并部署好 STAGING 环境；值得注意的是这里的每一步都是自动化的。
+BUILD --> TEST --> DEPLOY STAGING 属于 CI PIPELINE 阶段。开发人员将某条分支的业务代码和对应的测试代码提交到代码仓库；触发 BUILD 来构建代码；构建成功后触发 TEST 来跑测试代码；测试成功后会将该条分支合并到 STAGING 环境的代码分支 (可能这条分支就叫 staging) 并部署好 STAGING 环境；值得注意的是这里的每一步都是自动化的。
 
 只要 PIPELINE 中的任何一步失败了，这次的持续集成就算是失败了，失败的原因可能是因为测试不通过，可能是部署出了问题，无论是什么原因，开发、测试、运维都能迅速收到反馈并作出调整。同时，产品也可以通过这个统一的 STAGING 环境来进行测试，一旦发现跟既定的需求有出入，立刻提出。
 
