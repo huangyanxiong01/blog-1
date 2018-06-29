@@ -16,3 +16,11 @@ CI 代表持续集成，CD 代表持续交付或持续部署。个人认为，�
 ![](https://raw.githubusercontent.com/hsxhr-10/picture/master/CI%26CD1.png)
 
 ![](https://raw.githubusercontent.com/hsxhr-10/picture/master/CI%26CD3.png)
+
+![](https://raw.githubusercontent.com/hsxhr-10/picture/master/CI%26CD4.png)
+
+CI&CD 的各个步骤：
+
+- plan：
+- code：
+- build:
