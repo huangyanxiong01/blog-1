@@ -22,7 +22,7 @@
 
 ### 1. 流程图
 
-根据描述可以初步完成流程图，演示如下：
+根据描述可以初步完成流程图，演示如下 (下图 START 的 T 没显示出来...)：
 
 ![](https://raw.githubusercontent.com/hsxhr-10/picture/master/plan1.png)
 
