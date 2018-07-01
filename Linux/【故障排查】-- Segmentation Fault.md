@@ -40,7 +40,7 @@ DISTRIB_DESCRIPTION="Ubuntu 14.04.2 LTS"
 
 常见于多线程环境下的线程冲突、向已分配的内存空间之外写数据。
 
-通过 GDB 可以看到 backtrace 的信息异常，栈被破坏的情况下，即使有部分栈信息可见，也不应该信任。演示如下：
+在编译构建时已经加了 `-g` 参数表明可调式的情况下，如果通过 GDB 还是看到如下 backtrace 信息异常，说明栈被破坏了，即使有部分栈信息可见，也不应该信任。演示如下：
 
 ![](https://raw.githubusercontent.com/hsxhr-10/picture/master/栈被破坏1.png)
 
