@@ -112,6 +112,8 @@
 
 ### Hashing Search
 
+> 在第一次遍历的时候顺便做 hashing 是个实用的技巧
+
 ### Binary Search Tree
 
 - 特点
