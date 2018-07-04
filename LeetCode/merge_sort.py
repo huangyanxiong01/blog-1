@@ -35,11 +35,11 @@ def merge(arr, start, mid, end):
         elif (j > end):
             arr[k] = aux[i]
             i += 1
-        # 左边当前小于右边    
+        # 左边当前小于右边当前  
         elif (less(aux[i], aux[j])):
             arr[k] = aux[i]
             i += 1
-        # 右边当前小于左边
+        # 右边当前小于左边当前
         else:
             arr[k] = aux[j]
             j += 1
