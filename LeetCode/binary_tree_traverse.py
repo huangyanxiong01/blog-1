@@ -265,36 +265,4 @@ class TestCaseBinaryTreeTraverse(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    # # 初始化根节点
-    # root = create_binary_search_tree(None, 10)
-
-    # # 创建子节点
-    # arr = [6, 14, 4, 8, 12, 16]
-    # for item in arr:
-    #     root = create_binary_search_tree(root, item)
-
-    # # 前序遍历
-    # preorder_by_redursion(root)
-    # print
-    # preorder_by_loops(root)
-
-    # print
-
-    # # 前序遍历
-    # inorder_by_redursion(root)
-    # print
-    # inorder_by_loops(root)
-
-    # print
-
-    # # 后序遍历
-    # postorder_by_recursion(root)
-    # print
-    # postorder_by_loops(root)
-
-    # print
-
-    # # 层序遍历
-    # sequence(root)
-    
     unittest.main()
