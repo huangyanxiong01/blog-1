@@ -14,8 +14,11 @@ class BinarySearchTree():
     定义二叉树结构
     """
     def __init__(self, value, light=None, right=None):
+        # 值
         self.value = value
+        # 左子树
         self.light = light
+        # 右子树
         self.right = right
 
 
@@ -24,7 +27,9 @@ class BinarySearchTreeForLoops():
     定义用于非递归遍历的结构
     """
     def __init__(self, BinarySearchTree, visited):
+        # 二叉树结构
         self.BinarySearchTree = BinarySearchTree
+        # 访问标记
         self.visited = visited
 
 
@@ -33,13 +38,18 @@ def create_binary_search_tree(root, value):
     创建二叉搜索树
     """
     # 递归结束条件
+    # root 为 None 代表本次递归结束, 创建并返回节点, 递归结束会返回上层调用处, 就可以对相应的子树进行赋值, 即对应下面两个递归语句的处理
+    # 这个递归过程同样可以利用最小二叉树模型思考
     if (root == None):
         return BinarySearchTree(value)
+    # 递归创建左子树
     elif (value < root.value):
         root.light = create_binary_search_tree(root.light, value)
+    # 递归创建右子树
     else:
         root.right = create_binary_search_tree(root.right, value)
 
+    # 返回树根
     return root
 
 
