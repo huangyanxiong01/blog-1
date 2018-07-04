@@ -168,7 +168,7 @@
 ### Quick Sort
 
 - 代码实现描述
-  - 核心思想：挖坑 + 前、后往中间移动直到相等
+  - 核心思想：选基准数 + 两端指针往中间移动、和基准数比较
   - 快速排序 = 技术选择 (可引入随机选择) + 大循环条件 while (i != j) + j 从后往前移动，找比基准数小的数，找到就交换 arr[i] 和 arr[j]，i 后移一位 + i 从前往后移动，找比基准数大的数，找到就交换 arr[i] 和 arr[j]，j 前移一位 + 最后返回基准数位置 i 或 j
 - [代码实现](https://github.com/hsxhr-10/blog/blob/master/LeetCode/quick_sort.py)
 - 时间复杂度
@@ -178,6 +178,8 @@
 
 ### Merge Sort
 
+- 代码实现描述
+  - 核心思想：
 ### Count Sort
 
 ## String
