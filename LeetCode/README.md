@@ -106,8 +106,7 @@
   - 增：[O(1), O(log(n))]
   - 删：[O(1), O(log(n))]
   - 查：[O(log(n)), O(n)]
-- 代码实现
-  - 7 种遍历
+- [代码实现](https://github.com/hsxhr-10/blog/blob/master/LeetCode/binary_tree_traverse.py)
 
 ### Binary Search Tree
 
