@@ -69,21 +69,27 @@ class TestCaseBinarySearch(unittest.TestCase):
         # 8 是重复的, 返回了首个匹配 index
         self.assertEqual(binary_search_by_recursion(self.target_1, self.data_arr,
             self.data_arr_start, self.data_arr_end), 10)
+
         # 9 是重复的, 并不是返回首个匹配 index
         self.assertEqual(binary_search_by_recursion(self.target_2, self.data_arr,
             self.data_arr_start, self.data_arr_end), 13)
+
         self.assertEqual(binary_search_by_recursion(self.target_3, self.data_arr,
             self.data_arr_start, self.data_arr_end), 21)
+
         self.assertEqual(binary_search_by_recursion(self.target_4, self.data_arr,
             self.data_arr_start, self.data_arr_end), -1)
 
     def test_binary_search_by_loops(self):
         self.assertEqual(binary_search_by_loops(self.target_1, self.data_arr,
             self.data_arr_start, self.data_arr_end), 10)
+
         self.assertEqual(binary_search_by_loops(self.target_2, self.data_arr,
             self.data_arr_start, self.data_arr_end), 13)
+
         self.assertEqual(binary_search_by_loops(self.target_3, self.data_arr,
             self.data_arr_start, self.data_arr_end), 21)
+
         self.assertEqual(binary_search_by_loops(self.target_4, self.data_arr,
             self.data_arr_start, self.data_arr_end), -1)
 
