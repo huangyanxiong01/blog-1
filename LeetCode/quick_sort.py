@@ -62,7 +62,7 @@ def quick_sort(arr, start, end):
     快速排序的主函数
     """
     # 递归结束条件
-    if (start > end):
+    if (start >= end):
         return
 
     # 得到划分点 compare, 实际的排序就是发生在这里
