@@ -17,6 +17,9 @@ def less(num1, num2):
 
 
 def merge(arr, start, mid, end):
+    """
+    二路归并
+    """
     # 计数器初始化
     i = start
     j = mid + 1
@@ -46,6 +49,9 @@ def merge(arr, start, mid, end):
 
 
 def merge_sort(arr, start, end):
+    """
+    归并排序主函数
+    """
     # 递归结束条件
     if (start >= end):
         return
@@ -65,7 +71,7 @@ def merge_sort(arr, start, end):
 # ======================== 单元测试 ================================
 
 
-class TestMergeSort(unittest.TestCase):
+class TestCaseMergeSort(unittest.TestCase):
 
     def setUp(self):
         self.data_arr1 = [3, 2, 5, 1, 8]

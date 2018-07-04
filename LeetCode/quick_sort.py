@@ -79,7 +79,7 @@ def quick_sort(arr, start, end):
 # ======================== 单元测试 ================================
 
 
-class TestQuickSort(unittest.TestCase):
+class TestCaseQuickSort(unittest.TestCase):
 
     def setUp(self):
         self.data_arr1 = [3, 2, 5, 1, 8]
