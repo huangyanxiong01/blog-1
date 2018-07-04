@@ -4,12 +4,13 @@ import unittest
 
 
 # ======================== 算法实现 ================================
+#
+# 返回匹配的 item 的 index, 没找到就返回 -1, 当有重复 item 时, 不保证是返回第一个 item 的 index
 
 
 def binary_search_by_recursion(target, arr, start, end):
     """
     二分查找递归版
-    返回匹配的 item 的 index, 没找到就返回 -1, 当有重复 item 时, 不保证是返回第一个 item 的 index
     """
     # 递归结束条件
     if (start <= end):
@@ -31,7 +32,6 @@ def binary_search_by_recursion(target, arr, start, end):
 def binary_search_by_loops(target, arr, start, end):
     """
     二分查找循环版
-    返回匹配的 item 的 index, 没找到就返回 -1, 当有重复 item 时, 不保证是返回第一个 item 的 index
     """
     # 循环结束条件
     while (start <= end):
@@ -66,8 +66,10 @@ class TestCaseBinarySearch(unittest.TestCase):
         self.data_arr_end = 21
 
     def test_binary_search_by_recursion(self):
+        # 8 是重复的, 返回了首个匹配 index
         self.assertEqual(binary_search_by_recursion(self.target_1, self.data_arr,
             self.data_arr_start, self.data_arr_end), 10)
+        # 9 是重复的, 并不是返回首个匹配 index
         self.assertEqual(binary_search_by_recursion(self.target_2, self.data_arr,
             self.data_arr_start, self.data_arr_end), 13)
         self.assertEqual(binary_search_by_recursion(self.target_3, self.data_arr,
