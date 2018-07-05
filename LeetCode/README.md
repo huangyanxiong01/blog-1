@@ -156,7 +156,7 @@
 
 - 代码实现描述
   - 核心思想：分治
-  - 特点：选中间点比较
+  - 实现标签：选中间数比较
   - 二分查找 = 算出中间点 + 递归划分
 - [代码实现](https://github.com/hsxhr-10/blog/blob/master/LeetCode/binary_search.py)
 - 时间复杂度
