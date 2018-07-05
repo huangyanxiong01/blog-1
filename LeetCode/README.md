@@ -205,7 +205,7 @@
   - [代码实现](https://github.com/hsxhr-10/blog/blob/master/LeetCode/merge_sort.py)
 - 时间复杂度
   - 平均：O(nlogn)
-  - 最优：：O(nlogn)
+  - 最优：O(nlogn)
   - 最差：O(nlogn)
 - 空间复杂度：O(n)。对于原地归并而言
 
