@@ -22,7 +22,7 @@ def hash_float(key, M):
     return int(key * M)
 
 
-def hash_string(key):
+def hash_string(key, M):
     """
     用于字符串的散列函数
     参考 djb2
@@ -32,7 +32,7 @@ def hash_string(key):
     for x in key:
         hash = (( hash << 5) + hash) + ord(x)
 
-    return hash & 0xFFFFFFFF
+    return (hash & 0xFFFFFFFF) % M
 
 
 # ======================== 单元测试 ================================
@@ -50,7 +50,7 @@ class TestCaseHashFunction(unittest.TestCase):
 
         self.result_hash_integer = 99
         self.result_hash_float = 346
-        self.result_hash_string = 2149277029
+        self.result_hash_string = 467
 
     def test_hash_integer(self):
         self.assertEqual(hash_integer(self.data_hash_integer_key, self.M), self.result_hash_integer)
@@ -59,7 +59,7 @@ class TestCaseHashFunction(unittest.TestCase):
         self.assertEqual(hash_float(self.data_hash_float_key, self.M), self.result_hash_float)
 
     def test_hash_string(self):
-        self.assertEqual(hash_string(self.data_hash_string_key), self.result_hash_string)
+        self.assertEqual(hash_string(self.data_hash_string_key, self.M), self.result_hash_string)
 
 
 if __name__ == '__main__':
