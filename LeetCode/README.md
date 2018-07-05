@@ -102,11 +102,11 @@
     - 前序遍历：root 总在遍历结果序列的第一个
     - 中序遍历：root 的左边总是左子树，右边是右子树
     - 后序遍历：root 总在遍历结果序列的最后一个
+- [代码实现](https://github.com/hsxhr-10/blog/blob/master/LeetCode/binary_tree_traverse.py)
 - 时间复杂度 (要看数据的分布情况，可能会退化成链表，也可以通过引入随机算法尽量避免)
   - 增：[O(1), O(log(n))]
   - 删：[O(1), O(log(n))]
   - 查：[O(log(n)), O(n)]
-- [代码实现](https://github.com/hsxhr-10/blog/blob/master/LeetCode/binary_tree_traverse.py)
 
 ### Binary Search Tree
 
@@ -116,7 +116,7 @@
 - 代码实现
   - 增
   - 查
-- 时间复杂度 (要看数据的分布情况，可能会退化成链表，也可以通过引入随机算法尽量避免)
+- 时间复杂度 (要看数据的分布情况，可能会退化成链表)
   - 增：[O(1), O(log(n))]
   - 删：[O(1), O(log(n))]
   - 查：[O(log(n)), O(n)]
