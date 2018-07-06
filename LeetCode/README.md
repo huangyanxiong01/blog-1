@@ -173,6 +173,7 @@
 
 ### Hashing Search
 
+- [参考](https://github.com/hsxhr-10/blog/blob/master/LeetCode/README.md#hashing)
 - 在第一次遍历的时候顺便做 hashing 是个实用的技巧
 
 ### Binary Search Tree
@@ -181,6 +182,10 @@
 
 ### Quick Search
 
+- 代码实现描述
+  - 核心思想：分治
+  - 实现标签：就是快排中的挖坑填数
+  - 
 ## Sorting
 
 ### Quick Sort
