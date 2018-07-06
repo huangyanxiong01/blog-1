@@ -183,7 +183,7 @@
 ### Quick Select
 
 - 就是快排的挖坑填数，[参考](https://github.com/hsxhr-10/blog/blob/master/LeetCode/README.md#quick-sort)
-- [代码实现]()
+- [代码实现](https://github.com/hsxhr-10/blog/blob/master/LeetCode/quick_select.py)
 - 时间复杂度
   - 平均：O(n)
   - 最优：O(n)
