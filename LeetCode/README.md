@@ -236,6 +236,22 @@
 
 ## String
 
+### Substring Match
+
+#### Sequence Match
+
+#### BM
+
+- 代码实现描述
+  - 核心思想：下标原生有序
+  - 优化提升：将 arr_counter 换成 byte 类型或者 bit 类型, 可以很好地降低计数排序的空间复杂度
+- [代码实现](https://github.com/hsxhr-10/blog/blob/master/LeetCode/count_sort.py)
+- 时间复杂度
+  - 平均：O(n + k)
+  - 最优：O(n + k)
+  - 最差：O(n + k)
+- 空间复杂度：O(n + k)
+
 ## Graph
 
 - TODO
