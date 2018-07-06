@@ -180,12 +180,16 @@
 
 - [参考](https://github.com/hsxhr-10/blog/blob/master/LeetCode/README.md#binary-search-tree)
 
-### Quick Search
+### Quick Select
 
-- 代码实现描述
-  - 核心思想：分治
-  - 实现标签：就是快排中的挖坑填数
-  - 
+- 就是快排的挖坑填数，[参考](https://github.com/hsxhr-10/blog/blob/master/LeetCode/README.md#quick-sort)
+- [代码实现]()
+- 时间复杂度
+  - 平均：O(n)
+  - 最优：O(n)
+  - 最差：O(n^2)。和快速排序同理
+- 空间复杂度：O(1)
+
 ## Sorting
 
 ### Quick Sort
@@ -209,7 +213,7 @@
   - 难点：原地二路归并的实现
   - 实现标签：辅助数组排序原数组
   - 原地二路归并 = 计数器初始化 + 辅助数组初始化 + 大循环条件 for (k=start, k<= end, k++) + 四个条件判断：1. 左边取完了，a[k] = a[j], j++；2. 右边取完了，a[k] = a[i], i++；3. 左边当前小于右边当前，a[k] = a[i], i++；4. 右边当前小于左边，a[k] = a[j], j++
-  - [代码实现](https://github.com/hsxhr-10/blog/blob/master/LeetCode/merge_sort.py)
+- [代码实现](https://github.com/hsxhr-10/blog/blob/master/LeetCode/merge_sort.py)
 - 时间复杂度
   - 平均：O(nlogn)
   - 最优：O(nlogn)
