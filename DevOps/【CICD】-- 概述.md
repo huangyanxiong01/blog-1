@@ -39,7 +39,7 @@ CI/CD 包含的步骤相对灵活，个人认为，以下几个是必须的：
 
 #### PREPARE
 
-PLAN <--> CODE 属于 PREPARE 阶段。需求如何扎实地交付给开发？需求文档要不要写，要写的话如何写？如何让需求文档和代码实现之间可以比较好地映射起来？这些都是这一层要思考的，这一层却很容易被弱化甚至忽略，轻 PLAN 重 CODE 往往会导致代码容易出现 bug，试想 PLAN 已经有漏洞了，实现的 CODE 肯定也会有问题的。详细的讨论可以参考 [这里](https://github.com/hsxhr-10/blog/blob/master/DevOps/【CI%26CD】--%20PLAN.md)。
+PLAN <--> CODE 属于 PREPARE 阶段。需求如何扎实地交付给开发？需求文档要不要写，要写的话如何写？如何让需求文档和代码实现之间可以比较好地映射起来？这些都是这一层要思考的，这一层却很容易被弱化甚至忽略，轻 PLAN 重 CODE 往往会导致代码容易出现 bug，试想 PLAN 已经有漏洞了，实现的 CODE 肯定也会有问题的。详细的讨论可以参考 [这里](https://github.com/hsxhr-10/blog/edit/master/DevOps/【CI&CD】--%20PLAN.md)。
 
 #### CI PIPELINE
 
