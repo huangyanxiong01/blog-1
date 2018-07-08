@@ -6,7 +6,7 @@
 
 # 方法
 
-## API 架构风格
+## 风格
 
 目前主流的有 RESTful 和 RPC/REST-RPC 两种方式，以前貌似还有个 SOA。
 
