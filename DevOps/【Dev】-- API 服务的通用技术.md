@@ -25,3 +25,5 @@ RPC 以操作为核心，只会用到 HTTP 协议中的 GET 和 POST 方法，�
 - GET/POST /create_article：创建文章
 - GET/POST /modify_article：修改文章
 - GET/POST /delete_article：删除文章
+
+这里忍不住要吐槽网上有一些关于这两种风格撕逼或者一味鼓吹某一种风格的言论，其实讲真，只要团队接受，并且有能力落地，爱用哪种用哪种，Swagger 也不会因为你是  RPC 风格。
