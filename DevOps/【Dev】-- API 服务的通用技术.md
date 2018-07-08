@@ -77,8 +77,7 @@ def resource_protected():
 
 ## 版本
 
-有两种做法，一种是现实在 API 的 URL 上，如 `domian.com/api/v1/xxx/`。另一种是随着响应的数据返回，如 `{'code': 200, 'resp': {'version': 'v1', 'data': []}}`。
-
+有两种做法，一种是现实在 API 的 URL 上，如 `domian.com/api/v1/xxx/`。另一种是随着响应的数据返回，如 `{'code': 200, 'resp': {'version': 'v1', 'data': []}}`。个人认为如果是作为第三方 API 给别人使用的，第一种会更直观，如果是内部使用的话，团队接受就行。
 
 
 
