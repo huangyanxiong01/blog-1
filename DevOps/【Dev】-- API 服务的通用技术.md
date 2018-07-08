@@ -75,7 +75,9 @@ def resource_protected():
     return decorator
 ```
 
+## 版本
 
+有两种做法，一种是现实在 API 的 URL 上，如 `domian.com/api/v1/xxx/`。另一种是随着响应的数据返回，如 `{'code': 200, 'resp': {'version': 'v1', 'data': []}}`。
 
 
 
