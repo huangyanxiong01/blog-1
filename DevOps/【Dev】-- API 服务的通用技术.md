@@ -140,7 +140,7 @@ pass
 
 ![](https://raw.githubusercontent.com/hsxhr-10/picture/master/电梯式分页.png)
 
-![](https://raw.githubusercontent.com/hsxhr-10/picture/master/流式分页.png =100x50)
+![](https://raw.githubusercontent.com/hsxhr-10/picture/master/流式分页.png | width=100)
 
 
 
