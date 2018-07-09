@@ -136,9 +136,11 @@ pass
 
 ### 分页
 
-最常用分页有两种：电梯式分页和流式分页，分别如下图所示：
+电梯式分页如下图所示：
 
 ![](https://raw.githubusercontent.com/hsxhr-10/picture/master/电梯式分页.png)
+
+流式分页如下图所示：
 
 ![](https://raw.githubusercontent.com/hsxhr-10/picture/master/流式分页.png)
 
