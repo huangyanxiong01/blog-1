@@ -55,7 +55,7 @@ def resource_protected():
                 raise tornado.web.HTTPError(403)
             
             # 服务端再次签名所需的参数
-            access_token = kwargs['id']
+            id = kwargs['id']
             signature = kwargs['signature']
 
             secret = RK.get_hash_value(Setting.REDIS_SECRET_STORE, id)
