@@ -142,9 +142,8 @@ pass
 
 电梯式分页的特点是可以看到当前所处是第几页、可以在不同页数之间切换、一般还可以看到总页数。
 
-电梯式分页所对应的 SQL 为 `select * from ... where ... order by (可选) ... limit (page - 1) * page_size, page_size;`。当数据量很大时 (比如 1000w) 这条 SQL 的性能表现会很差，因为 `limit offset, end` 会顺序扫描 0 ~ offset 的数据，顺序扫描是杰出的 SQL 性能杀手。解决方法如下：
-
-- 换成子查询
+电梯式分页所对应的 SQL 为 `select * from ... where ... order by (可选) ... limit (page - 1) * page_size, page_size;`。当数据量很大时 (比如 1000w) 这条 SQL 的性能表现会很差，因为 `limit offset, end` 会顺序扫描 0 ~ offset 的数据，顺序扫描是杰出的 SQL 性能杀手。常见解决方法：自增主键/明显自增性的字段 + 子查询定位 offset：`SELECT * FROM ... WHERE pid >= (SELECT pid FROM  
+... ORDER BY pid LIMIT page , 1) LIMIT page_size`
 
 流式分页如下图所示：
 
