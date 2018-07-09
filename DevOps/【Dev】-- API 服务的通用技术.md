@@ -134,10 +134,6 @@ pass
 - data：响应数据，一般使用 JSON 格式，如果对序列化、反序列化、传输等性能要求苛刻的，可以考虑类似 protocol buffer 这样的格式
 - pagination：分页信息，当然除了基本的 `page`, `page_size`, `total` 之外，还可以包括 `pre_page`, `next_page` 等信息
 
-### 状态码
-
-### 数据
-
 ### 分页
 
 
