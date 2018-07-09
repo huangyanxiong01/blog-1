@@ -125,9 +125,7 @@ pass
 ```
 {
     "code": 10001,
-    "msg": "xxxxxx",
-    "data": [],
-    "pagination": {}
+    "msg": "xxxxxx"
 }
 ```
 
