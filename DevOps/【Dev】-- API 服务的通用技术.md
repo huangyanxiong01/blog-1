@@ -142,12 +142,49 @@ pass
 
 电梯式分页的特点是可以看到当前所处是第几页、可以在不同页数之间切换、一般还可以看到总页数。
 
-电梯式分页所对应的 SQL 为 `select * from ... where ... order by (可选) ... limit (page - 1) * page_size, page_size;`。当数据量很大时 (比如 1000w) 这条 SQL 的性能表现会很差，因为 `limit offset, end` 会顺序扫描 0 ~ offset 的数据，顺序扫描是杰出的 SQL 性能杀手。常见解决方法：自增主键/明显自增性的字段 + 子查询定位 offset：`SELECT * FROM ... WHERE pid >= (SELECT pid FROM  
-... ORDER BY pid LIMIT page , 1) LIMIT page_size`
+电梯式分页所对应的 SQL 为 `select * from ... where ... order by (可选) ... limit (page - 1) * page_size, page_size;`。当数据量很大时 (比如 1000w) 这条 SQL 的性能表现会很差，因为 `limit offset, number` 会顺序扫描 0 ~ offset 的数据，顺序扫描是杰出的 SQL 性能杀手。常见解决方法：自增主键/明显自增性的字段 + 子查询定位 offset：`SELECT * FROM ... WHERE pid >= (SELECT pid FROM  
+... ORDER BY pid LIMIT page , 1) LIMIT page_size`。
+
+当然这里并不是说一上来就要用这种子查询的方式，可以用 page 为条件判断，当小于某个数值时可以直接使用 `limit offset number`，当大于某个数值时可以用 `自增主键 + 子查询` 的方式处理。
 
 流式分页如下图所示：
 
 ![](https://raw.githubusercontent.com/hsxhr-10/picture/master/流式分页.png)
+
+流式分页的特点是无法看到当前出与第几页、没有总页数、只能以 “上一页、下一页” 的形式翻页。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
