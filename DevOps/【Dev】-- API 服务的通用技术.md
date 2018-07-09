@@ -148,9 +148,23 @@ pass
 select * from ... where ... order by (可选) ... limit (page - 1) * page_size, page_size;
 ```
 
+当数据量很大时 (比如 1000w) 这条 SQL 的性能表现会很差，因为 `limit offset, end` 会顺序扫描 0 ~ offset 的数据，顺序扫描是杰出的 SQL 性能杀手。解决方法如下：
+
+- 换成子查询
+
 流式分页如下图所示：
 
 ![](https://raw.githubusercontent.com/hsxhr-10/picture/master/流式分页.png)
+
+
+
+
+
+
+
+
+
+
 
 
 
