@@ -153,6 +153,11 @@ pass
 
 流式分页的特点是无法看到当前出与第几页、没有总页数、只能以 “上一页、下一页” 的形式翻页。
 
+电梯式分页的 SQL 处理方式用在流式分页上可能会造成查询出来的数据重复或者数据缺失，具体参考下图：
+
+![](https://raw.githubusercontent.com/hsxhr-10/picture/master/分页数据重复.png)
+
+![](https://raw.githubusercontent.com/hsxhr-10/picture/master/分页数据缺失.png)
 
 
 
