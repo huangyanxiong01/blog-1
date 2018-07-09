@@ -159,22 +159,27 @@ pass
 
 ![](https://raw.githubusercontent.com/hsxhr-10/picture/master/分页数据缺失.png)
 
+应该使用游标分页这种方法去处理流式分页。结合实际情况，流式分页一般用于跟时间有关的列表，因此，游标一般是这个时间字段。游标分页的 SQL 为 `select * from ... where 时间字段 > ... order by 时间字段 desc limit page_size`。
 
+同样以上面的文章为例，列表要求以文章的创建时间倒序排序显示，则相关代码如下：
 
+```
+# SQL
+select * from article where create_datetime > $cursor order by create_datetime desc limit 20;
 
+# 响应结构体 pagination 部分
+{
+    ...
 
+    "pagination": {
+       "next_cursor": "2015-01-01 12:20:30",
+       "limit": 10,
+       "total": 100,
+    }
+}
+```
 
-
-
-
-
-
-
-
-
-
-
-
+同时，流式分页也是解决电梯分页中数据量过大导致 `limit` 性能下降另一种方法。
 
 
 
