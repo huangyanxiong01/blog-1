@@ -145,7 +145,7 @@ pass
 电梯式分页所对应的 SQL 如下：
 
 ```
-select * from ... where ... order by (可选) ... limit (page- 1) * page_size, page_size;
+select * from ... where ... order by (可选) ... limit (page - 1) * page_size, page_size;
 ```
 
 流式分页如下图所示：
