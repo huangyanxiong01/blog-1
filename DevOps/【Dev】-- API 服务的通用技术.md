@@ -95,6 +95,31 @@ pass
 
 ### 响应结构体
 
+参考的结构如下：
+
+请求成功时
+
+```
+{
+    "code": 200,
+    "msg": "OK",
+    "data": [
+        {
+            "name": "tiger",
+            "sex": "male"
+        }, {
+            "name": "simon",
+            "sex": "female"
+        }, ...
+    ],
+    "pagination": {
+        "page": 1,
+        "page_size": 10,
+        "total": 200
+    }
+}
+```
+
 ### 状态码
 
 ### 数据
