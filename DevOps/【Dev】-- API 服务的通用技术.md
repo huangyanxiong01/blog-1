@@ -140,6 +140,14 @@ pass
 
 ![](https://raw.githubusercontent.com/hsxhr-10/picture/master/电梯式分页.png)
 
+电梯式分页的特点是可以看到当前所处是第几页、可以在不同页数之间切换、一般还可以看到总页数。
+
+电梯式分页所对应的 SQL 如下：
+
+```
+select * from ... where ... order by ... limit (currentPage- 1) * pagingSize, pagingSize;
+```
+
 流式分页如下图所示：
 
 ![](https://raw.githubusercontent.com/hsxhr-10/picture/master/流式分页.png)
