@@ -142,8 +142,8 @@ pass
 
 电梯式分页的特点是可以看到当前所处是第几页、可以在不同页数之间切换、一般还可以看到总页数。
 
-电梯式分页所对应的 SQL 为 `select * from ... where ... order by (可选) ... limit (page - 1) * page_size, page_size;`。当数据量很大时 (比如 1000w) 这条 SQL 的性能表现会很差，因为 `limit offset, number` 会顺序扫描 0 ~ offset 的数据，顺序扫描是杰出的 SQL 性能杀手。常见解决方法：自增主键/明显自增性的字段 + 子查询定位 offset：`SELECT * FROM ... WHERE pid >= (SELECT pid FROM  
-... ORDER BY pid LIMIT page , 1) LIMIT page_size`。
+电梯式分页所对应的 SQL 为 `select * from $tablename where $过滤条件 (可选) order by $某个字段 (可选) ... limit ($page - 1) * $page_size, $page_size;`。当数据量很大时 (比如 1000w) 这条 SQL 的性能表现会很差，因为 `limit offset, number` 会顺序扫描 0 ~ offset 的数据，顺序扫描是杰出的 SQL 性能杀手。常见解决方法：自增主键/明显自增性的字段 + 子查询定位 offset：`SELECT * FROM $tablename WHERE $过滤条件 (可选) AND pid >= (SELECT pid FROM  
+$tablename ORDER BY pid LIMIT $page , 1) LIMIT $page_size`。
 
 当然这里并不是说一上来就要用这种子查询的方式，可以用 page 为条件判断，当小于某个数值时可以直接使用 `limit offset number`，当大于某个数值时可以用 `自增主键 + 子查询` 的方式处理。
 
@@ -159,7 +159,7 @@ pass
 
 ![](https://raw.githubusercontent.com/hsxhr-10/picture/master/分页数据缺失.png)
 
-应该使用游标分页这种方法去处理流式分页。结合实际情况，流式分页一般用于跟时间有关的列表，因此，游标一般是这个时间字段。游标分页的 SQL 为 `select * from ... where 时间字段 > ... order by 时间字段 desc limit page_size`。
+应该使用游标分页这种方法去处理流式分页。结合实际情况，流式分页一般用于跟时间有关的列表，因此，游标一般是这个时间字段。游标分页的 SQL 为 `select * from $tablename where $时间字段 > $cursor order by $时间字段 desc limit $page_size`。
 
 同样以上面的文章为例，列表要求以文章的创建时间倒序排序显示，则相关代码如下：
 
@@ -172,14 +172,14 @@ select * from article where create_datetime > $cursor order by create_datetime d
     ...
 
     "pagination": {
-       "next_cursor": "2015-01-01 12:20:30",
+       "next_cursor": "2015-01-01 12:20:30",  // 下一次 SQL 查询中的 $cursor 变量
        "limit": 10,
        "total": 100,
     }
 }
 ```
 
-同时，流式分页也是解决电梯分页中数据量过大导致 `limit` 性能下降另一种方法。
+同时，流式分页也是解决电梯分页中数据量过大导致 `limit` 性能下降的另一种方法。
 
 
 
