@@ -2,3 +2,4 @@
 - 缓存：If-None-Match: ETag & Cache-Control: max-age/no-cache/public/private
 - 压缩：gzip
 - 跨域请求
+- 状态码
