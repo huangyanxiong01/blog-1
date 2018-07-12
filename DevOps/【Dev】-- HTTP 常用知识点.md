@@ -48,8 +48,9 @@ HTTP 缓存策略决策图如下：
 
 ![](https://raw.githubusercontent.com/hsxhr-10/picture/master/HTTP缓存1.png)
 
-# 跨域请求
+# 跨域
 
+跨域分广义和狭义两种。
 
 
 
