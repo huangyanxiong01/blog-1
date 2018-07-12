@@ -44,11 +44,11 @@ max-age 策略下的 HTTP 缓存的基本交互图如下：
 
 ![](https://raw.githubusercontent.com/hsxhr-10/picture/master/HTTP缓存.png)
 
-什么时候用什么缓存策略？可以参考下图：
+HTTP 缓存策略决策图如下：
 
-![]()
+![](https://raw.githubusercontent.com/hsxhr-10/picture/master/HTTP缓存1.png)
 
-
+# 跨域请求
 
 
 
