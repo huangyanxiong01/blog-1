@@ -10,6 +10,6 @@
 
 - GET 使用 URL 传参，而 POST 将数据放在 BODY 中
 - GET 的 URL 会有长度上的限制，而 POST 的数据则可以非常大
-- POST 比 GET 安全，因为数据在地址栏上不可见
+- GET 没 POST 安全，因为数据在地址栏上可见
 
-
+对于第一点，我们截取 [RFC 2616 中 GET 的描述](https://tools.ietf.org/html/rfc2616#section-9.3)
