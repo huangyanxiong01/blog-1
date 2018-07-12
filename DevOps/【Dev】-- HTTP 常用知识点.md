@@ -40,7 +40,7 @@
     - no-cache：即使缓存在有效期内，客户端也需要发起 HTTP 实时确保缓存真的没有过期
     - no-store：不准客户端和代理进行缓存
 
-HTTP 缓存的基本交互图如下：
+max-age 策略下的 HTTP 缓存的基本交互图如下：
 
 ![](https://raw.githubusercontent.com/hsxhr-10/picture/master/HTTP缓存.png)
 
