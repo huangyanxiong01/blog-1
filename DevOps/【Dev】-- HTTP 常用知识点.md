@@ -91,7 +91,7 @@ location ~* .+\.(eot|otf|ttf|woff|svg)$ {
 
 # 状态码
 
-大致上：
+概括地：
 
 - 1xx：服务端接收成功
 - 2xx：成功
