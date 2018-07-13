@@ -1,9 +1,3 @@
-- GET POST 误解
-- 缓存：If-None-Match: ETag & Cache-Control: max-age/no-cache/public/private
-- 压缩：gzip
-- 跨域请求
-- 状态码
-
 # GET 和 POST 的误解
 
 对于两者的区别，普遍的答案如下：
@@ -93,6 +87,9 @@ location ~* .+\.(eot|otf|ttf|woff|svg)$ {
 }
 ```
 
+最后，WebSocket 是允许跨域请求的。
+
+# 状态码
 
 
 
