@@ -26,6 +26,7 @@ def merge(arr, start, mid, end):
 
     # 辅助数组初始化
     # aux = arr[start:end+1]
+    # print aux
     aux = arr[:]
 
     # 大循环条件
@@ -38,7 +39,7 @@ def merge(arr, start, mid, end):
         elif (j > end):
             arr[k] = aux[i]
             i += 1
-        # 左边当前小于右边当前  
+        # 左边当前小于右边当前
         elif (less(aux[i], aux[j])):
             arr[k] = aux[i]
             i += 1
