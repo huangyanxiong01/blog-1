@@ -50,8 +50,48 @@ HTTP 缓存策略决策图如下：
 
 # 跨域
 
-跨域分广义和狭义两种。
+协议、域名 (注意不是 IP)、端口，三个之中任何一个不一致都视为跨域。
 
+解决跨域的常用技巧大致有三种，jsonp、服务端设置跨域资源共享、代理。
+
+jsonp 的原理是浏览器跨域访问 js、css、img 等常规静态资源被同源策略许可。比如在动静分离的架构下，js、css、img 等静态资源可以放在另外不同域名的服务器下，我们可以通过在 html 页面中通过对应的标签去加载这些资源。缺点是只能发起 GET 请求。
+
+服务端设置跨域资源共享算是主流的，简单高效的做法。
+
+```
+# 不需要传递 cookie 时
+"Access-Control-Allow-Origin", "*"
+
+# 需要传递 cookie 时，www.domain1 是指服务器自身的域名
+"Access-Control-Allow-Origin", "http://www.domain1.com"
+"Access-Control-Allow-Credentials", "true"
+```
+
+代理就相当于间接的跨域访问。
+
+```
+# nginx 代理跨域设置
+
+server {
+    listen       81;
+    server_name  www.domain1.com;
+
+    location / {
+        proxy_pass   http://www.domain2.com:8080;
+        
+        # 如果要传递 cookie
+        proxy_cookie_domain www.domain2.com www.domain1.com;
+        add_header Access-Control-Allow-Origin http://www.domain1.com;
+        add_header Access-Control-Allow-Credentials true;
+    }
+}
+
+# 如果 nginx 上的字体文件无法跨域访问，可以在字体文件的 location 如下设置
+
+location ~* .+\.(eot|otf|ttf|woff|svg)$ {
+  add_header Access-Control-Allow-Origin *;
+}
+```
 
 
 
