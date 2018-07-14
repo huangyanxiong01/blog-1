@@ -1,4 +1,6 @@
-# ANSI SQL
+下面记录的都是 ANSI SQL 的标准，不同的数据库之间的具体实现会有一点出入，但是大体上一致。
+
+# SQL
 
 ## 增加
 
@@ -41,5 +43,75 @@
   ```
 
 - right outer join，两张表以上的 join 操作，且左边的表就算没有关联行也返回。就是跟 left outer join 相反。
+
+# 操纵表
+
+## 创建
+
+```
+CREATE TABLE $table
+(
+  $filed1 约束 (可选),
+  $filed2 约束 (可选),
+  ...
+);
+```
+
+## 删除
+
+```
+DROP TABLE $table;
+```
+
+## 修改
+
+- 增加字段
+
+  ```
+  ALERT TABLE $table ADD $filed 约束 (可选);
+  ```
+
+- 删除字段
+
+  ```
+  ALERT TABLE $table DROP CLOUMN $filed;
+  ```
+
+# 统计函数
+
+- COUNT(*)/COUNT($filed)：统计行数/统计特定值的列的数量
+- MAX($filed)：统计某个列的最大值
+- MIN($filed)：统计某个列的最小值
+- SUM($filed)：统计某个列的总和
+- AVG($filed)：统计某个列的平局值
+
+# 分组 GROUP BY
+
+- `GROUP BY` 通常配合统计函数使用
+- `GROUP BY` 下的过滤应该使用 `HAVING`
+- `WHERE` 子句的语法都适用于  `HAVING` 子句
+
+# SELECT 子句的顺序
+
+1. SELECT
+2. FROM
+3. WHERE
+4. GROUP BY
+5. HAVING
+6. ORDER BY
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
