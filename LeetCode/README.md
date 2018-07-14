@@ -175,6 +175,9 @@
   - 归并排序/快速排序
   - 二分查找/快速查找
 
+- 下图就是经典的一维分治
+  - ![](https://raw.githubusercontent.com/hsxhr-10/picture/master/一维分治算法图解.png)
+
 ## Search
 
 ### Binary Search
