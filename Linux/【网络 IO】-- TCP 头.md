@@ -41,6 +41,8 @@
 - Checksum：验证数据包在传输过程中没有损坏
 - Urgent pointer：TODO
 
+> TCP 包：[0 Byte, 65535 Byte]；IP 包：[0 Byte, 65535 Byte]；MAC 帧：[0 Byte, 1500 Byte]
+
 #### 3. ACK 种类
 
 - 延迟 ACK：接收方会在一个 ACK 时间窗口内等待尽可能多的数据包，如果在 ACK 时间窗口内内又收到几个数据包，那么将会一次性地应答；如果在 ACK 时间窗口内没有接收到数据包，那么会在窗口结束后应答
