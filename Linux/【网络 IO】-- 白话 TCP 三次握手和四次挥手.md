@@ -144,12 +144,7 @@ TIME_WAIT 状态下等待 2 个 MSL 的原因：
   netstat -an|grep FIN_WAIT1
   ```
 
-问题 2：存在大量 FIN_WAIT2
-
-- 网络环境导致，FIN_WAIT2 无法 接收到 FIN，也就无法进入 TIME_WAIT 状态了
-- 检查接收方是否没有执行 `close`，无论有意或无意
-
-问题 3：存在大量 TIME_WAIT
+问题 2：存在大量 TIME_WAIT
 
 - 通过调整内核参数加快 TIME_WAIT 连接的回收
 
@@ -162,9 +157,7 @@ shell> /proc/sys/net/ipv4/net.ipv4.tcp_tw_recycle
 shell> /proc/sys/net/ipv4/net.ipv4.tcp_fin_timeout
 ```
 
-(对于接收方)
-
-问题：存在大量 CLOSE_WAIT
+问题 3：存在大量 CLOSE_WAIT
 
 - 通过 `PID/Program name` 字段检查进程是否没有正常的 `close`
 
