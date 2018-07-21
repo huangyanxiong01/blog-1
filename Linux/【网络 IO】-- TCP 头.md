@@ -21,25 +21,25 @@
 
 字段详解：
 
-- Source Port：对应 TCP 头中的 16 位源端口
-- Destination Port：对应 TCP 头中的 16 目的端口
+- Source Port：该 TCP 包的源端口
+- Destination Port：该 TCP 包的目的端口
 - [TCP Segment Len]：wireshark 的额外字段。TCP 数据包长度。下一次的 Sequence number = 当前 Sequence number + 当前 [TCP Segment Len]
-- Sequence number：对应 TCP 头中的 32 序列号
-- [Next Sequence number]：wireshark 的额外字段。下一次的 TCP 数据包序列号
-- Acknowledgment number：对应 TCP 头中的 32 确认号。下一次的 Acknowledgment number = 当前 Acknowledgment number + 下一次接收到的 [TCP Segment Len]
-- Head Length：TCP 头大小
+- Sequence number：该 TCP 包的序列号
+- [Next Sequence number]：wireshark 的额外字段。下一次 TCP 包的序列号
+- Acknowledgment number：本端已经收到的最新 TCP 包的序列号
+- Head Length：TCP 头大小，单位是 32 bit
 - Flags
   - Congestion Window Reduced：wireshark 的额外字段。根据该标记可以判断是否发生网络拥塞，再进一步判断是超时重传还是快速重传
-  - Urgent：对应 TCP 头中的 URG。表示 16 位紧急指针有效。用于催促中间设备要尽快传递该数据包
-  - Acknowledgment：对应 TCP 头中的 ACK。用于标记 32 位确认号有效
-  - Push：对应 TCP 头中的 PSH。用于接受方应该尽快将数据包交给应用层，尽量别再缓存中排队等待
-  - Rest：对应 TCP 头中的 RST。用于异常关闭连接
+  - Urgent：对应 TCP 头中的 URG。标记该数据包应该被中间设备尽快传递
+  - Acknowledgment：对应 TCP 头中的 ACK。标记该 TCP 包为应答包
+  - Push：对应 TCP 头中的 PSH。标记该 TCP 包应该尽快交付给应用层
+  - Rest：对应 TCP 头中的 RST。用于回应异常的数据包，[参考]()
   - Syn：对应 TCP 头中的 SYN。用于三次握手
   - Fin：对应 TCP 头中的 FIN。用于四次挥手
-- Window size value：对应 TCP 头中的 16 位窗口大小。还没算上 window scale 的 window size
+- Window size value：本端接收窗口大小。还没算上 window scale 的 window size
 - [calculated window size]：wireshark 的额外字段。算上 window scale 之后的 window size
-- Checksum：对应 TCP 头中的 16 位校验和。用于确保数据在传输过程中没有损坏
-- Urgent pointer：对应 TCP 头中的 16 位紧急指针
+- Checksum：验证数据包在传输过程中没有损坏
+- Urgent pointer：TODO
 
 #### 3. ACK 发送情景
 
