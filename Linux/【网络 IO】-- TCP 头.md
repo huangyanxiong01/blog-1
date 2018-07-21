@@ -2,15 +2,14 @@
 
 ![](https://raw.githubusercontent.com/hsxhr-10/picture/master/TCP头.png)
 
-需要注意的一些数字：
+字段的取值范围：
 
-- 16 位 src port：取值范围 [0, 2^16=65535]
-- 16 位目的端口号：同上
-- 32 位序列号： 取值范围 [0, 2^32=4294967296 (42亿)]
-- 32 位确认号：同上
-- 16 位窗口大小：意味着接收窗口在还没算上 window scale 之前取值范围 [0 Byte, 65535 Byte]
-
-- TCP 头大小：
+- src port：取值范围 [0, 2^16 - 1 = 65535]
+- dest port：同上
+- sequence number： 取值范围 [0, 2^32 - 1 = 4294967296 (42亿)]
+- ack number：同上
+- header size：该字段的单位是 32 bit 不是 1 bit。即 tcp header 的取值 [20 Byte, (2^4 - 1)*32 / 8 = 60 Byte]
+- window size：意味着接收窗口在还没算上 window scale 之前取值范围 [0 Byte, 65535 Byte]
 
 #### 2. 通过 wireshark 看 TCP 头
 
