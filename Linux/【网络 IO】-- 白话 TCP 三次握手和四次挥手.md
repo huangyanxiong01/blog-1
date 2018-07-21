@@ -101,7 +101,7 @@ shell> cat /proc/sys/net/ipv4/tcp_fin_timeout
 SHELL> echo 5 > /proc/sys/net/ipv4/tcp_fin_timeout
 ```
 
-> /proc/sys/net/ipv4/tcp_fin_timeout 控制着 FIN_WAIT2 和 TIME_WAIT 状态的持续时间
+> /proc/sys/net/ipv4/tcp_fin_timeout 控制着 TIME_WAIT 状态的持续时间
 
 TIME_WAIT 状态下等待 2 个 MSL 的原因：
 
@@ -148,14 +148,6 @@ TIME_WAIT 状态下等待 2 个 MSL 的原因：
 
 - 网络环境导致，FIN_WAIT2 无法 接收到 FIN，也就无法进入 TIME_WAIT 状态了
 - 检查接收方是否没有执行 `close`，无论有意或无意
-- 通过调整内核参数减少 FIN_WAIT2 状态的保持时间
-  ```
-  # 查看，默认 60s
-  shell> cat /proc/sys/net/ipv4/tcp_fin_timeout
-  
-  # 修改
-  shell> echo 30 > /proc/sys/net/ipv4/tcp_fin_timeout
-  ```
 
 问题 3：存在大量 TIME_WAIT
 
