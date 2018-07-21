@@ -33,10 +33,10 @@
   - Urgent：对应 TCP 头中的 URG。标记该数据包应该被中间设备尽快传递
   - Acknowledgment：对应 TCP 头中的 ACK。标记该 TCP 包为应答包
   - Push：对应 TCP 头中的 PSH。标记该 TCP 包应该尽快交付给应用层
-  - Rest：对应 TCP 头中的 RST。用于回应异常的数据包，[参考]()
-  - Syn：对应 TCP 头中的 SYN。用于三次握手
-  - Fin：对应 TCP 头中的 FIN。用于四次挥手
-- Window size value：本端接收窗口大小。还没算上 window scale 的 window size
+  - Rest：对应 TCP 头中的 RST。标记该 TCP 包是回应某种异常情况，[参考](https://github.com/hsxhr-10/blog/blob/master/Linux/【网络%20IO】--%20TCP%20头.md#4-rst-发送情景)
+  - Syn：对应 TCP 头中的 SYN。标记该 TCP 包是跟三次握手相关
+  - Fin：对应 TCP 头中的 FIN。标记该 TCP 包是跟四次挥手相关
+- Window size value：本端接收窗口大小，还没算上 window scale 的 window size
 - [calculated window size]：wireshark 的额外字段。算上 window scale 之后的 window size
 - Checksum：验证数据包在传输过程中没有损坏
 - Urgent pointer：TODO
