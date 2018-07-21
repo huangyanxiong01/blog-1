@@ -57,11 +57,8 @@
 
 #### 4. RST 发送情景
 
-- 连接一个没被监听的端口号
 - 向已经建立好的连接再次发出 SYN 包
 - 像一个已经关闭的连接读写数据
-- socket api `close` 调用中指定 SO_LINGER 参数
-- 服务器 A 要重启，收到 B 的 KEEP-ALIVED，A 会向 B 发送 RST 包
 
 > TCP 连接无论在什么情况下只要收到 RST 包，都会进入 CLOSED 状态
 
