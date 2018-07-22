@@ -119,7 +119,7 @@ root@120:~# cat /proc/sys/vm/dirty_expire_centisecs
 3000
 ```
 
-2.3. `/proc/sys/vm/dirty_background_ratio` 这个参数和 1.1. 中的 `/proc/sys/vm/dirty_ratio` 基本一致，建议这两个参数取值一致。默认值 10。
+2.3. `/proc/sys/vm/dirty_background_ratio` 这个参数和 2.1. 中的 `/proc/sys/vm/dirty_ratio` 基本一致，建议这两个参数取值一致。默认值 10。
 
 ```
 root@120:~# cat /proc/sys/vm/dirty_background_ratio
