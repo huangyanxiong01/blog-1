@@ -10,8 +10,6 @@
 
 一个磁盘系统的分层模型如下：
 
-![](https://raw.githubusercontent.com/hsxhr-10/picture/master/%E7%A3%81%E7%9B%98%E5%88%86%E5%B1%82%E6%A8%A1%E5%9E%8B.png)
-
 ![](https://raw.githubusercontent.com/hsxhr-10/picture/master/%E5%9D%97%E8%AE%BE%E5%A4%87%E5%88%86%E5%B1%82%E5%9B%BE2.jpg)
 
 下面简单介绍每一层的意义：
