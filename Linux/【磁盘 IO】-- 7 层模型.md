@@ -21,7 +21,7 @@
 - **FS Layer**：文件系统层。主要作用有两个，1 是制定磁盘格式，让面向用户空间的路径能转换成面向物理设备的位置；2 是为 VFS 提供映射关系
 - **Generic Block Layer**：通用块层。主要作用是提供了一个类似 VFS 层的块设备操作抽象层，下层对接各种不同属性的块设备，对上提供统一的 Block IO 请求标准 (上三层操作数据的单位是块/页，下三层操作数据的单位是扇区，从该层开始发出的就是以扇区为单位的面向物理设备的 I/O 请求)
 - **I/O Scheduler Layer**：I/O 调度层。主要作用有两个，1 是合并相邻扇区的 I/O 请求；2 是对请求重新排序并调度
-- **Block Device Drive Layer**：块设备驱动层。主要作用是和磁盘控制器打交道
-- **Block Device Layer**：块设备层。主要作用是通过磁盘控制器读写物理设备
+- **Block Device Drive Layer**：驱动层。主要作用是和磁盘控制器打交道
+- **Block Device Layer**：块设备层
 
 > 优化的性价比：Block Device Layer > Page Cache Layer > FS Layer > I/O Scheduler Layer > (VFS Layer, Generic Block Layer, Block Device Drive Layer)
