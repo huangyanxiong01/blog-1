@@ -110,7 +110,7 @@ EXTENTS:
 
 # 重点看到 (0-79):15809024-15809103，(0-79) 就是文件的 block number，15809024-15809103 就是文件在 data blocks/块 中的位置。
 # 15809024 是由 "(15809024 对应的 sector - 分区起始 sector) / 8 得到；15809103 是由 (15809103 对应的 sector - 分区起始 sector) / 8 得到，
-# 之所以除 8 是因为 block size 4096B 和 sector size 512B 之间差了 4 倍。
+# 之所以除 8 是因为 block size 4096B 和 sector size 512B 之间差了 8 倍。
 ```
 
 1.3. 根据文件路径查找 sector
