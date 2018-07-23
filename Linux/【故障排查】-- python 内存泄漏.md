@@ -61,7 +61,7 @@ pip install objgraph
 
 对于 Python 语言来说，想要违反垃圾回收机制需要满足以下两点：
 
-- 存在循环引用
+- 对象之间存在循环引用
 - 循环引用链上的若干对象自定义了 `__del__` 方法
 
 一个用于模拟循环引的脚本 `mock_high_memory_cycle.py`，内容如下：
