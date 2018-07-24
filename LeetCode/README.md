@@ -103,7 +103,7 @@
     - 后序遍历：root 总在遍历结果序列的最后一个
 - [代码实现](https://github.com/hsxhr-10/blog/blob/master/LeetCode/binary_tree_traverse.py)
 - 时间复杂度 (这里偏向完全二叉树，不讨论退化成链表的树)
-  - 查：O(n)
+  - 查：O(logn)
 
 ### Binary Search Tree
 
