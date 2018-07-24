@@ -199,7 +199,7 @@ def postorder_by_loops(root, result):
             print(root.value)
         # 否则就进行入栈操作
         else:
-            # 以最小二叉树为参考写出以下的入栈方式: 右子树 --> 根 --> 左子树
+            # 以最小二叉树为参考写出以下的入栈方式: 根 --> 右子树 --> 左子树
             # 此处可以优化, 当 root.light 或 root.right 为空时，无需入栈, 减少大循环次数
             stack.append(BinarySearchTreeForLoops(root, True))
             stack.append(BinarySearchTreeForLoops(root.right, False))
