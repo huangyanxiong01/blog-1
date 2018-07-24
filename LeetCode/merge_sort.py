@@ -20,14 +20,14 @@ def merge(arr, start, mid, end):
     """
     二路归并
     """
-    # 计数器初始化
-    i = start
-    j = mid + 1
-
     # 辅助数组初始化
     # aux = arr[start:end+1]
     # print aux
     aux = arr[:]
+
+    # 计数器初始化
+    i = start
+    j = mid + 1
 
     # 大循环条件
     for k in xrange(start, end + 1):
