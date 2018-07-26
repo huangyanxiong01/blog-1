@@ -21,9 +21,10 @@ def merge(arr, start, mid, end):
     二路归并
     """
     # 辅助数组初始化
-    # aux = arr[start:end+1]
-    # print aux
     aux = arr[:]
+    # 辅助数组优化
+    # aux = arr[start:end+1]
+    # arr[k+start] = aux[i]
 
     # 计数器初始化
     i = start
