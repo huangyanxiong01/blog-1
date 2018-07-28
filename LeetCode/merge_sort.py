@@ -24,7 +24,7 @@ def merge(arr, start, mid, end):
     aux = arr[:]
     # 辅助数组优化
     # aux = arr[start:end+1]
-    # arr[k+start] = aux[i]
+    # for 循环中的 `arr[k] = aux[i]` 改成 `arr[k+start] = aux[i]`
 
     # 计数器初始化
     i = start
