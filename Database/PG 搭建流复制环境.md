@@ -207,4 +207,4 @@ postgres=# select * from test_1 ;
 - 同步流复制
   - 性能方面：Master 必须确保数据到达 Slave，这会增加大延迟的可能
   - 可用性方面：当只有两个节点时，Master 必须等待 Slave 事务 commit 成功后才能返回，当 Slave 宕机时，Master 将会被阻塞掉，解决方法是用两个以上的非联级 Slave，这样只要有一个 Slave 事务完成，Master 就会返回
-- wal 存在疯长问题
+- wal 存在疯长问题 （http://blog.jobbole.com/112842/）
