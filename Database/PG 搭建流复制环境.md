@@ -198,6 +198,8 @@ postgres=# select * from test_1 ;
 
 > 可以看到主从的数据已经同步
 
+# 其他
+
 
 
 
