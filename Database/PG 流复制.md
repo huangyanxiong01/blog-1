@@ -101,3 +101,62 @@ transaction log end point: 1/1B0000DC
 pg_basebackup: waiting for background process to finish streaming ...
 pg_basebackup: base backup completed
 ```
+
+4. 设置从库 postgresql.conf 
+
+```
+hot_standby = on
+```
+
+5. 创建从库 recovery.conf
+
+```
+> cp /opt/pgsql9.3beta1/share/recovery.conf.sample  recovery.conf
+```
+
+6. 修改以下参数
+
+```
+standby_mode = on
+primary_conninfo = 'host=192.168.1.36 port=1925 user=repuser'
+trigger_file = '/database/pg93/pg_root/postgresql.trigger.1925'
+```
+
+7. 启动从库服务
+
+```
+> pg_ctl start -D $PGDATA
+server starting
+```
+
+8. 查看备库进程
+
+```
+> ps -ef | grep pg93
+pg93     31398     1  0 21:09 pts/0    00:00:00 /opt/pgsql9.3beta1/bin/postgres -D /database/pg93/pg_root
+pg93     31399 31398  0 21:09 ?        00:00:00 postgres: logger process                                 
+pg93     31400 31398  0 21:09 ?        00:00:00 postgres: startup process   waiting for 00000001000000010000001A
+pg93     31401 31398  0 21:09 ?        00:00:00 postgres: checkpointer process                           
+pg93     31402 31398  0 21:09 ?        00:00:00 postgres: writer process                                 
+pg93     31403 31398  0 21:09 ?        00:00:00 postgres: stats collector process                        
+pg93     31404 31398  0 21:09 ?        00:00:00 postgres: wal receiver process
+```
+
+9. 登录到主库所在的服务器，查看主库进程
+
+```
+> ps -ef | grep pg93
+pg93      2504     1  0 Jun28 ?        00:00:26 /opt/pgsql9.3beta1/bin/postgres -D /database/pg93/pg_root
+pg93      2505  2504  0 Jun28 ?        00:00:00 postgres: logger process                                 
+pg93      2507  2504  0 Jun28 ?        00:00:08 postgres: checkpointer process                           
+pg93      2508  2504  0 Jun28 ?        00:00:28 postgres: writer process                                 
+pg93      2509  2504  0 Jun28 ?        00:00:08 postgres: wal writer process                             
+pg93      2510  2504  0 Jun28 ?        00:00:19 postgres: autovacuum launcher process                    
+pg93      2511  2504  0 Jun28 ?        00:00:00 postgres: archiver process   last was 000000010000000100000019.00000024.backup
+pg93      2512  2504  0 Jun28 ?        00:00:44 postgres: stats collector process                        
+pg93     31898  2504  0 21:09 ?        00:00:00 postgres: wal sender process repuser 192.168.1.35(39545) idle
+```
+
+# 测试
+
+
