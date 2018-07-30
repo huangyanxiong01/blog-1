@@ -159,4 +159,47 @@ pg93     31898  2504  0 21:09 ?        00:00:00 postgres: wal sender process rep
 
 # 测试
 
+1. 登录到主库服务器执行
+
+```
+> psql
+psql (9.3beta1)
+Type "help" for help.
+
+postgres=# create table test_1 (id int4,create_time timestamp(0) without time zone);
+CREATE TABLE
+
+postgres=# insert into test_1 values (1,now());
+INSERT 0 1
+
+postgres=# select * from test_1;
+ id |     create_time     
+----+---------------------
+  1 | 2013-07-01 21:15:34
+(1 row)
+```
+
+2. 登录到备库服务器执行
+
+```
+> psql
+psql (9.3beta1)
+Type "help" for help.
+
+postgres=# select * from test_1 
+
+postgres=# select * from test_1 ;
+ id |     create_time     
+----+---------------------
+  1 | 2013-07-01 21:15:34
+(1 row)
+
+```
+
+> 可以看到主从的数据已经同步
+
+
+
+
+
 
