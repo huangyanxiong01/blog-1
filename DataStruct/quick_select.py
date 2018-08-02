@@ -62,24 +62,23 @@ def quick_select(k, arr, start, end):
     快速选择, 返回第 k 小的数
     """
     # 递归结束条件
-    if (start > end):
-        return
+    if (start <= end):
+        # 基准数下标, 即第 k 小的数
+        index = partition(arr, start, end)
 
-    # 基准数下标, 即第 k 小的数
-    index = partition(arr, start, end)
-
-    # 和快速排序的区别主要是下面这部分
-    # (因为编码中是从 0 开始的, 所以 k 要减 1, 但是为了方便讨论下面的注释省略这个减 1 的说明)
-    # 若 k == index, 即找到这个数
-    if ((k - 1) == index):
-        return arr[index]
-    # 如果 k < index, 则从递归处理左边的子问题
-    elif ((k - 1) < index):
-        return quick_select(k, arr, start, index - 1)
-    # 如果 k > index, 则从递归处理右边的子问题
+        # 和快速排序的区别主要是下面这部分
+        # (因为编码中是从 0 开始的, 所以 k 要减 1, 但是为了方便讨论下面的注释省略这个减 1 的说明)
+        # 若 k == index, 即找到这个数
+        if ((k - 1) == index):
+            return arr[index]
+        # 如果 k < index, 则从递归处理左边的子问题
+        elif ((k - 1) < index):
+            return quick_select(k, arr, start, index - 1)
+        # 如果 k > index, 则从递归处理右边的子问题
+        else:
+            return quick_select(k, arr, index + 1, end)
     else:
-        return quick_select(k, arr, index + 1, end)
-
+        return -1
 
 # ======================== 单元测试 ================================
 
@@ -103,7 +102,7 @@ class TestCaseQuickSelect(unittest.TestCase):
         self.result_3 = 12
         self.result_4 = 31
         self.result_5 = 78
-        self.result_6 = None
+        self.result_6 = -1
 
     def test_quick_select(self):
         self.assertEqual(quick_select(self.data_k_1, self.data_arr,
