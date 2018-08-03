@@ -6,3 +6,9 @@
 4. https://github.com/torvalds/linux/blob/master/fs/eventpoll.c
 5. http://blog.chinaunix.net/uid-20687780-id-2105157.html
 6. http://scotdoyle.com/python-epoll-howto.html
+
+# 
+
+- 可监控的 fd 理论上无限制 (具体看物理内存 hold 不 hold 得住)
+- 每次检查是否有就绪的 fd 时，无需将所有的 fd 从 user space copy 到 kernel space，只需调用 `epoll_ctl` 增量式地添加 fd (即往 `struct eventpoll` 所维护的 red black tree 中插入封装后的 fd --- `struct epitem`)
+- 每次检查是否有就绪 fd 时，无需遍历所有的 fd，只需遍历就绪链表 rdllink
