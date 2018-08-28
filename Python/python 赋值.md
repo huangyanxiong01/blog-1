@@ -36,7 +36,25 @@ Out[96]: False
 
 ### copy 赋值
 
+```
+In [97]: var1 = 1
 
+In [98]: var2 = copy.copy(var1)
+
+In [99]: var3 = copy.deepcopy(var1)
+
+In [100]: id(var1)
+Out[100]: 4344811552
+
+In [101]: id(var2)
+Out[101]: 4344811552
+
+In [102]: id(var3)
+Out[102]: 4344811552
+
+In [103]: var1 is var2 is var3
+Out[103]: True
+```
 
 
 
